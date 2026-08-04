@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://thelapisai.com.ng/sitemap.xml
