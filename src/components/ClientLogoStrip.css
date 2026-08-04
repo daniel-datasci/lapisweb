@@ -1,0 +1,98 @@
+.client-logo-strip {
+  background: var(--lapis-950);
+  padding: 36px 0 48px;
+  margin-top: 0;
+  border-top: 1px solid rgba(247, 248, 246, 0.08);
+}
+
+.client-logo-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white-faint);
+  margin-bottom: 24px;
+}
+
+.client-logo-marquee {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100vw;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+.client-logo-track {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: max-content;
+  min-width: 100%;
+  animation: clientLogoScroll 24s linear infinite;
+}
+
+@keyframes clientLogoScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.client-logo-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  padding: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  filter: grayscale(1);
+  opacity: 0.8;
+}
+
+.client-logo-item:hover {
+  transform: translateY(-3px);
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+.client-logo-item img {
+  max-height: 72px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .client-logo-strip {
+    padding: 0 0 32px;
+    overflow-x: hidden;
+  }
+
+  .client-logo-marquee {
+    max-width: 100vw;
+  }
+
+  .client-logo-track {
+    gap: 18px;
+  }
+
+  .client-logo-item {
+    min-width: 120px;
+    padding: 10px 12px;
+  }
+
+  .client-logo-item img {
+    max-height: 32px;
+  }
+}

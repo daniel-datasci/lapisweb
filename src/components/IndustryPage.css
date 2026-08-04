@@ -1,0 +1,106 @@
+.industry-pain-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.industry-pain-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 24px;
+  background: var(--white);
+  border: 1px solid rgba(11, 26, 51, 0.08);
+  border-radius: var(--radius-card);
+  transition: border-color 0.4s var(--ease-standard), transform 0.4s var(--ease-standard);
+}
+
+.industry-pain-item:hover {
+  border-color: rgba(201, 162, 39, 0.4);
+  transform: translateY(-3px);
+}
+
+.industry-pain-icon {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--gold-500);
+  margin-top: 2px;
+}
+
+.industry-pain-item p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.industry-cost-body {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(20px, 2.5vw, 28px);
+  line-height: 1.4;
+  color: var(--white);
+  margin-top: 24px;
+  letter-spacing: -0.3px;
+}
+
+.industry-offer {
+  margin-top: 32px;
+  padding: 40px;
+  border-left: 4px solid var(--gold-500);
+  background: var(--white);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+}
+
+.industry-offer-quote {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 2.8vw, 30px);
+  line-height: 1.35;
+  color: var(--ink);
+  letter-spacing: -0.4px;
+}
+
+.industry-included {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.industry-included-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--white-soft);
+  padding: 18px 24px;
+  background: var(--lapis-900);
+  border: 1px solid rgba(224, 188, 75, 0.1);
+  border-radius: var(--radius-card);
+}
+
+.included-check-dark {
+  background: rgba(224, 188, 75, 0.15);
+  color: var(--gold-400);
+  flex-shrink: 0;
+}
+
+.industry-cross-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.industry-cross-section {
+  padding-top: 0;
+}
+
+@media (max-width: 768px) {
+  .industry-pain-list {
+    grid-template-columns: 1fr;
+  }
+  .industry-offer {
+    padding: 28px;
+  }
+}

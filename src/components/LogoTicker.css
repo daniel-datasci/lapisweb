@@ -1,0 +1,89 @@
+.logo-ticker-section {
+  padding: 64px 0;
+  background: var(--lapis-950);
+  overflow: hidden;
+}
+
+.logo-ticker-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white-faint);
+  margin-bottom: 32px;
+}
+
+.logo-ticker {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100vw;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+}
+
+.logo-ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  width: max-content;
+  min-width: 100%;
+  animation: tickerScroll 20s linear infinite;
+}
+
+@keyframes tickerScroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  color: var(--white-soft);
+  opacity: 0.7;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .logo-ticker {
+    padding: 0 12px;
+  }
+
+  .logo-ticker-track {
+    gap: 18px;
+  }
+
+  .logo-ticker-item {
+    gap: 8px;
+  }
+
+  .logo-ticker-text {
+    font-size: 14px;
+  }
+}
+
+.logo-ticker-item:hover {
+  opacity: 1;
+  color: var(--gold-400);
+}
+
+.logo-ticker-icon {
+  display: flex;
+}
+
+.logo-ticker-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.3px;
+}

@@ -1,0 +1,265 @@
+.orbit-viz {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: orbitScaleIn 1.2s var(--ease-standard) 0.3s both;
+}
+
+@keyframes orbitScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.orbit-stage {
+  position: relative;
+  width: 720px;
+  height: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Orbit rings — dashed gold arcs via rotating border */
+.orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(224, 188, 75, 0.18);
+  box-shadow: 0 0 40px rgba(201, 162, 39, 0.05);
+}
+
+.orbit-ring.cw {
+  animation-name: orbitSpinCW;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.orbit-ring.ccw {
+  animation-name: orbitSpinCCW;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes orbitSpinCW {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitSpinCCW {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Center circle */
+.orbit-center {
+  position: relative;
+  z-index: 5;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, var(--lapis-700) 0%, var(--lapis-950) 80%);
+  border: 1px solid rgba(224, 188, 75, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 60px rgba(201, 162, 39, 0.25), inset 0 0 30px rgba(11, 26, 51, 0.6);
+}
+
+.orbit-center-inner {
+  text-align: center;
+  z-index: 2;
+}
+
+.orbit-center-value {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 64px;
+  line-height: 1;
+  color: var(--white);
+  letter-spacing: -1px;
+}
+
+.orbit-center-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--gold-400);
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+
+.orbit-center-pulse {
+  position: absolute;
+  inset: -40px;
+  border-radius: 50%;
+  border: 1px solid rgba(224, 188, 75, 0.35);
+  box-shadow: 0 0 0 12px rgba(224, 188, 75, 0.06), 0 0 0 24px rgba(224, 188, 75, 0.03);
+  animation: orbitPulse 3s ease-out infinite;
+}
+
+@keyframes orbitPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  70% {
+    opacity: 0.18;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+/* Node positioning (static transform from inline style) */
+.orbit-node-pos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 4;
+}
+
+/* Fly-in animation on the inner element so it doesn't conflict with positioning */
+.orbit-node-inner {
+  opacity: 0;
+  animation: nodeFlyIn 0.8s var(--ease-standard) forwards;
+}
+
+@keyframes nodeFlyIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3) rotate(-180deg);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+}
+
+.orbit-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(15, 34, 71, 0.92);
+  border: 1px solid rgba(224, 188, 75, 0.2);
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 24px var(--node-glow);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.orbit-node:hover {
+  transform: scale(1.12);
+  border-color: var(--gold-400);
+}
+
+.orbit-node-icon {
+  color: var(--gold-400);
+  display: flex;
+}
+
+.orbit-node-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--white-soft);
+  letter-spacing: 0.3px;
+}
+
+/* Live badge */
+.orbit-deco {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold-400);
+  padding: 6px 12px;
+  border: 1px solid rgba(224, 188, 75, 0.25);
+  border-radius: var(--radius-pill);
+  background: rgba(11, 26, 51, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.orbit-deco svg {
+  animation: orbitDecoSpin 4s linear infinite;
+}
+
+@keyframes orbitDecoSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive scaling — width + height track the scale so layout footprint shrinks too */
+@media (max-width: 1280px) {
+  .orbit-stage {
+    transform: scale(0.85);
+    width: 612px;
+    height: 612px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .orbit-stage {
+    transform: scale(0.7);
+    width: 504px;
+    height: 504px;
+  }
+}
+
+@media (max-width: 768px) {
+  .orbit-stage {
+    transform: scale(0.5);
+    width: 360px;
+    height: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orbit-stage {
+    transform: scale(0.34);
+    width: 240px;
+    height: 240px;
+  }
+
+  .orbit-center {
+    width: 140px;
+    height: 140px;
+  }
+
+  .orbit-center-value {
+    font-size: 38px;
+  }
+
+  .orbit-center-label {
+    font-size: 12px;
+  }
+
+  .orbit-node {
+    padding: 6px 9px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .orbit-node-label {
+    font-size: 9px;
+  }
+}
