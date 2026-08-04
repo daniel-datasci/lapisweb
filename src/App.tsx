@@ -59,6 +59,8 @@ function App() {
         </Routes>
       </Suspense>
       <Footer />
+      <Analytics />
+      <SpeedInsights />
     </BrowserRouter>
   );
 }
