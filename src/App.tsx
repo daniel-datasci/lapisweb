@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Analytics } from "@vercel/analytics/react"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -35,31 +36,33 @@ function PageLoader() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Header />
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services/ai-consulting" element={<AIConsulting />} />
-          <Route path="/services/market-intelligence" element={<MarketIntelligence />} />
-          <Route path="/services/ai-agents" element={<AIAgents />} />
-          <Route path="/services/ai-infrastructure" element={<AIInfrastructure />} />
-          <Route path="/industries/saas" element={<SaaS />} />
-          <Route path="/industries/real-estate" element={<RealEstate />} />
-          <Route path="/industries/hospitality" element={<Hospitality />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/case-studies" element={<CaseStudies />} />
-          <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </Suspense>
-      <Footer />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Header />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/services/ai-consulting" element={<AIConsulting />} />
+            <Route path="/services/market-intelligence" element={<MarketIntelligence />} />
+            <Route path="/services/ai-agents" element={<AIAgents />} />
+            <Route path="/services/ai-infrastructure" element={<AIInfrastructure />} />
+            <Route path="/industries/saas" element={<SaaS />} />
+            <Route path="/industries/real-estate" element={<RealEstate />} />
+            <Route path="/industries/hospitality" element={<Hospitality />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/case-studies" element={<CaseStudies />} />
+            <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </Suspense>
+        <Footer />
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

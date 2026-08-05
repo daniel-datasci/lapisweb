@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import PageHero from '@/components/PageHero';
 import IncludedGrid from '@/components/IncludedGrid';
 import DarkCallout from '@/components/DarkCallout';
@@ -18,48 +19,94 @@ const included = [
 
 export default function AIConsulting() {
   return (
-    <div>
-      <PageHero
-        eyebrow="AI Consulting"
-        text={heading}
-        splitIndex={48}
-        subtext="Before you hire an engineer or buy a tool, make sure you know what to build. The most expensive mistake isn't hiring the wrong person, it's building the wrong thing."
-        ctaLabel="Book a Free Readiness Audit"
-      />
+    <>
+      <Helmet>
+        <title>AI Consulting | The Lapis AI</title>
+        <meta
+          name="description"
+          content="Strategy before software. A clear-eyed readiness audit and executive roadmap so your team invests in AI where it creates measurable advantage, not just momentum."
+        />
+        <link rel="canonical" href="https://thelapisai.com.ng/services/ai-consulting" />
 
-      <section className="section section-paper">
-        <div className="container">
-          <Reveal>
-            <span className="eyebrow">What&rsquo;s Included</span>
-            <h2 className="section-title">
-              Six things you get <span className="accent">before you build anything.</span>
-            </h2>
-            <p className="section-intro">
-              Strategy is cheaper than software. This phase saves you from building the wrong system.
-            </p>
-          </Reveal>
-          <IncludedGrid items={included} />
-        </div>
-      </section>
+        {/* Open Graph */}
+        <meta property="og:title" content="AI Consulting | The Lapis AI" />
+        <meta
+          property="og:description"
+          content="Strategy before software. A clear-eyed readiness audit and executive roadmap so your team invests in AI where it creates measurable advantage, not just momentum."
+        />
+        <meta property="og:url" content="https://thelapisai.com.ng/services/ai-consulting" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://thelapisai.com.ng/og-back.png" />
+        <meta property="og:site_name" content="The Lapis AI" />
+        <meta property="og:locale" content="en_NG" />
 
-      <SavingsEstimator
-        subtitle="Strategy isn&rsquo;t free, but building the wrong system costs ten times more. See what you could save by getting AI right the first time."
-        laborSavingsRate={0.45}
-        toolSavingsRate={0.25}
-        analyticsSavingsRate={0.55}
-        growthRate={0.03}
-      />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://thelapisai.com.ng/og-back.png" />
+      </Helmet>
 
-      <DarkCallout
-        title="We don&rsquo;t sell AI. We sell the judgment that tells you where AI goes."
-        body="Any engineer can build a model. The hard part is knowing which problem to solve, which data to use, and which workflow to redesign. That&rsquo;s what consulting delivers \u2014 and it&rsquo;s the difference between an AI pilot that ships and one that stalls."
-      />
+      {/* Service structured data */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'AI Consulting',
+          provider: {
+            '@type': 'Organization',
+            name: 'The Lapis AI',
+            url: 'https://thelapisai.com.ng',
+          },
+          description:
+            'Strategy before software. A clear-eyed readiness audit and executive roadmap so your team invests in AI where it creates measurable advantage.',
+          serviceType: 'AI Consulting',
+          url: 'https://thelapisai.com.ng/services/ai-consulting',
+          areaServed: 'Worldwide',
+        })}
+      </script>
 
-      <CTASection
-        heading="Not sure where AI fits? Let&rsquo;s find out for free."
-        subtext="The readiness audit is a 60-minute conversation. You leave with a roadmap. No obligation, no hard sell."
-        ctaLabel="Book My Free Audit"
-      />
-    </div>
+      <div>
+        <PageHero
+          eyebrow="AI Consulting"
+          text={heading}
+          splitIndex={48}
+          subtext="Before you hire an engineer or buy a tool, make sure you know what to build. The most expensive mistake isn't hiring the wrong person, it's building the wrong thing."
+          ctaLabel="Book a Free Readiness Audit"
+        />
+
+        <section className="section section-paper">
+          <div className="container">
+            <Reveal>
+              <span className="eyebrow">What&rsquo;s Included</span>
+              <h2 className="section-title">
+                Six things you get <span className="accent">before you build anything.</span>
+              </h2>
+              <p className="section-intro">
+                Strategy is cheaper than software. This phase saves you from building the wrong system.
+              </p>
+            </Reveal>
+            <IncludedGrid items={included} />
+          </div>
+        </section>
+
+        <SavingsEstimator
+          subtitle="Strategy isn&rsquo;t free, but building the wrong system costs ten times more. See what you could save by getting AI right the first time."
+          laborSavingsRate={0.45}
+          toolSavingsRate={0.25}
+          analyticsSavingsRate={0.55}
+          growthRate={0.03}
+        />
+
+        <DarkCallout
+          title="We don&rsquo;t sell AI. We sell the judgment that tells you where AI goes."
+          body="Any engineer can build a model. The hard part is knowing which problem to solve, which data to use, and which workflow to redesign. That&rsquo;s what consulting delivers \u2014 and it&rsquo;s the difference between an AI pilot that ships and one that stalls."
+        />
+
+        <CTASection
+          heading="Not sure where AI fits? Let&rsquo;s find out for free."
+          subtext="The readiness audit is a 60-minute conversation. You leave with a roadmap. No obligation, no hard sell."
+          ctaLabel="Book My Free Audit"
+        />
+      </div>
+    </>
   );
 }

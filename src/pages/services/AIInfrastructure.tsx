@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import PageHero from '@/components/PageHero';
 import IncludedGrid from '@/components/IncludedGrid';
 import DarkCallout from '@/components/DarkCallout';
@@ -27,62 +28,108 @@ const stack = [
 
 export default function AIInfrastructure() {
   return (
-    <div>
-      <PageHero
-        eyebrow="AI Infrastructure"
-        text={heading}
-        splitIndex={54}
-        subtext="The data pipelines, integrations, orchestration, and dashboards that make systems reliable, accurate, and production-grade."
-        ctaLabel="Book a Free Readiness Audit"
-      >
-        {/* Stack diagram */}
-        <div className="stack-diagram fade-up" style={{ animationDelay: '2s' }}>
-          {stack.map((s) => (
-            <div key={s.label} className={`stack-layer stack-layer-${s.layer}`}>
-              <span className="stack-layer-icon">{s.icon}</span>
-              <div className="stack-layer-text">
-                <span className="stack-layer-label">{s.label}</span>
-                <span className="stack-layer-desc">{s.desc}</span>
+    <>
+      <Helmet>
+        <title>AI Infrastructure | The Lapis AI</title>
+        <meta
+          name="description"
+          content="The foundation under reliable intelligence. The data pipelines, integrations, and orchestration layers that make custom AI systems dependable, accurate, and ready for production use."
+        />
+        <link rel="canonical" href="https://thelapisai.com.ng/services/ai-infrastructure" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="AI Infrastructure | The Lapis AI" />
+        <meta
+          property="og:description"
+          content="The foundation under reliable intelligence. The data pipelines, integrations, and orchestration layers that make custom AI systems dependable, accurate, and ready for production use."
+        />
+        <meta property="og:url" content="https://thelapisai.com.ng/services/ai-infrastructure" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://thelapisai.com.ng/og-back.png" />
+        <meta property="og:site_name" content="The Lapis AI" />
+        <meta property="og:locale" content="en_NG" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://thelapisai.com.ng/og-back.png" />
+      </Helmet>
+
+      {/* Service structured data */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'AI Infrastructure',
+          provider: {
+            '@type': 'Organization',
+            name: 'The Lapis AI',
+            url: 'https://thelapisai.com.ng',
+          },
+          description:
+            'The data pipelines, integrations, and orchestration layers that make custom AI systems dependable, accurate, and ready for production use.',
+          serviceType: 'AI Infrastructure',
+          url: 'https://thelapisai.com.ng/services/ai-infrastructure',
+          areaServed: 'Worldwide',
+        })}
+      </script>
+
+      <div>
+        <PageHero
+          eyebrow="AI Infrastructure"
+          text={heading}
+          splitIndex={54}
+          subtext="The data pipelines, integrations, orchestration, and dashboards that make systems reliable, accurate, and production-grade."
+          ctaLabel="Book a Free Readiness Audit"
+        >
+          {/* Stack diagram */}
+          <div className="stack-diagram fade-up" style={{ animationDelay: '2s' }}>
+            {stack.map((s) => (
+              <div key={s.label} className={`stack-layer stack-layer-${s.layer}`}>
+                <span className="stack-layer-icon">{s.icon}</span>
+                <div className="stack-layer-text">
+                  <span className="stack-layer-label">{s.label}</span>
+                  <span className="stack-layer-desc">{s.desc}</span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </PageHero>
+            ))}
+          </div>
+        </PageHero>
 
-      <section className="section section-paper">
-        <div className="container">
-          <Reveal>
-            <span className="eyebrow">What&rsquo;s Included</span>
-            <h2 className="section-title">
-              The four layers <span className="accent">under every smart system.</span>
-            </h2>
-            <p className="section-intro">
-              Skip any layer and the whole thing collapses. We build all of them.
-            </p>
-          </Reveal>
-          <IncludedGrid items={included} />
-        </div>
-      </section>
+        <section className="section section-paper">
+          <div className="container">
+            <Reveal>
+              <span className="eyebrow">What&rsquo;s Included</span>
+              <h2 className="section-title">
+                The four layers <span className="accent">under every smart system.</span>
+              </h2>
+              <p className="section-intro">
+                Skip any layer and the whole thing collapses. We build all of them.
+              </p>
+            </Reveal>
+            <IncludedGrid items={included} />
+          </div>
+        </section>
 
-      <SavingsEstimator
-        subtitle="Solid infrastructure doesn't just prevent outages, it compounds. Model your current tooling and data spend to see what a unified AI stack could save."
-        laborSavingsRate={0.40}
-        toolSavingsRate={0.45}
-        analyticsSavingsRate={0.50}
-        growthRate={0.06}
-      />
+        <SavingsEstimator
+          subtitle="Solid infrastructure doesn't just prevent outages, it compounds. Model your current tooling and data spend to see what a unified AI stack could save."
+          laborSavingsRate={0.40}
+          toolSavingsRate={0.45}
+          analyticsSavingsRate={0.50}
+          growthRate={0.06}
+        />
 
-      <DarkCallout
-        eyebrow="Why This Matters"
-        title="The dashboard is the easy part. It&rsquo;s the three layers below it that fail."
-        body="Most AI pilots build the dashboard and ignore the infrastructure underneath. It looks impressive in the demo. Then someone asks where the data comes from, and the answer is we&rsquo;re not sure. We build from the bottom up - pipelines first, orchestration second, dashboard last - so the system you rely on is the system that actually works."
-      />
+        <DarkCallout
+          eyebrow="Why This Matters"
+          title="The dashboard is the easy part. It&rsquo;s the three layers below it that fail."
+          body="Most AI pilots build the dashboard and ignore the infrastructure underneath. It looks impressive in the demo. Then someone asks where the data comes from, and the answer is we&rsquo;re not sure. We build from the bottom up - pipelines first, orchestration second, dashboard last - so the system you rely on is the system that actually works."
+        />
 
-      <CTASection
-        heading="Build the foundation before the dashboard."
-        subtext="If your AI pilot stalled, the infrastructure is why. Let&rsquo;s fix it."
-        ctaLabel="Book My Free Audit"
-      />
-    </div>
+        <CTASection
+          heading="Build the foundation before the dashboard."
+          subtext="If your AI pilot stalled, the infrastructure is why. Let&rsquo;s fix it."
+          ctaLabel="Book My Free Audit"
+        />
+      </div>
+    </>
   );
 }
