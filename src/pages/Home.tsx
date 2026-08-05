@@ -17,7 +17,7 @@ import { ArrowRight } from 'lucide-react';
 import { caseStudies } from '@/data/testimonials';
 import './Home.css';
 
-const heroText = 'You don’t need more data. You need to know what to do next.';
+const heroText = 'Data is cheap. Knowing what to do with it is the advantage.';
 
 export default function Home() {
   return (
@@ -88,7 +88,7 @@ export default function Home() {
               <span className="eyebrow hero-eyebrow">The Lapis AI</span>
               <TypewriterHeading
                 text={heroText}
-                splitIndex={47}
+                splitIndex={14}
                 colorBefore="var(--white)"
                 colorAfter="var(--gold-500)"
                 className="hero-title"
