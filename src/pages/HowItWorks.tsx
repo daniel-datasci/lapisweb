@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import PageHero from '@/components/PageHero';
 import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
@@ -14,15 +15,15 @@ const phases = [
     num: '01',
     phase: 'Discovery',
     duration: 'Week 1',
-    body: 'We start with a free readiness audit \u2014 a 60-minute conversation where we map your operations, your data, and your blind spots. You leave with a written roadmap identifying your top three AI opportunities.',
+    body: 'We start with a free readiness audit — a 60-minute conversation where we map your operations, your data, and your blind spots. You leave with a written roadmap identifying your top three AI opportunities.',
     details: ['Readiness assessment across your operations', 'Data and systems audit', 'Opportunity prioritization', 'Written roadmap delivered'],
   },
   {
     icon: <Wrench size={32} />,
     num: '02',
     phase: 'Build',
-    duration: 'Weeks 2\u20135',
-    body: 'We build your intelligence and agent systems on real infrastructure \u2014 data pipelines, integrations, model orchestration, and dashboards \u2014 connected to the tools your team already uses. You get something usable within the first month.',
+    duration: 'Weeks 2–5',
+    body: 'We build your intelligence and agent systems on real infrastructure — data pipelines, integrations, model orchestration, and dashboards — connected to the tools your team already uses. You get something usable within the first month.',
     details: ['Data pipelines and integrations built', 'Agent development and testing', 'Dashboard deployment', 'Team onboarding and training'],
   },
   {
@@ -39,7 +40,7 @@ const expectations = [
   'Access to the systems and data sources you want us to connect to',
   'A point person on your team who can answer questions during the build',
   'An hour for the free audit, and a few hours for onboarding after launch',
-  'Honesty about what\u2019s working and what isn\u2019t \u2014 we can\u2019t fix what you don\u2019t tell us',
+  'Honesty about what’s working and what isn’t — we can’t fix what you don’t tell us',
 ];
 
 function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
@@ -59,95 +60,138 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
 
 export default function HowItWorks() {
   return (
-    <div>
-      <PageHero
-        eyebrow="How It Works"
-        text={heading}
-        splitIndex={42}
-        subtext="No six-month discovery phase. No vague timelines. Here&rsquo;s exactly what happens from your first conversation to a live system."
-        ctaLabel="Book a Free Readiness Audit"
-      />
+    <>
+      <Helmet>
+        <title>How It Works | The Lapis AI</title>
+        <meta
+          name="description"
+          content="From free audit to live system in weeks. Three phases, zero fluff. See exactly how we build AI intelligence and agents for your business."
+        />
+        <link rel="canonical" href="https://thelapisai.com.ng/how-it-works" />
 
-      {/* Timeline */}
-      <section className="section section-paper">
-        <div className="container">
-          <Reveal>
-            <span className="eyebrow">The Timeline</span>
-            <h2 className="section-title">
-              Three phases. <span className="accent">Five weeks to live.</span>
-            </h2>
-          </Reveal>
-          <div className="timeline" style={{ marginTop: 56 }}>
-            {phases.map((p, i) => (
-              <Reveal key={p.phase} delay={(i + 1) as 1 | 2 | 3}>
-                <div className="timeline-card">
-                  <div className="timeline-left">
-                    <span className="timeline-num">{p.num}</span>
-                    <span className="timeline-icon">{p.icon}</span>
+        {/* Open Graph */}
+        <meta property="og:title" content="How It Works | The Lapis AI" />
+        <meta
+          property="og:description"
+          content="From free audit to live system in weeks. Three phases, zero fluff. See exactly how we build AI intelligence and agents for your business."
+        />
+        <meta property="og:url" content="https://thelapisai.com.ng/how-it-works" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://thelapisai.com.ng/og-back.png" />
+        <meta property="og:site_name" content="The Lapis AI" />
+        <meta property="og:locale" content="en_NG" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://thelapisai.com.ng/og-back.png" />
+      </Helmet>
+
+      {/* FAQPage structured data */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((f) => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: f.a,
+            },
+          })),
+        })}
+      </script>
+
+      <div>
+        <PageHero
+          eyebrow="How It Works"
+          text={heading}
+          splitIndex={42}
+          subtext="No six-month discovery phase. No vague timelines. Here’s exactly what happens from your first conversation to a live system."
+          ctaLabel="Book a Free Readiness Audit"
+        />
+
+        {/* Timeline */}
+        <section className="section section-paper">
+          <div className="container">
+            <Reveal>
+              <span className="eyebrow">The Timeline</span>
+              <h2 className="section-title">
+                Three phases. <span className="accent">Five weeks to live.</span>
+              </h2>
+            </Reveal>
+            <div className="timeline" style={{ marginTop: 56 }}>
+              {phases.map((p, i) => (
+                <Reveal key={p.phase} delay={(i + 1) as 1 | 2 | 3}>
+                  <div className="timeline-card">
+                    <div className="timeline-left">
+                      <span className="timeline-num">{p.num}</span>
+                      <span className="timeline-icon">{p.icon}</span>
+                    </div>
+                    <div className="timeline-right">
+                      <span className="timeline-phase">{p.phase}</span>
+                      <span className="timeline-duration">{p.duration}</span>
+                      <p className="timeline-body">{p.body}</p>
+                      <ul className="timeline-details">
+                        {p.details.map((d) => (
+                          <li key={d}>{d}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                  <div className="timeline-right">
-                    <span className="timeline-phase">{p.phase}</span>
-                    <span className="timeline-duration">{p.duration}</span>
-                    <p className="timeline-body">{p.body}</p>
-                    <ul className="timeline-details">
-                      {p.details.map((d) => (
-                        <li key={d}>{d}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* What we need from you */}
-      <section className="section section-navy">
-        <div className="container" style={{ maxWidth: 880 }}>
-          <Reveal>
-            <span className="eyebrow">What We Need From You</span>
-            <h2 className="section-title">
-              Not much. <span className="accent">But it matters.</span>
-            </h2>
-          </Reveal>
-          <ul className="expectations-list" style={{ marginTop: 40 }}>
-            {expectations.map((e, i) => (
-              <Reveal key={i} delay={((i % 2) + 1) as 1 | 2}>
-                <li className="expectation-item">
-                  <span className="expectation-icon">
-                    <ClipboardList size={20} />
-                  </span>
-                  <span>{e}</span>
-                </li>
-              </Reveal>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="section section-paper">
-        <div className="container" style={{ maxWidth: 880 }}>
-          <Reveal>
-            <span className="eyebrow">FAQ</span>
-            <h2 className="section-title">
-              Questions you&rsquo;re <span className="accent">probably asking.</span>
-            </h2>
-          </Reveal>
-          <div className="faq-list" style={{ marginTop: 40 }}>
-            {faqs.map((f, i) => (
-              <FaqItem key={i} q={f.q} a={f.a} index={i} />
-            ))}
+        {/* What we need from you */}
+        <section className="section section-navy">
+          <div className="container" style={{ maxWidth: 880 }}>
+            <Reveal>
+              <span className="eyebrow">What We Need From You</span>
+              <h2 className="section-title">
+                Not much. <span className="accent">But it matters.</span>
+              </h2>
+            </Reveal>
+            <ul className="expectations-list" style={{ marginTop: 40 }}>
+              {expectations.map((e, i) => (
+                <Reveal key={i} delay={((i % 2) + 1) as 1 | 2}>
+                  <li className="expectation-item">
+                    <span className="expectation-icon">
+                      <ClipboardList size={20} />
+                    </span>
+                    <span>{e}</span>
+                  </li>
+                </Reveal>
+              ))}
+            </ul>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <CTASection
-        heading="Ready to see your blind spots close?"
-        subtext="The free audit is the first step. Sixty minutes, no obligation, a roadmap you keep."
-        ctaLabel="Book My Free Audit"
-      />
-    </div>
+        {/* FAQ */}
+        <section className="section section-paper">
+          <div className="container" style={{ maxWidth: 880 }}>
+            <Reveal>
+              <span className="eyebrow">FAQ</span>
+              <h2 className="section-title">
+                Questions you’re <span className="accent">probably asking.</span>
+              </h2>
+            </Reveal>
+            <div className="faq-list" style={{ marginTop: 40 }}>
+              {faqs.map((f, i) => (
+                <FaqItem key={i} q={f.q} a={f.a} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <CTASection
+          heading="Ready to see your blind spots close?"
+          subtext="The free audit is the first step. Sixty minutes, no obligation, a roadmap you keep."
+          ctaLabel="Book My Free Audit"
+        />
+      </div>
+    </>
   );
 }
