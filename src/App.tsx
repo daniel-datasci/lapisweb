@@ -61,6 +61,8 @@ function App() {
           </Routes>
         </Suspense>
         <Footer />
+        <SpeedInsights />
+        <Analytics />
       </BrowserRouter>
     </HelmetProvider>
   );
