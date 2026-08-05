@@ -17,7 +17,7 @@ import { ArrowRight } from 'lucide-react';
 import { caseStudies } from '@/data/testimonials';
 import './Home.css';
 
-const heroText = 'Turn Market Blind Spots Into a Strategic Advantage.';
+const heroText = 'You don’t need more data. You need to know what to do next.';
 
 export default function Home() {
   return (
@@ -94,7 +94,7 @@ export default function Home() {
                 className="hero-title"
               />
               <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>
-                We build always-on AI systems that help leadership teams act faster, spot shifts earlier, and make better decisions with confidence.
+                We engineer AI systems that turn fragmented market signals into clear, prioritized decisions. From readiness audit to fully deployed agent, your first win is only weeks away—not months.
               </p>
               <div className="hero-cta-row fade-up" style={{ animationDelay: '1.8s' }}>
                 <Button to="/contact" variant="primary" size="lg" borderWrap icon>
