@@ -88,7 +88,7 @@ export default function Home() {
               <span className="eyebrow hero-eyebrow">The Lapis AI</span>
               <TypewriterHeading
                 text={heroText}
-                splitIndex={46}
+                splitIndex={47}
                 colorBefore="var(--white)"
                 colorAfter="var(--gold-500)"
                 className="hero-title"
