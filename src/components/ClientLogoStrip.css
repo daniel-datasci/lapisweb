@@ -3,6 +3,8 @@
   padding: 36px 0 48px;
   margin-top: 0;
   border-top: 1px solid rgba(247, 248, 246, 0.08);
+  content-visibility: auto;
+  contain-intrinsic-size: 180px;
 }
 
 .client-logo-label {
@@ -37,6 +39,7 @@
   width: max-content;
   min-width: 100%;
   animation: clientLogoScroll 24s linear infinite;
+  will-change: transform;
 }
 
 @keyframes clientLogoScroll {

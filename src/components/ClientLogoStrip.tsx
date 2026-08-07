@@ -34,7 +34,15 @@ export default function ClientLogoStrip() {
           <div className="client-logo-track">
             {items.map((logo, index) => (
               <div className="client-logo-item" key={`${logo.alt}-${index}`}>
-                <img src={logo.src} alt={logo.alt} loading="lazy" />
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
+                  width={640}
+                  height={640}
+                />
               </div>
             ))}
           </div>

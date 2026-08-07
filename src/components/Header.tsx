@@ -79,7 +79,7 @@ export default function Header() {
       <div className="header-inner">
         <Link to="/" className="header-logo" aria-label="The Lapis AI home">
           <span className="logo-mark" aria-hidden="true">
-            <img src={logsImage} alt="" />
+            <img src={logsImage} alt="" width={28} height={28} decoding="async" />
           </span>
           <span className="logo-text">
             The Lapis<span className="logo-accent"> AI</span>

@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="footer-brand">
             <Link to="/" className="footer-logo">
               <span className="logo-mark" aria-hidden="true">
-                <img src={logsImage} alt="" />
+                <img src={logsImage} alt="" width={28} height={28} decoding="async" />
               </span>
               <span className="logo-text">
                 The Lapis<span className="logo-accent"> AI</span>
