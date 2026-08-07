@@ -44,6 +44,10 @@
   animation-iteration-count: infinite;
 }
 
+.orbit-viz-simplified .orbit-ring {
+  animation: none;
+}
+
 @keyframes orbitSpinCW {
   to {
     transform: rotate(360deg);
@@ -130,6 +134,11 @@
 .orbit-node-inner {
   opacity: 0;
   animation: nodeFlyIn 0.8s var(--ease-standard) forwards;
+}
+
+.orbit-viz-simplified .orbit-node-inner {
+  opacity: 1;
+  animation: none;
 }
 
 @keyframes nodeFlyIn {
@@ -225,6 +234,23 @@
     transform: scale(0.5);
     width: 360px;
     height: 360px;
+  }
+
+  .orbit-ring.cw,
+  .orbit-ring.ccw,
+  .orbit-center-pulse,
+  .orbit-deco svg {
+    animation: none;
+  }
+
+  .orbit-node-inner {
+    opacity: 1;
+    animation: none;
+  }
+
+  .orbit-node,
+  .orbit-deco {
+    backdrop-filter: none;
   }
 }
 

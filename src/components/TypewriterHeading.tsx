@@ -12,19 +12,43 @@ type Props = {
   className?: string;
 };
 
-export default function TypewriterHeading({
+type ResolvedTextProps = {
+  text: string;
+  splitIndex: number;
+  colorBefore: string;
+  colorAfter: string;
+  className: string;
+};
+
+function StaticHeading({
   text,
-  splitIndex = 0,
-  colorBefore = 'currentColor',
-  colorAfter = 'var(--gold-500)',
-  animate = false,
+  splitIndex,
+  colorBefore,
+  colorAfter,
+  className = '',
+}: ResolvedTextProps) {
+  const fullBefore = splitIndex > 0 ? text.slice(0, splitIndex) : text;
+  const fullAfter = splitIndex > 0 ? text.slice(splitIndex) : '';
+
+  return (
+    <h1 className={`typewriter-heading ${className}`.trim()}>
+      <span style={{ color: colorBefore }}>{fullBefore}</span>
+      {splitIndex > 0 && <span style={{ color: colorAfter }}>{fullAfter}</span>}
+    </h1>
+  );
+}
+
+function AnimatedHeading({
+  text,
+  splitIndex,
+  colorBefore,
+  colorAfter,
   speed = 35,
   startDelay = 400,
   className = '',
-}: Props) {
-  const effectiveSpeed = animate ? speed : 0;
-  const effectiveStartDelay = animate ? startDelay : 0;
-  const { displayed, done } = useTypewriter(text, effectiveSpeed, effectiveStartDelay);
+}: ResolvedTextProps & Pick<Props, 'speed' | 'startDelay'>) {
+  const { displayed, done } = useTypewriter(text, speed, startDelay);
+
   const fullBefore = splitIndex > 0 ? text.slice(0, splitIndex) : text;
   const fullAfter = splitIndex > 0 ? text.slice(splitIndex) : '';
 
@@ -43,5 +67,40 @@ export default function TypewriterHeading({
         {!done && <span className="cursor" />}
       </span>
     </h1>
+  );
+}
+
+export default function TypewriterHeading({
+  text,
+  splitIndex = 0,
+  colorBefore = 'currentColor',
+  colorAfter = 'var(--gold-500)',
+  animate = false,
+  speed = 35,
+  startDelay = 400,
+  className = '',
+}: Props) {
+  if (!animate) {
+    return (
+      <StaticHeading
+        text={text}
+        splitIndex={splitIndex}
+        colorBefore={colorBefore}
+        colorAfter={colorAfter}
+        className={className}
+      />
+    );
+  }
+
+  return (
+    <AnimatedHeading
+      text={text}
+      splitIndex={splitIndex}
+      colorBefore={colorBefore}
+      colorAfter={colorAfter}
+      speed={speed}
+      startDelay={startDelay}
+      className={className}
+    />
   );
 }

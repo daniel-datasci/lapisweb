@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense } from 'react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Analytics } from "@vercel/analytics/react"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
-import Home from '@/pages/Home';
+const Home = lazy(() => import('@/pages/Home'));
 
 const AIConsulting = lazy(() => import('@/pages/services/AIConsulting'));
 const MarketIntelligence = lazy(() => import('@/pages/services/MarketIntelligence'));
@@ -35,18 +35,6 @@ function PageLoader() {
 }
 
 function App() {
-  const [showTelemetry, setShowTelemetry] = useState(false);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setShowTelemetry(true);
-    }, 4000);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, []);
-
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -73,12 +61,8 @@ function App() {
           </Routes>
         </Suspense>
         <Footer />
-        {showTelemetry && (
-          <>
-            <SpeedInsights />
-            <Analytics />
-          </>
-        )}
+        <SpeedInsights />
+        <Analytics />
       </BrowserRouter>
     </HelmetProvider>
   );

@@ -1,7 +1,7 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Button from '@/components/Button';
 import TypewriterHeading from '@/components/TypewriterHeading';
+import OrbitVisualization from '@/components/OrbitVisualization';
 import ProblemGrid from '@/components/ProblemGrid';
 import PillarGrid from '@/components/PillarGrid';
 import DiffTable from '@/components/DiffTable';
@@ -10,29 +10,15 @@ import PersonaGrid from '@/components/PersonaGrid';
 import LogoTicker from '@/components/LogoTicker';
 import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
-import CountUp from '@/components/CountUp';
 import ClientLogoStrip from '@/components/ClientLogoStrip';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { caseStudies } from '@/data/testimonials';
 import './Home.css';
 
-const OrbitVisualization = lazy(() => import('@/components/OrbitVisualization'));
 const heroText = 'Data is cheap. Knowing what to do with it is the advantage.';
 
 export default function Home() {
-  const [showOrbit, setShowOrbit] = useState(false);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setShowOrbit(true);
-    }, 1200);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, []);
-
   return (
     <>
       <Helmet>
@@ -120,13 +106,7 @@ export default function Home() {
               </div>
             </div>
             <div className="home-hero-right">
-              {showOrbit ? (
-                <Suspense fallback={<div className="orbit-placeholder" aria-hidden="true" />}>
-                  <OrbitVisualization variant="simplified" />
-                </Suspense>
-              ) : (
-                <div className="orbit-placeholder" aria-hidden="true" />
-              )}
+              <OrbitVisualization variant="simplified" />
             </div>
           </div>
         </section>
@@ -151,7 +131,7 @@ export default function Home() {
               <Reveal>
                 <div className="home-stat">
                   <div className="home-stat-value">
-                    <CountUp target={24} suffix="/7" />
+                    24/7
                   </div>
                   <div className="home-stat-label">Continuous monitoring</div>
                 </div>
@@ -159,7 +139,7 @@ export default function Home() {
               <Reveal delay={2}>
                 <div className="home-stat">
                   <div className="home-stat-value">
-                    <CountUp target={6} suffix="+" />
+                    6+
                   </div>
                   <div className="home-stat-label">Agents working at once</div>
                 </div>
@@ -167,7 +147,7 @@ export default function Home() {
               <Reveal delay={3}>
                 <div className="home-stat">
                   <div className="home-stat-value">
-                    <CountUp target={5} />
+                    5
                     <span className="home-stat-unit">Weeks</span>
                   </div>
                   <div className="home-stat-label">From audit to live system</div>

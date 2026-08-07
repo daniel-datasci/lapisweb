@@ -42,15 +42,6 @@
   width: min(100%, 420px);
 }
 
-.home-hero-right .orbit-placeholder {
-  width: min(100%, 380px);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  border: 1px solid rgba(224, 188, 75, 0.2);
-  background: radial-gradient(circle at 50% 42%, rgba(44, 82, 150, 0.5), rgba(11, 26, 51, 0.95));
-  box-shadow: 0 0 48px rgba(201, 162, 39, 0.14);
-}
-
 .home-hero-right .orbit-stage {
   width: 520px;
   height: 520px;
@@ -174,10 +165,6 @@
     height: min(86vw, 360px);
     transform: scale(0.5);
   }
-
-  .home-hero-right .orbit-placeholder {
-    width: min(86vw, 300px);
-  }
 }
 
 @media (max-width: 480px) {
@@ -202,10 +189,6 @@
     width: min(92vw, 300px);
     height: min(92vw, 300px);
     transform: scale(0.42);
-  }
-
-  .home-hero-right .orbit-placeholder {
-    width: min(92vw, 240px);
   }
   .home-case-quote {
     font-size: 18px;

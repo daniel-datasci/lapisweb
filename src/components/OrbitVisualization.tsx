@@ -63,11 +63,12 @@ export default function OrbitVisualization({
   centerSuffix = '+',
   centerLabel = 'AI Agents Working',
 }: Props) {
+  const isSimplified = variant === 'simplified';
   const nodes = variant === 'simplified' ? simplifiedNodes : fullNodes;
-  const orbits = variant === 'simplified' ? [0, 1] : [0, 1, 2, 3];
+  const orbits = isSimplified ? [0, 1] : [0, 1, 2, 3];
 
   return (
-    <div className="orbit-viz">
+    <div className={`orbit-viz ${isSimplified ? 'orbit-viz-simplified' : ''}`.trim()}>
       <div className="orbit-stage">
         {orbits.map((oi) => (
           <div
@@ -120,13 +121,15 @@ export default function OrbitVisualization({
             </div>
             <div className="orbit-center-label">{centerLabel}</div>
           </div>
-          <div className="orbit-center-pulse" />
+          {!isSimplified && <div className="orbit-center-pulse" />}
         </div>
 
-        <div className="orbit-deco">
-          <Repeat2 size={14} />
-          <span>live</span>
-        </div>
+        {!isSimplified && (
+          <div className="orbit-deco">
+            <Repeat2 size={14} />
+            <span>live</span>
+          </div>
+        )}
       </div>
     </div>
   );
