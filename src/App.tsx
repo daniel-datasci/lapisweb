@@ -6,8 +6,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
-const Home = lazy(() => import('@/pages/Home'));
 
+const Home = lazy(() => import('@/pages/Home'));
 const AIConsulting = lazy(() => import('@/pages/services/AIConsulting'));
 const MarketIntelligence = lazy(() => import('@/pages/services/MarketIntelligence'));
 const AIAgents = lazy(() => import('@/pages/services/AIAgents'));
@@ -26,7 +26,7 @@ const Contact = lazy(() => import('@/pages/Contact'));
 
 function PageLoader() {
   return (
-    <div style={{ minHeight: 'calc(100vh - 160px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 15, color: 'var(--ink-faint)', letterSpacing: '1px' }}>
         Loading&hellip;
       </span>

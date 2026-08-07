@@ -32,7 +32,7 @@
   --speed-typewriter: 35ms;
 
   --font-body: 'Inter', system-ui, sans-serif;
-  --font-display: 'Inter', system-ui, sans-serif;
+  --font-display: 'Urbanist', 'Inter', sans-serif;
 }
 
 @property --border-angle {
@@ -339,12 +339,14 @@ img {
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
-  transition: opacity 0.8s var(--ease-standard);
-  will-change: opacity;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-standard), transform 0.8s var(--ease-standard);
+  will-change: opacity, transform;
 }
 
 .reveal.reveal-visible {
   opacity: 1;
+  transform: translateY(0);
 }
 
 .reveal-delay-1 {
@@ -389,18 +391,22 @@ img {
 @keyframes fadeInDown {
   from {
     opacity: 0;
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 

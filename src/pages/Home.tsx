@@ -10,6 +10,7 @@ import PersonaGrid from '@/components/PersonaGrid';
 import LogoTicker from '@/components/LogoTicker';
 import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
+import CountUp from '@/components/CountUp';
 import ClientLogoStrip from '@/components/ClientLogoStrip';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -90,7 +91,6 @@ export default function Home() {
                 splitIndex={14}
                 colorBefore="var(--white)"
                 colorAfter="var(--gold-500)"
-                animate={false}
                 className="hero-title"
               />
               <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>
@@ -106,7 +106,7 @@ export default function Home() {
               </div>
             </div>
             <div className="home-hero-right">
-              <OrbitVisualization variant="simplified" />
+              <OrbitVisualization />
             </div>
           </div>
         </section>
@@ -131,7 +131,7 @@ export default function Home() {
               <Reveal>
                 <div className="home-stat">
                   <div className="home-stat-value">
-                    24/7
+                    <CountUp target={24} suffix="/7" />
                   </div>
                   <div className="home-stat-label">Continuous monitoring</div>
                 </div>
@@ -139,7 +139,7 @@ export default function Home() {
               <Reveal delay={2}>
                 <div className="home-stat">
                   <div className="home-stat-value">
-                    6+
+                    <CountUp target={6} suffix="+" />
                   </div>
                   <div className="home-stat-label">Agents working at once</div>
                 </div>
@@ -147,7 +147,7 @@ export default function Home() {
               <Reveal delay={3}>
                 <div className="home-stat">
                   <div className="home-stat-value">
-                    5
+                    <CountUp target={5} />
                     <span className="home-stat-unit">Weeks</span>
                   </div>
                   <div className="home-stat-label">From audit to live system</div>

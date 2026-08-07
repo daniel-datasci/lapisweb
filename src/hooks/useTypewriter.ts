@@ -5,24 +5,17 @@ export function useTypewriter(
   speed = 35,
   startDelay = 400,
 ): { displayed: string; done: boolean } {
-  const [displayed, setDisplayed] = useState(() => (speed <= 0 ? text : ''));
-  const [done, setDone] = useState(() => speed <= 0);
+  const [displayed, setDisplayed] = useState('');
+  const [done, setDone] = useState(false);
   const textRef = useRef(text);
   textRef.current = text;
 
   useEffect(() => {
     setDisplayed('');
     setDone(false);
-
-    if (speed <= 0) {
-      setDisplayed(textRef.current);
-      setDone(true);
-      return;
-    }
-
     let i = 0;
     let interval: ReturnType<typeof setInterval>;
-    let timeout: ReturnType<typeof setTimeout> | null = null;
+    let timeout: ReturnType<typeof setTimeout>;
 
     const start = () => {
       interval = setInterval(() => {
@@ -35,16 +28,10 @@ export function useTypewriter(
       }, speed);
     };
 
-    if (startDelay <= 0) {
-      start();
-    } else {
-      timeout = setTimeout(start, startDelay);
-    }
+    timeout = setTimeout(start, startDelay);
 
     return () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
+      clearTimeout(timeout);
       clearInterval(interval);
     };
   }, [text, speed, startDelay]);

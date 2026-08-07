@@ -33,7 +33,6 @@
   justify-content: center;
   align-items: center;
   max-width: 500px;
-  min-height: 420px;
   margin-left: auto;
   padding-left: 8px;
 }
@@ -70,7 +69,6 @@
   line-height: 1;
   color: var(--white);
   letter-spacing: -1px;
-  font-variant-numeric: tabular-nums;
   display: flex;
   align-items: baseline;
   justify-content: center;
