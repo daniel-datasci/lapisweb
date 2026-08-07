@@ -6,6 +6,7 @@ type Props = {
   splitIndex?: number;
   colorBefore?: string;
   colorAfter?: string;
+  animate?: boolean;
   speed?: number;
   startDelay?: number;
   className?: string;
@@ -16,11 +17,14 @@ export default function TypewriterHeading({
   splitIndex = 0,
   colorBefore = 'currentColor',
   colorAfter = 'var(--gold-500)',
+  animate = false,
   speed = 35,
   startDelay = 400,
   className = '',
 }: Props) {
-  const { displayed, done } = useTypewriter(text, speed, startDelay);
+  const effectiveSpeed = animate ? speed : 0;
+  const effectiveStartDelay = animate ? startDelay : 0;
+  const { displayed, done } = useTypewriter(text, effectiveSpeed, effectiveStartDelay);
   const fullBefore = splitIndex > 0 ? text.slice(0, splitIndex) : text;
   const fullAfter = splitIndex > 0 ? text.slice(splitIndex) : '';
 

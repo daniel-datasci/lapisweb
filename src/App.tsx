@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Analytics } from "@vercel/analytics/react"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -35,6 +35,18 @@ function PageLoader() {
 }
 
 function App() {
+  const [showTelemetry, setShowTelemetry] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setShowTelemetry(true);
+    }, 4000);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, []);
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -61,8 +73,12 @@ function App() {
           </Routes>
         </Suspense>
         <Footer />
-        <SpeedInsights />
-        <Analytics />
+        {showTelemetry && (
+          <>
+            <SpeedInsights />
+            <Analytics />
+          </>
+        )}
       </BrowserRouter>
     </HelmetProvider>
   );

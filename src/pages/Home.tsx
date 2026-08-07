@@ -1,7 +1,7 @@
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Button from '@/components/Button';
 import TypewriterHeading from '@/components/TypewriterHeading';
-import OrbitVisualization from '@/components/OrbitVisualization';
 import ProblemGrid from '@/components/ProblemGrid';
 import PillarGrid from '@/components/PillarGrid';
 import DiffTable from '@/components/DiffTable';
@@ -17,9 +17,22 @@ import { ArrowRight } from 'lucide-react';
 import { caseStudies } from '@/data/testimonials';
 import './Home.css';
 
+const OrbitVisualization = lazy(() => import('@/components/OrbitVisualization'));
 const heroText = 'Data is cheap. Knowing what to do with it is the advantage.';
 
 export default function Home() {
+  const [showOrbit, setShowOrbit] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setShowOrbit(true);
+    }, 1200);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -91,6 +104,7 @@ export default function Home() {
                 splitIndex={14}
                 colorBefore="var(--white)"
                 colorAfter="var(--gold-500)"
+                animate={false}
                 className="hero-title"
               />
               <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>
@@ -106,7 +120,13 @@ export default function Home() {
               </div>
             </div>
             <div className="home-hero-right">
-              <OrbitVisualization />
+              {showOrbit ? (
+                <Suspense fallback={<div className="orbit-placeholder" aria-hidden="true" />}>
+                  <OrbitVisualization variant="simplified" />
+                </Suspense>
+              ) : (
+                <div className="orbit-placeholder" aria-hidden="true" />
+              )}
             </div>
           </div>
         </section>

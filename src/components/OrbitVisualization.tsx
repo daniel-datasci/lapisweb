@@ -9,7 +9,6 @@ import {
   Database,
   Repeat2,
 } from 'lucide-react';
-import CountUp from './CountUp';
 import './OrbitVisualization.css';
 
 type OrbitNode = {
@@ -117,7 +116,7 @@ export default function OrbitVisualization({
         <div className="orbit-center">
           <div className="orbit-center-inner">
             <div className="orbit-center-value">
-              <CountUp target={centerValue} duration={2000} suffix={centerSuffix} />
+              <span>{centerValue}{centerSuffix}</span>
             </div>
             <div className="orbit-center-label">{centerLabel}</div>
           </div>

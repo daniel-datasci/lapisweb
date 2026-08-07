@@ -32,7 +32,7 @@
   --speed-typewriter: 35ms;
 
   --font-body: 'Inter', system-ui, sans-serif;
-  --font-display: 'Urbanist', 'Inter', sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
 }
 
 @property --border-angle {
