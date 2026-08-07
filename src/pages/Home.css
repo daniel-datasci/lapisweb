@@ -69,6 +69,7 @@
   line-height: 1;
   color: var(--white);
   letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
   display: flex;
   align-items: baseline;
   justify-content: center;
