@@ -17,7 +17,7 @@ import { ArrowRight } from 'lucide-react';
 import { caseStudies } from '@/data/testimonials';
 import './Home.css';
 
-const heroText = 'Data is cheap. Knowing what to do with it is the advantage.';
+const heroText = 'Data is cheap. Knowing what to do with it is the real advantage.';
 
 export default function Home() {
   return (
