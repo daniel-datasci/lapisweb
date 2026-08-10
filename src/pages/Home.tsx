@@ -17,7 +17,7 @@ import { ArrowRight } from 'lucide-react';
 import { caseStudies } from '@/data/testimonials';
 import './Home.css';
 
-const heroText = 'Data is cheap. Knowing what to do with it is the real advantage.';
+const heroText = 'We make your entire business the one that is not prone to surprises.';
 
 export default function Home() {
   return (
@@ -88,13 +88,13 @@ export default function Home() {
               <span className="eyebrow hero-eyebrow">The Lapis AI</span>
               <TypewriterHeading
                 text={heroText}
-                splitIndex={14}
+                splitIndex={28}
                 colorBefore="var(--white)"
                 colorAfter="var(--gold-500)"
                 className="hero-title"
               />
               <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>
-                We engineer AI systems that turn fragmented market signals into clear, prioritized decisions. From readiness audit to fully deployed agent, your first win is only weeks away—not months.
+                We engineer AI systems that turn fragmented data & market signals into clear, prioritized decisions. From readiness audit to fully deployed agent, your first win is only weeks away—not months.
               </p>
               <div className="hero-cta-row fade-up" style={{ animationDelay: '1.8s' }}>
                 <Button to="/contact" variant="primary" size="lg" borderWrap icon>
