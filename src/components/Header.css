@@ -82,10 +82,13 @@
 
 .nav-link,
 .nav-link-button {
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 500;
   color: var(--white-soft);
-  padding: 9px 15px;
+  height: 38px;
+  padding: 0 14px;
+  min-width: 112px;
   border-radius: var(--radius-pill);
   transition: color 0.28s ease, border-color 0.28s ease, background 0.28s ease;
   background: rgba(246, 252, 255, 0.05);
@@ -93,12 +96,20 @@
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   line-height: 1;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .nav-link-button {
-  font: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .nav-link::after {
@@ -159,6 +170,12 @@
 }
 
 .header-actions .btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  min-height: 38px;
+  padding: 9px 15px;
   white-space: nowrap;
 }
 
@@ -263,7 +280,9 @@
   }
   .nav-link,
   .nav-link-button {
-    padding: 8px 12px;
+    min-width: 104px;
+    height: 36px;
+    padding: 0 12px;
   }
 }
 
