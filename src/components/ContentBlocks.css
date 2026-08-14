@@ -1,7 +1,21 @@
 /* ---------- Card styles ---------- */
+.problem-grid {
+  align-items: stretch;
+}
+
+.problem-grid .reveal {
+  height: 100%;
+}
+
+.problem-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .card-icon {
   display: inline-flex;
-  color: var(--gold-500);
+  color: var(--gold-400);
   margin-bottom: 20px;
 }
 
@@ -150,18 +164,21 @@
 
 .process-card {
   position: relative;
-  background: var(--white);
+  background: linear-gradient(165deg, rgba(8, 22, 44, 0.94), rgba(4, 12, 24, 0.97));
   border-radius: var(--radius-card);
   padding: 36px;
-  border: 1px solid rgba(11, 26, 51, 0.08);
+  border: 1px solid rgba(143, 207, 255, 0.22);
+  color: var(--white);
+  box-shadow: 0 20px 54px rgba(1, 8, 18, 0.35);
+  backdrop-filter: blur(14px);
   transition: transform 0.4s var(--ease-standard), border-color 0.4s var(--ease-standard),
     box-shadow 0.4s var(--ease-standard);
 }
 
 .process-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(201, 162, 39, 0.4);
-  box-shadow: 0 20px 50px rgba(11, 26, 51, 0.12);
+  border-color: rgba(111, 208, 255, 0.58);
+  box-shadow: 0 28px 70px rgba(0, 8, 24, 0.5), 0 0 22px rgba(108, 227, 255, 0.18);
 }
 
 .process-num {
@@ -171,13 +188,13 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 14px;
-  color: var(--gold-500);
+  color: var(--gold-400);
   letter-spacing: 1px;
 }
 
 .process-icon {
   display: inline-flex;
-  color: var(--gold-500);
+  color: var(--gold-400);
   margin-bottom: 20px;
 }
 
@@ -186,7 +203,7 @@
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--white-faint);
 }
 
 .process-title {
@@ -195,18 +212,19 @@
   font-size: 26px;
   margin: 8px 0 4px;
   letter-spacing: -0.3px;
+  color: var(--white);
 }
 
 .process-duration {
   font-size: 13px;
   font-weight: 500;
-  color: var(--gold-500);
+  color: var(--gold-400);
 }
 
 .process-body {
   font-size: 15px;
   line-height: 1.6;
-  color: var(--ink-soft);
+  color: var(--white-soft);
   margin: 16px 0 20px;
 }
 
@@ -219,7 +237,7 @@
 
 .process-points li {
   font-size: 14px;
-  color: var(--ink);
+  color: var(--white-soft);
   padding-left: 20px;
   position: relative;
 }
@@ -270,8 +288,22 @@
 }
 
 /* ---------- Included grid ---------- */
+.included-grid-equal {
+  align-items: stretch;
+}
+
+.included-grid-equal .reveal {
+  height: 100%;
+}
+
 .included-card {
   position: relative;
+}
+
+.included-grid-equal .included-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .included-check {
@@ -282,7 +314,7 @@
   height: 32px;
   border-radius: 50%;
   background: rgba(201, 162, 39, 0.12);
-  color: var(--gold-500);
+  color: var(--gold-400);
   margin-bottom: 20px;
 }
 

@@ -31,7 +31,7 @@ const steps = [
 
 export default function ProcessSteps() {
   return (
-    <section className="section section-paper">
+    <section className="section section-paper section-paper-blend">
       <div className="container">
         <Reveal>
           <span className="eyebrow">Three Phases</span>

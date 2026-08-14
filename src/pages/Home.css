@@ -1,12 +1,14 @@
 .home-hero {
-  padding-top: 220px;
-  padding-bottom: 280px;
-  background: radial-gradient(
-      ellipse at 72% 42%,
-      rgba(31, 63, 120, 0.45) 0%,
-      transparent 58%
-    ),
-    var(--lapis-950);
+  padding-top: 178px;
+  padding-bottom: 120px;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 24, 45, 0.92) 0%,
+    rgba(7, 19, 37, 0.95) 68%,
+    rgba(5, 13, 27, 0.98) 100%
+  );
+  border-top: 1px solid rgba(132, 198, 255, 0.16);
+  border-bottom: 0;
   overflow: hidden;
 }
 
@@ -53,13 +55,18 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  border-top: 1px solid rgba(224, 188, 75, 0.12);
-  border-bottom: 1px solid rgba(224, 188, 75, 0.12);
+  border-top: 1px solid rgba(166, 215, 255, 0.16);
+  border-bottom: 1px solid rgba(166, 215, 255, 0.16);
   padding: 48px 0;
 }
 
 .home-stat {
   text-align: center;
+  background: rgba(7, 20, 39, 0.56);
+  border: 1px solid rgba(132, 197, 255, 0.22);
+  border-radius: 18px;
+  padding: 24px 16px;
+  backdrop-filter: blur(10px);
 }
 
 .home-stat-value {
@@ -147,8 +154,8 @@
 
 @media (max-width: 768px) {
   .home-hero {
-    padding-top: 180px;
-    padding-bottom: 140px;
+    padding-top: 148px;
+    padding-bottom: 90px;
   }
   .home-stats {
     grid-template-columns: 1fr;
@@ -167,8 +174,8 @@
 
 @media (max-width: 480px) {
   .home-hero {
-    padding-top: 150px;
-    padding-bottom: 100px;
+    padding-top: 132px;
+    padding-bottom: 80px;
   }
   .home-hero-left .hero-sub {
     font-size: 0.94rem;

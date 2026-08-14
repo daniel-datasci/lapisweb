@@ -12,16 +12,19 @@
 
 .team-card {
   text-align: center;
-  background: var(--white);
-  border: 1px solid rgba(11, 26, 51, 0.08);
-  border-radius: 14px;
+  background: linear-gradient(165deg, rgba(9, 25, 50, 0.84), rgba(5, 14, 30, 0.94));
+  border: 1px solid rgba(130, 198, 255, 0.3);
+  border-radius: 20px;
   padding: 36px 24px;
-  transition: transform 0.4s var(--ease-standard), border-color 0.4s var(--ease-standard);
+  transition: transform 0.4s var(--ease-standard), border-color 0.4s var(--ease-standard),
+    box-shadow 0.4s var(--ease-standard);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.32);
 }
 
 .team-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(201, 162, 39, 0.4);
+  border-color: rgba(111, 203, 255, 0.6);
+  box-shadow: 0 28px 70px rgba(0, 8, 24, 0.5), 0 0 20px rgba(108, 227, 255, 0.15);
 }
 
 .team-avatar {
@@ -35,7 +38,7 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 28px;
-  color: var(--gold-500);
+  color: var(--gold-400);
   background: linear-gradient(135deg, var(--lapis-900), var(--lapis-700));
   border: 2px solid rgba(201, 162, 39, 0.3);
 }
@@ -44,11 +47,11 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 18px;
-  color: var(--ink);
+  color: var(--white);
   margin-bottom: 6px;
 }
 
 .team-role {
   font-size: 14px;
-  color: var(--ink-soft);
+  color: var(--white-soft);
 }

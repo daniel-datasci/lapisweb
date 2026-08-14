@@ -4,9 +4,14 @@ import './ContentBlocks.css';
 
 type Item = { title: string; body: string };
 
-export default function IncludedGrid({ items }: { items: Item[] }) {
+type Props = {
+  items: Item[];
+  className?: string;
+};
+
+export default function IncludedGrid({ items, className = '' }: Props) {
   return (
-    <div className="grid grid-3" style={{ marginTop: 56 }}>
+    <div className={`grid grid-3 included-grid ${className}`.trim()} style={{ marginTop: 56 }}>
       {items.map((item, i) => (
         <Reveal key={item.title} delay={((i % 3) + 1) as 1 | 2 | 3}>
           <div className="card included-card">

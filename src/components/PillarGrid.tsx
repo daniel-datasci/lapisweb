@@ -13,7 +13,7 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export default function PillarGrid() {
   return (
-    <section className="section section-dark">
+    <section className="section section-paper section-paper-blend">
       <div className="container">
         <Reveal>
           <span className="eyebrow">A Premium Operating Layer</span>

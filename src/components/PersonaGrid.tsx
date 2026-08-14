@@ -12,7 +12,7 @@ const personas = [
 
 export default function PersonaGrid() {
   return (
-    <section className="section section-navy">
+    <section className="section section-paper section-paper-blend">
       <div className="container">
         <Reveal>
           <span className="eyebrow">Who This Is For</span>

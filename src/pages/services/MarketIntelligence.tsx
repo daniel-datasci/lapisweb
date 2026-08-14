@@ -66,7 +66,7 @@ export default function MarketIntelligence() {
         <PageHero
           eyebrow="Market & Competitive Intelligence"
           text={heading}
-          splitIndex={56}
+          splitIndex={116}
           subtext="Continuous monitoring that watches your competitors, market signals, and pricing changes, then alerts you as soon as something shifts."
           ctaLabel="Book a Free Readiness Audit"
           variant="split"

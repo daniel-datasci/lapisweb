@@ -4,7 +4,7 @@
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--gold-500);
+  color: var(--gold-400);
 }
 
 .blog-post-title {
@@ -26,7 +26,7 @@
 }
 
 .blog-post-meta-dot {
-  color: var(--gold-500);
+  color: var(--gold-400);
 }
 
 .blog-post-body {
@@ -38,7 +38,7 @@
 .blog-post-body p {
   font-size: 18px;
   line-height: 1.75;
-  color: var(--ink);
+  color: var(--white-soft);
 }
 
 .blog-post-body p:first-child::first-letter {
@@ -48,19 +48,21 @@
   line-height: 1;
   float: left;
   margin: 4px 12px 0 0;
-  color: var(--gold-500);
+  color: var(--gold-400);
 }
 
 .blog-post-cta {
   margin-top: 56px;
   padding: 36px;
-  background: var(--lapis-950);
-  border-radius: 14px;
-  border: 1px solid rgba(224, 188, 75, 0.2);
+  background: linear-gradient(165deg, rgba(9, 25, 50, 0.84), rgba(5, 14, 30, 0.94));
+  border-radius: 20px;
+  border: 1px solid rgba(130, 198, 255, 0.3);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(14px);
 }
 
 .blog-post-cta-text {

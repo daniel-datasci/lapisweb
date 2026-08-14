@@ -106,7 +106,7 @@ export default function AIInfrastructure() {
                 Skip any layer and the whole thing collapses. We build all of them.
               </p>
             </Reveal>
-            <IncludedGrid items={included} />
+            <IncludedGrid items={included} className="included-grid-equal" />
           </div>
         </section>
 

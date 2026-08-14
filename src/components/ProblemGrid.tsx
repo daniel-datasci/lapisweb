@@ -26,7 +26,7 @@ const problems = [
 
 export default function ProblemGrid() {
   return (
-    <section className="section section-paper">
+    <section className="section section-paper section-paper-blend">
       <div className="container">
         <Reveal>
           <span className="eyebrow">Why Leadership Teams Struggle</span>
@@ -37,10 +37,10 @@ export default function ProblemGrid() {
             Most organisations do not need more tools. They need decision intelligence, cleaner signal, and systems that surface what matters before it becomes a cost.
           </p>
         </Reveal>
-        <div className="grid grid-4" style={{ marginTop: 56 }}>
+        <div className="grid grid-4 problem-grid" style={{ marginTop: 56 }}>
           {problems.map((p, i) => (
             <Reveal key={p.title} delay={(i + 1) as 1 | 2 | 3 | 4}>
-              <div className="card">
+              <div className="card problem-card">
                 <span className="card-icon">{p.icon}</span>
                 <h3 className="card-title">{p.title}</h3>
                 <p className="card-body">{p.body}</p>

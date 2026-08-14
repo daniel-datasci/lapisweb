@@ -8,16 +8,18 @@
   display: grid;
   grid-template-columns: 120px 1fr;
   gap: 32px;
-  background: var(--white);
-  border: 1px solid rgba(11, 26, 51, 0.08);
-  border-radius: var(--radius-card);
+  background: linear-gradient(165deg, rgba(9, 25, 50, 0.84), rgba(5, 14, 30, 0.94));
+  border: 1px solid rgba(130, 198, 255, 0.3);
+  border-radius: 20px;
   padding: 36px;
   transition: transform 0.4s var(--ease-standard), border-color 0.4s var(--ease-standard);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(14px);
 }
 
 .timeline-card:hover {
   transform: translateX(6px);
-  border-color: rgba(201, 162, 39, 0.4);
+  border-color: rgba(112, 206, 255, 0.6);
 }
 
 .timeline-left {
@@ -25,7 +27,7 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  border-right: 1px solid rgba(11, 26, 51, 0.08);
+  border-right: 1px solid rgba(166, 215, 255, 0.18);
   padding-right: 24px;
 }
 
@@ -33,13 +35,13 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 32px;
-  color: var(--gold-500);
+  color: var(--gold-400);
   line-height: 1;
 }
 
 .timeline-icon {
   display: flex;
-  color: var(--lapis-700);
+  color: var(--gold-400);
 }
 
 .timeline-phase {
@@ -53,14 +55,14 @@
   display: inline-block;
   font-size: 13px;
   font-weight: 500;
-  color: var(--gold-500);
+  color: var(--gold-400);
   margin-top: 4px;
 }
 
 .timeline-body {
   font-size: 15px;
   line-height: 1.6;
-  color: var(--ink-soft);
+  color: var(--white-soft);
   margin: 16px 0 20px;
 }
 
@@ -73,7 +75,7 @@
 
 .timeline-details li {
   font-size: 14px;
-  color: var(--ink);
+  color: var(--white-soft);
   padding-left: 18px;
   position: relative;
 }
@@ -124,14 +126,16 @@
 }
 
 .faq-item {
-  border: 1px solid rgba(11, 26, 51, 0.08);
-  border-radius: var(--radius-card);
+  border: 1px solid rgba(130, 198, 255, 0.26);
+  border-radius: 16px;
+  background: rgba(8, 22, 43, 0.7);
+  backdrop-filter: blur(10px);
   overflow: hidden;
   transition: border-color 0.3s ease;
 }
 
 .faq-open {
-  border-color: rgba(201, 162, 39, 0.4);
+  border-color: rgba(111, 203, 255, 0.58);
 }
 
 .faq-question {
@@ -145,12 +149,12 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 17px;
-  color: var(--ink);
+  color: var(--white);
 }
 
 .faq-q-icon {
   display: flex;
-  color: var(--gold-500);
+  color: var(--gold-400);
   transition: transform 0.3s ease;
   flex-shrink: 0;
 }
@@ -169,7 +173,7 @@
   padding: 0 28px 24px;
   font-size: 15px;
   line-height: 1.6;
-  color: var(--ink-soft);
+  color: var(--white-soft);
 }
 
 @media (max-width: 768px) {
@@ -181,7 +185,7 @@
   .timeline-left {
     flex-direction: row;
     border-right: none;
-    border-bottom: 1px solid rgba(11, 26, 51, 0.08);
+    border-bottom: 1px solid rgba(166, 215, 255, 0.18);
     padding-right: 0;
     padding-bottom: 16px;
   }

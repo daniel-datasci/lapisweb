@@ -1,8 +1,9 @@
 .client-logo-strip {
-  background: var(--lapis-950);
-  padding: 36px 0 48px;
+  background: linear-gradient(180deg, rgba(5, 13, 27, 0.98) 0%, rgba(6, 16, 33, 0.98) 100%);
+  padding: 24px 0 48px;
   margin-top: 0;
-  border-top: 1px solid rgba(247, 248, 246, 0.08);
+  border-top: 0;
+  border-bottom: 1px solid rgba(132, 198, 255, 0.16);
   content-visibility: auto;
   contain-intrinsic-size: 180px;
 }
@@ -58,7 +59,7 @@
   justify-content: center;
   min-width: 180px;
   padding: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
   filter: grayscale(1);
   opacity: 0.8;
 }

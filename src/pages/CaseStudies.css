@@ -7,19 +7,21 @@
 .case-card {
   display: flex;
   flex-direction: column;
-  background: var(--white);
-  border: 1px solid rgba(11, 26, 51, 0.08);
-  border-radius: 14px;
+  background: linear-gradient(165deg, rgba(9, 25, 50, 0.84), rgba(5, 14, 30, 0.94));
+  border: 1px solid rgba(130, 198, 255, 0.3);
+  border-radius: 20px;
   padding: 36px;
   height: 100%;
   transition: transform 0.4s var(--ease-standard), border-color 0.4s var(--ease-standard),
     box-shadow 0.4s var(--ease-standard);
+  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(14px);
 }
 
 .case-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(201, 162, 39, 0.4);
-  box-shadow: 0 24px 60px rgba(11, 26, 51, 0.12);
+  border-color: rgba(111, 203, 255, 0.6);
+  box-shadow: 0 28px 72px rgba(0, 0, 0, 0.44), 0 0 22px rgba(108, 227, 255, 0.2);
 }
 
 .case-card-top {
@@ -28,7 +30,7 @@
   justify-content: space-between;
   margin-bottom: 24px;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(11, 26, 51, 0.08);
+  border-bottom: 1px solid rgba(176, 218, 255, 0.16);
 }
 
 .case-card-industry {
@@ -36,14 +38,14 @@
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--gold-500);
+  color: var(--gold-400);
 }
 
 .case-card-client {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 15px;
-  color: var(--ink);
+  color: var(--white);
 }
 
 .case-card-section {
@@ -55,7 +57,7 @@
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--white-faint);
   display: block;
   margin-bottom: 8px;
 }
@@ -63,15 +65,15 @@
 .case-card-section p {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--ink-soft);
+  color: var(--white-soft);
 }
 
 .case-card-results {
   display: flex;
   gap: 24px;
   padding: 20px 0;
-  border-top: 1px solid rgba(11, 26, 51, 0.08);
-  border-bottom: 1px solid rgba(11, 26, 51, 0.08);
+  border-top: 1px solid rgba(176, 218, 255, 0.16);
+  border-bottom: 1px solid rgba(176, 218, 255, 0.16);
   margin-bottom: 20px;
 }
 
@@ -85,12 +87,12 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 22px;
-  color: var(--gold-500);
+  color: var(--gold-400);
 }
 
 .case-card-result-label {
   font-size: 11px;
-  color: var(--ink-faint);
+  color: var(--white-faint);
 }
 
 .case-card-link {
@@ -100,7 +102,7 @@
   margin-top: auto;
   font-size: 14px;
   font-weight: 500;
-  color: var(--lapis-700);
+  color: var(--gold-400);
   transition: gap 0.3s ease;
 }
 

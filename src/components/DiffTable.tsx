@@ -19,7 +19,7 @@ const withItems = [
 
 export default function DiffTable() {
   return (
-    <section className="section section-paper">
+    <section className="section section-paper section-paper-blend">
       <div className="container">
         <Reveal>
           <span className="eyebrow">The Lapis Difference</span>
