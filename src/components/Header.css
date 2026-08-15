@@ -65,7 +65,7 @@
 }
 
 .logo-accent {
-  color: var(--gold-400);
+  color: var(--white);
 }
 
 .header-nav {
@@ -121,7 +121,7 @@
 .nav-item-open .nav-link-button {
   color: #031122;
   border-color: rgba(111, 208, 255, 0.72);
-  background: linear-gradient(120deg, rgba(108, 227, 255, 0.92), rgba(201, 162, 39, 0.82));
+  background: linear-gradient(120deg, rgba(108, 227, 255, 0.92), rgba(30, 203, 255, 0.86));
 }
 
 .nav-dropdown {

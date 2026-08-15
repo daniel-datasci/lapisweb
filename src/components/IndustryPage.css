@@ -27,7 +27,7 @@
 .industry-pain-icon {
   display: flex;
   flex-shrink: 0;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin-top: 2px;
 }
 
@@ -92,7 +92,7 @@
 
 .included-check-dark {
   background: rgba(224, 188, 75, 0.15);
-  color: var(--gold-400);
+  color: var(--cyan-400);
   flex-shrink: 0;
 }
 

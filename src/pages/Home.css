@@ -84,7 +84,7 @@
 
 .home-stat-unit {
   font-size: 24px;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   font-weight: 600;
 }
 
@@ -126,7 +126,7 @@
   margin-top: 24px;
   font-size: 15px;
   font-weight: 500;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   transition: gap 0.3s ease;
 }
 

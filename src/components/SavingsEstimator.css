@@ -37,7 +37,7 @@
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin-bottom: 28px;
 }
 
@@ -81,7 +81,7 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 22px;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -101,8 +101,8 @@
   border-radius: 3px;
   background: linear-gradient(
     to right,
-    var(--gold-500) 0%,
-    var(--gold-400) var(--slider-pct, 0%),
+    var(--cyan-500) 0%,
+    var(--cyan-400) var(--slider-pct, 0%),
     rgba(247, 248, 246, 0.12) var(--slider-pct, 0%),
     rgba(247, 248, 246, 0.12) 100%
   );
@@ -117,14 +117,14 @@
   height: 20px;
   border-radius: 50%;
   background: var(--white);
-  border: 3px solid var(--gold-500);
+  border: 3px solid var(--cyan-500);
   cursor: grab;
   transition: transform 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 .slider::-webkit-slider-thumb:hover {
   transform: scale(1.18);
-  box-shadow: 0 2px 14px rgba(224, 188, 75, 0.5);
+  box-shadow: 0 2px 14px rgba(108, 227, 255, 0.5);
 }
 .slider::-webkit-slider-thumb:active {
   cursor: grabbing;
@@ -136,7 +136,7 @@
   height: 20px;
   border-radius: 50%;
   background: var(--white);
-  border: 3px solid var(--gold-500);
+  border: 3px solid var(--cyan-500);
   cursor: grab;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
@@ -151,7 +151,7 @@
 .slider-saved {
   font-size: 13px;
   font-weight: 500;
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .slider-range {
@@ -179,7 +179,7 @@
   font-weight: 700;
   font-size: 44px;
   line-height: 1;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   letter-spacing: -1px;
 }
 
@@ -217,7 +217,7 @@
   border-radius: 50%;
   flex-shrink: 0;
 }
-.savings-dot-labor { background: var(--gold-400); }
+.savings-dot-labor { background: var(--cyan-400); }
 .savings-dot-tools { background: var(--lapis-500); }
 .savings-dot-analytics { background: var(--gold-300); }
 
@@ -250,7 +250,7 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 20px;
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .savings-pct-track {
@@ -263,7 +263,7 @@
 .savings-pct-fill {
   height: 100%;
   border-radius: 4px;
-  background: linear-gradient(90deg, var(--gold-500), var(--gold-400), var(--gold-300));
+  background: linear-gradient(90deg, var(--cyan-500), var(--cyan-400), var(--cyan-400));
   transition: width 0.5s var(--ease-standard);
 }
 

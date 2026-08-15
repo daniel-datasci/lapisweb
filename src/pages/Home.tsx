@@ -90,7 +90,7 @@ export default function Home() {
                 text={heroText}
                 splitIndex={28}
                 colorBefore="var(--white)"
-                colorAfter="var(--gold-500)"
+                colorAfter="var(--cyan-400)"
                 className="hero-title"
               />
               <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>

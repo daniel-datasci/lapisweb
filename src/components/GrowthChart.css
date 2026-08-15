@@ -45,7 +45,7 @@
 }
 
 .growth-chart-legend-projected {
-  background: var(--gold-400);
+  background: var(--cyan-400);
   height: 3px;
 }
 
@@ -78,11 +78,11 @@
 }
 
 .growth-chart-projected {
-  stroke: var(--gold-400);
+  stroke: var(--cyan-400);
   stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 2px 6px rgba(224, 188, 75, 0.35));
+  filter: drop-shadow(0 2px 6px rgba(108, 227, 255, 0.35));
   transition: d 0.4s var(--ease-standard);
 }
 
@@ -95,8 +95,8 @@
 }
 
 .growth-chart-dot-projected {
-  fill: var(--gold-400);
-  filter: drop-shadow(0 0 6px rgba(224, 188, 75, 0.6));
+  fill: var(--cyan-400);
+  filter: drop-shadow(0 0 6px rgba(108, 227, 255, 0.6));
 }
 
 @media (max-width: 480px) {

@@ -38,7 +38,7 @@
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .case-card-client {
@@ -87,7 +87,7 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 22px;
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .case-card-result-label {
@@ -102,7 +102,7 @@
   margin-top: auto;
   font-size: 14px;
   font-weight: 500;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   transition: gap 0.3s ease;
 }
 

@@ -38,7 +38,7 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 28px;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   background: linear-gradient(135deg, var(--lapis-900), var(--lapis-700));
   border: 2px solid rgba(201, 162, 39, 0.3);
 }

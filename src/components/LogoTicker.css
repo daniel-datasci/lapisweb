@@ -74,7 +74,7 @@
 
 .logo-ticker-item:hover {
   opacity: 1;
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .logo-ticker-icon {

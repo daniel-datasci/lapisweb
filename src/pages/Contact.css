@@ -118,7 +118,7 @@
   height: 80px;
   border-radius: 50%;
   background: rgba(201, 162, 39, 0.15);
-  color: var(--gold-400);
+  color: var(--cyan-400);
   animation: fadeInUp 0.6s var(--ease-standard) both;
 }
 

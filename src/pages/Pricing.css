@@ -90,7 +90,7 @@
 }
 
 .pricing-popular .pricing-amount {
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .pricing-cadence {
@@ -141,12 +141,12 @@
 .pricing-check {
   display: flex;
   flex-shrink: 0;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin-top: 1px;
 }
 
 .pricing-popular .pricing-check {
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .pricing-cta {

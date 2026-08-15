@@ -5,7 +5,7 @@
   margin-top: 32px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   transition: gap 0.3s ease;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .case-testimonial-mark {
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin: 0 auto 24px;
   display: block;
 }

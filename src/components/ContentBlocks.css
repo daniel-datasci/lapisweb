@@ -15,13 +15,13 @@
 
 .card-icon {
   display: inline-flex;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin-bottom: 20px;
 }
 
 .card-icon-gold {
   display: inline-flex;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin-bottom: 20px;
 }
 
@@ -57,7 +57,7 @@
 .card-tagline {
   font-size: 13px;
   font-weight: 500;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin-bottom: 12px;
   letter-spacing: 0.3px;
 }
@@ -77,7 +77,7 @@
   padding-top: 20px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   transition: gap 0.3s ease;
 }
 
@@ -117,7 +117,7 @@
 }
 
 .diff-heading-gold {
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .diff-list {
@@ -144,7 +144,7 @@
 }
 
 .diff-check {
-  color: var(--gold-400);
+  color: var(--cyan-400);
   font-size: 18px;
   font-weight: 700;
   flex-shrink: 0;
@@ -188,13 +188,13 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 14px;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   letter-spacing: 1px;
 }
 
 .process-icon {
   display: inline-flex;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin-bottom: 20px;
 }
 
@@ -218,7 +218,7 @@
 .process-duration {
   font-size: 13px;
   font-weight: 500;
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .process-body {
@@ -249,7 +249,7 @@
   top: 9px;
   width: 8px;
   height: 1px;
-  background: var(--gold-500);
+  background: var(--cyan-500);
 }
 
 /* ---------- Persona grid ---------- */
@@ -276,7 +276,7 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 20px;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin-bottom: 12px;
   letter-spacing: -0.3px;
 }
@@ -314,7 +314,7 @@
   height: 32px;
   border-radius: 50%;
   background: rgba(201, 162, 39, 0.12);
-  color: var(--gold-400);
+  color: var(--cyan-400);
   margin-bottom: 20px;
 }
 
@@ -334,14 +334,14 @@
 
 /* ---------- Risk reversal box ---------- */
 .risk-box {
-  border-left: 4px solid var(--gold-500);
+  border-left: 4px solid var(--cyan-500);
   background: var(--paper);
   padding: 32px 36px;
   border-radius: 0 var(--radius-card) var(--radius-card) 0;
 }
 
 .risk-box-dark {
-  border-left: 4px solid var(--gold-500);
+  border-left: 4px solid var(--cyan-500);
   background: var(--lapis-900);
   padding: 32px 36px;
   border-radius: 0 var(--radius-card) var(--radius-card) 0;

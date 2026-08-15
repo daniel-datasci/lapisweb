@@ -125,7 +125,7 @@ img {
 }
 
 ::selection {
-  background: var(--gold-500);
+  background: var(--cyan-500);
   color: var(--lapis-950);
 }
 
@@ -177,7 +177,7 @@ img {
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--gold-400);
+  color: var(--cyan-400);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -187,7 +187,7 @@ img {
   content: '';
   width: 24px;
   height: 1px;
-  background: linear-gradient(90deg, var(--cyan-500), var(--gold-400));
+  background: linear-gradient(90deg, var(--cyan-500), var(--cyan-400));
 }
 
 .section-title {
@@ -200,7 +200,7 @@ img {
 }
 
 .section-title .accent {
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .section-intro {
@@ -254,7 +254,7 @@ img {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(110deg, rgba(30, 203, 255, 0.85), rgba(201, 162, 39, 0.8));
+  background: linear-gradient(110deg, rgba(30, 203, 255, 0.85), rgba(108, 227, 255, 0.82));
   opacity: 0;
   transition: opacity 0.35s var(--ease-standard);
   z-index: 0;
@@ -291,7 +291,7 @@ img {
   border: 1px solid rgba(198, 221, 250, 0.28);
 }
 .btn-ghost::after {
-  background: linear-gradient(110deg, rgba(30, 203, 255, 0.72), rgba(201, 162, 39, 0.68));
+  background: linear-gradient(110deg, rgba(30, 203, 255, 0.72), rgba(108, 227, 255, 0.74));
 }
 .btn-ghost:hover {
   color: #031122;
@@ -316,7 +316,7 @@ img {
   border-color: rgba(255, 255, 255, 0.66);
 }
 .btn-light::after {
-  background: linear-gradient(110deg, rgba(201, 162, 39, 0.9), rgba(30, 203, 255, 0.88));
+  background: linear-gradient(110deg, rgba(108, 227, 255, 0.9), rgba(30, 203, 255, 0.88));
 }
 
 /* Size variants */
@@ -346,7 +346,7 @@ img {
     from var(--border-angle),
     var(--cyan-500),
     rgba(8, 24, 46, 0.8),
-    var(--gold-400),
+    var(--cyan-400),
     rgba(8, 24, 46, 0.85),
     var(--cyan-500)
   );
@@ -432,7 +432,7 @@ img {
   display: inline-block;
   width: 3px;
   height: 0.9em;
-  background: var(--gold-500);
+  background: var(--cyan-400);
   margin-left: 4px;
   vertical-align: text-bottom;
   animation: blink 0.8s step-end infinite;
@@ -546,7 +546,7 @@ img {
 }
 
 .text-gold {
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 .text-white-soft {
   color: var(--white-soft);
@@ -715,7 +715,7 @@ img {
 .home-case-link,
 .pillar-link,
 .case-back {
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .blog-filter {

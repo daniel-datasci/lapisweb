@@ -15,7 +15,7 @@ export default function TypewriterHeading({
   text,
   splitIndex = 0,
   colorBefore = 'currentColor',
-  colorAfter = 'var(--gold-500)',
+  colorAfter = 'var(--cyan-400)',
   speed = 35,
   startDelay = 400,
   className = '',

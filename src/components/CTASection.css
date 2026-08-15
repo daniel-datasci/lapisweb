@@ -41,11 +41,11 @@
 }
 
 .cta-gold .eyebrow {
-  color: var(--gold-400);
+  color: var(--cyan-400);
 }
 
 .cta-gold .eyebrow::before {
-  background: linear-gradient(90deg, var(--cyan-500), var(--gold-400));
+  background: linear-gradient(90deg, var(--cyan-500), var(--cyan-400));
 }
 
 .cta-heading {
