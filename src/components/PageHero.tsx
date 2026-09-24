@@ -16,6 +16,8 @@ type Props = {
   secondaryTo?: string;
   children?: ReactNode;
   variant?: 'navy' | 'split';
+  /** Render the heading without the typewriter effect. */
+  staticHeading?: boolean;
 };
 
 export default function PageHero({
@@ -25,23 +27,31 @@ export default function PageHero({
   colorBefore = 'var(--white)',
   colorAfter = 'var(--white)',
   subtext,
-  ctaLabel = 'Get a Free Readiness Audit',
+  ctaLabel = 'Book My Free AI Audit',
   ctaTo = '/contact',
   secondaryLabel,
   secondaryTo,
   children,
   variant = 'navy',
+  staticHeading = false,
 }: Props) {
   const content = (
     <div className="page-hero-content">
       <span className="eyebrow hero-eyebrow">{eyebrow}</span>
-      <TypewriterHeading
-        text={text}
-        splitIndex={splitIndex}
-        colorBefore={colorBefore}
-        colorAfter={colorAfter}
-        className="hero-title"
-      />
+      {staticHeading ? (
+        <h1 className="typewriter-heading hero-title">
+          <span style={{ color: colorBefore }}>{splitIndex > 0 ? text.slice(0, splitIndex) : text}</span>
+          {splitIndex > 0 && <span style={{ color: colorAfter }}>{text.slice(splitIndex)}</span>}
+        </h1>
+      ) : (
+        <TypewriterHeading
+          text={text}
+          splitIndex={splitIndex}
+          colorBefore={colorBefore}
+          colorAfter={colorAfter}
+          className="hero-title"
+        />
+      )}
       {subtext && (
         <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>
           {subtext}

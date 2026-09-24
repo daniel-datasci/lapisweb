@@ -1,30 +1,51 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
 import Button from './Button';
+import { solutions } from '@/data/solutions';
+import { services } from '@/data/services';
+import { industries } from '@/data/industries';
 import './Header.css';
 import logsImage from '@/data/logs.png';
 
-const serviceLinks = [
-  { label: 'AI Consulting', to: '/services/ai-consulting' },
-  { label: 'Market Intelligence', to: '/services/market-intelligence' },
-  { label: 'AI Agents', to: '/services/ai-agents' },
-  { label: 'AI Infrastructure', to: '/services/ai-infrastructure' },
-];
+type SubLink = { label: string; to: string; description?: string };
 
-const industryLinks = [
-  { label: 'SaaS', to: '/industries/saas' },
-  { label: 'Real Estate', to: '/industries/real-estate' },
-  { label: 'Hospitality', to: '/industries/hospitality' },
-];
+type NavEntry = {
+  label: string;
+  to: string;
+  links?: SubLink[];
+  viewAll?: string;
+  wide?: boolean;
+};
 
-const navLinks = [
-  { label: 'Services', to: '/services/ai-consulting', links: serviceLinks },
-  { label: 'Industries', to: '/industries/saas', links: industryLinks },
+const navLinks: NavEntry[] = [
+  {
+    label: 'Solutions',
+    to: '/solutions',
+    viewAll: 'View all solutions',
+    links: solutions.map((s) => ({ label: s.name, to: s.path, description: s.navDescription })),
+  },
+  {
+    label: 'Services',
+    to: '/services',
+    viewAll: 'View all services',
+    links: services.map((s) => ({ label: s.name, to: s.path })),
+  },
+  {
+    label: 'Industries',
+    to: '/industries',
+    viewAll: 'View all industries',
+    wide: true,
+    links: industries.map((i) => ({ label: i.navName ?? i.name, to: i.path })),
+  },
   { label: 'How It Works', to: '/how-it-works' },
   { label: 'Pricing', to: '/pricing' },
+  { label: 'Case Studies', to: '/case-studies' },
+  { label: 'About', to: '/about' },
   { label: 'Blog', to: '/blog' },
 ];
+
+const menuId = (label: string) => `nav-menu-${label.toLowerCase().replace(/\s+/g, '-')}`;
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -43,7 +64,7 @@ export default function Header() {
   useEffect(() => {
     setOpen(false);
     setActiveMenu(null);
-  }, [location.pathname]);
+  }, [location.pathname, location.search, location.hash]);
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -54,6 +75,18 @@ export default function Header() {
       }
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!activeMenu && !open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveMenu(null);
+        setOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [activeMenu, open]);
 
   const clearCloseTimer = () => {
     if (closeTimerRef.current) {
@@ -81,12 +114,10 @@ export default function Header() {
           <span className="logo-mark" aria-hidden="true">
             <img src={logsImage} alt="" width={28} height={28} decoding="async" />
           </span>
-          <span className="logo-text">
-            The Lapis<span className="logo-accent"> AI</span>
-          </span>
+          <span className="logo-text">The Lapis AI</span>
         </Link>
 
-        <nav className="header-nav">
+        <nav className="header-nav" aria-label="Main">
           {navLinks.map((link) => {
             const hasChildren = Boolean(link.links?.length);
             const isOpen = activeMenu === link.label;
@@ -97,6 +128,11 @@ export default function Header() {
                 className={`nav-item ${isOpen ? 'nav-item-open' : ''}`}
                 onMouseEnter={() => hasChildren && openMenu(link.label)}
                 onMouseLeave={() => hasChildren && scheduleMenuClose(link.label)}
+                onBlur={(e) => {
+                  if (hasChildren && !e.currentTarget.contains(e.relatedTarget as Node | null)) {
+                    setActiveMenu((current) => (current === link.label ? null : current));
+                  }
+                }}
               >
                 {hasChildren ? (
                   <>
@@ -104,26 +140,38 @@ export default function Header() {
                       type="button"
                       className="nav-link nav-link-button"
                       aria-expanded={isOpen}
-                      onClick={() => (isOpen ? scheduleMenuClose(link.label) : openMenu(link.label))}
+                      aria-controls={menuId(link.label)}
+                      onClick={() => (isOpen ? setActiveMenu(null) : openMenu(link.label))}
                     >
                       <span>{link.label}</span>
-                      <ChevronDown size={14} />
+                      <ChevronDown size={14} aria-hidden="true" />
                     </button>
                     <div
-                      className="nav-dropdown"
+                      id={menuId(link.label)}
+                      className={`nav-dropdown ${link.wide ? 'nav-dropdown-wide' : ''} ${
+                        link.links?.some((l) => l.description) ? 'nav-dropdown-described' : ''
+                      }`}
                       onMouseEnter={() => clearCloseTimer()}
-                      onMouseLeave={() => hasChildren && scheduleMenuClose(link.label)}
+                      onMouseLeave={() => scheduleMenuClose(link.label)}
                     >
-                      {link.links?.map((item) => (
-                        <Link
-                          key={item.to}
-                          to={item.to}
-                          className="nav-dropdown-link"
-                          onClick={() => setActiveMenu(null)}
-                        >
-                          {item.label}
+                      <div className="nav-dropdown-list">
+                        {link.links?.map((item) => (
+                          <Link
+                            key={item.to}
+                            to={item.to}
+                            className="nav-dropdown-link"
+                            onClick={() => setActiveMenu(null)}
+                          >
+                            <span className="nav-dropdown-label">{item.label}</span>
+                            {item.description && <span className="nav-dropdown-desc">{item.description}</span>}
+                          </Link>
+                        ))}
+                      </div>
+                      {link.viewAll && (
+                        <Link to={link.to} className="nav-dropdown-all" onClick={() => setActiveMenu(null)}>
+                          {link.viewAll} <ArrowRight size={14} aria-hidden="true" />
                         </Link>
-                      ))}
+                      )}
                     </div>
                   </>
                 ) : (
@@ -138,11 +186,14 @@ export default function Header() {
 
         <div className="header-actions">
           <Button to="/contact" variant="primary" size="sm" borderWrap icon>
-            Get a Free Readiness Audit
+            Book a Free AI Audit
           </Button>
           <button
+            type="button"
             className="header-burger"
             aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X size={22} /> : <Menu size={22} />}
@@ -150,54 +201,62 @@ export default function Header() {
         </div>
       </div>
 
-      <div className={`mobile-menu ${open ? 'mobile-menu-open' : ''}`}>
+      <div id="mobile-menu" className={`mobile-menu ${open ? 'mobile-menu-open' : ''}`}>
         <button
           type="button"
           className="mobile-menu-close"
           aria-label="Close mobile menu"
           onClick={() => setOpen(false)}
         >
-          <X size={18} />
+          <X size={18} aria-hidden="true" />
           <span>Close</span>
         </button>
 
-        {navLinks.map((link) => {
-          const hasChildren = Boolean(link.links?.length);
-          const isOpen = activeMenu === link.label;
+        <nav className="mobile-nav" aria-label="Mobile">
+          {navLinks.map((link) => {
+            const hasChildren = Boolean(link.links?.length);
+            const isOpen = activeMenu === link.label;
 
-          return (
-            <div key={link.label} className="mobile-nav-group">
-              {hasChildren ? (
-                <>
-                  <button
-                    type="button"
-                    className="mobile-menu-link mobile-menu-toggle"
-                    onClick={() => setActiveMenu(isOpen ? null : link.label)}
-                    aria-expanded={isOpen}
-                  >
-                    <span>{link.label}</span>
-                    <ChevronDown size={18} />
-                  </button>
-                  {isOpen && (
-                    <div className="mobile-submenu">
-                      {link.links?.map((item) => (
-                        <Link key={item.to} to={item.to} className="mobile-submenu-link" onClick={() => setActiveMenu(null)}>
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <Link to={link.to} className="mobile-menu-link" onClick={() => setActiveMenu(null)}>
-                  {link.label}
-                </Link>
-              )}
-            </div>
-          );
-        })}
-        <Button to="/contact" variant="primary" size="lg" borderWrap icon className="mobile-menu-cta">
-          Get a Free Readiness Audit
+            return (
+              <div key={link.label} className="mobile-nav-group">
+                {hasChildren ? (
+                  <>
+                    <button
+                      type="button"
+                      className={`mobile-menu-link mobile-menu-toggle ${isOpen ? 'mobile-menu-toggle-open' : ''}`}
+                      onClick={() => setActiveMenu(isOpen ? null : link.label)}
+                      aria-expanded={isOpen}
+                    >
+                      <span>{link.label}</span>
+                      <ChevronDown size={18} aria-hidden="true" />
+                    </button>
+                    {isOpen && (
+                      <div className="mobile-submenu">
+                        {link.links?.map((item) => (
+                          <Link key={item.to} to={item.to} className="mobile-submenu-link">
+                            <span>{item.label}</span>
+                            {item.description && <span className="mobile-submenu-desc">{item.description}</span>}
+                          </Link>
+                        ))}
+                        {link.viewAll && (
+                          <Link to={link.to} className="mobile-submenu-link mobile-submenu-all">
+                            {link.viewAll} <ArrowRight size={14} aria-hidden="true" />
+                          </Link>
+                        )}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link to={link.to} className="mobile-menu-link">
+                    {link.label}
+                  </Link>
+                )}
+              </div>
+            );
+          })}
+        </nav>
+        <Button to="/contact" variant="primary" size="lg" borderWrap icon>
+          Book a Free AI Audit
         </Button>
       </div>
     </header>

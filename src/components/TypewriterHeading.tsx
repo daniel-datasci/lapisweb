@@ -26,9 +26,9 @@ export default function TypewriterHeading({
   const after = splitIndex > 0 ? displayed.slice(splitIndex) : '';
 
   return (
-    <h1 className={`typewriter-heading ${className}`.trim()}>
-      <span style={{ color: colorBefore }}>{before}</span>
-      {splitIndex > 0 && <span style={{ color: colorAfter }}>{after}</span>}
+    <h1 className={`typewriter-heading ${className}`.trim()} aria-label={text}>
+      <span aria-hidden="true" style={{ color: colorBefore }}>{before}</span>
+      {splitIndex > 0 && <span aria-hidden="true" style={{ color: colorAfter }}>{after}</span>}
       {!done && <span className="cursor" />}
     </h1>
   );

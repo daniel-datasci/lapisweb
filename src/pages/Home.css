@@ -50,88 +50,11 @@
   transform-origin: center;
 }
 
-/* Stats */
-.home-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  border-top: 1px solid rgba(166, 215, 255, 0.16);
-  border-bottom: 1px solid rgba(166, 215, 255, 0.16);
-  padding: 48px 0;
-}
-
-.home-stat {
-  text-align: center;
-  background: rgba(7, 20, 39, 0.56);
-  border: 1px solid rgba(132, 197, 255, 0.22);
-  border-radius: 18px;
-  padding: 24px 16px;
-  backdrop-filter: blur(10px);
-}
-
-.home-stat-value {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 64px;
-  line-height: 1;
-  color: var(--white);
-  letter-spacing: -1px;
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 6px;
-}
-
-.home-stat-unit {
-  font-size: 24px;
-  color: var(--cyan-400);
-  font-weight: 600;
-}
-
-.home-stat-label {
-  font-size: 14px;
-  color: var(--white-soft);
-  margin-top: 12px;
+.home-trust {
+  margin-top: 22px;
+  font-size: 13px;
   letter-spacing: 0.3px;
-}
-
-/* Case teaser */
-.home-case-teaser {
-  margin-top: 48px;
-  text-align: center;
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.home-case-quote {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(20px, 2.5vw, 28px);
-  line-height: 1.4;
-  color: var(--white);
-  letter-spacing: -0.3px;
-}
-
-.home-case-attr {
-  font-size: 14px;
   color: var(--white-faint);
-  margin-top: 16px;
-}
-
-.home-case-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 24px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--cyan-400);
-  transition: gap 0.3s ease;
-}
-
-.home-case-link:hover {
-  gap: 14px;
 }
 
 @media (max-width: 1024px) {
@@ -157,14 +80,6 @@
     padding-top: 148px;
     padding-bottom: 90px;
   }
-  .home-stats {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 32px 0;
-  }
-  .home-stat-value {
-    font-size: 48px;
-  }
   .home-hero-right .orbit-stage {
     width: min(86vw, 360px);
     height: min(86vw, 360px);
@@ -188,15 +103,15 @@
   }
   .home-hero .hero-cta-row .btn {
     width: 100%;
-    padding: 12px 10px;
-    font-size: 13px;
+    padding: 12px 8px;
+    font-size: 12.5px;
     white-space: nowrap;
+  }
+  .home-hero .hero-cta-row .btn-icon {
+    display: none;
   }
   .home-hero-left .hero-sub {
     font-size: 0.94rem;
-  }
-  .home-case-quote {
-    font-size: 17px;
   }
   .home-hero-right {
     min-height: 280px;
@@ -206,8 +121,5 @@
     width: min(92vw, 300px);
     height: min(92vw, 300px);
     transform: scale(0.42);
-  }
-  .home-case-quote {
-    font-size: 18px;
   }
 }

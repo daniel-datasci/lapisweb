@@ -23,13 +23,13 @@ const logos = [
   { src: xfr, alt: 'XFR' },
 ];
 
-export default function ClientLogoStrip() {
+export default function ClientLogoStrip({ label = 'Trusted by our clients' }: { label?: string }) {
   const items = [...logos, ...logos];
 
   return (
     <section className="client-logo-strip">
       <div className="container">
-        <p className="client-logo-label">TRUSTED BY OUR CLIENTS</p>
+        <p className="client-logo-label">{label}</p>
         <div className="client-logo-marquee" aria-label="Client logos">
           <div className="client-logo-track">
             {items.map((logo, index) => (
@@ -39,7 +39,6 @@ export default function ClientLogoStrip() {
                   alt={logo.alt}
                   loading="lazy"
                   decoding="async"
-                  fetchPriority="low"
                   width={640}
                   height={640}
                 />

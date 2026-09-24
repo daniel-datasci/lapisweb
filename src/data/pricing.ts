@@ -1,7 +1,7 @@
 export type PricingTier = {
   name: string;
   price: string;
-  cadence: string;
+  /** Supports **bold** and *italic* markup. */
   tagline: string;
   features: string[];
   cta: string;
@@ -10,47 +10,43 @@ export type PricingTier = {
 
 export const pricingTiers: PricingTier[] = [
   {
-    name: 'Free AI Readiness Audit',
+    name: 'Free AI Audit',
     price: '$0',
-    cadence: 'one-time',
-    tagline: 'Find out exactly where AI fits in your business — before you spend a dollar.',
+    tagline: 'Find out where your business is leaking time, leads and money, before you spend a thing.',
     features: [
-      '60-minute strategy session with our team',
-      'AI readiness assessment across your operations',
-      'Identification of your top 3 AI opportunities',
-      'A written roadmap you can act on yourself or with us',
+      '60-minute audit of operations, channels and AI spend',
+      'Your top three opportunities, ranked by return',
+      'A written roadmap you can act on with or without us',
       'No obligation, no hard sell',
     ],
     cta: 'Book My Free Audit',
   },
   {
-    name: 'Intelligence & Agent System',
+    name: 'Growth System',
     price: '$4,790',
-    cadence: 'one-time payment',
-    tagline: 'Then $87 monthly monitoring. Built around your market and your workflows.',
+    tagline: 'One-time build, **then $87/month** for Lapis Run. One complete solution, built and run for you.',
     features: [
-      'Everything in the Free Audit, plus:',
-      'Always-on competitive & market intelligence agents',
-      'Custom AI agents for your highest-value workflows',
-      'Real-time alerts and daily intelligence briefs',
-      'Shared intelligence dashboard for your team',
-      'Ongoing monitoring, maintenance, and optimization',
-      'Monthly strategy reviews with our team',
+      'Everything in the Free Audit',
+      'One solution fully deployed: **Grow Without Hiring** *or* **Never Miss a Lead**',
+      'Automations and agents connected to your tools',
+      '24/7 monitoring, maintenance and fixes',
+      'Monthly results report (hours returned, revenue recovered)',
+      'Monthly strategy review',
     ],
-    cta: 'Start with a Free Audit',
+    cta: 'Start With a Free Audit',
     popular: true,
   },
   {
-    name: 'Advanced & Enterprise',
+    name: 'Scale & Enterprise',
     price: 'Custom',
-    cadence: 'custom scope',
-    tagline: 'Full infrastructure, multiple agent systems, and deep integration.',
+    tagline: 'Multiple solutions, deep integration and AI-to-production programmes.',
     features: [
-      'Everything in Intelligence & Agent System, plus:',
-      'Full AI infrastructure build-out (pipelines, orchestration, dashboards)',
-      'Multi-system integration across your entire stack',
-      'Dedicated agent development for complex workflows',
+      'Everything in Growth System',
+      '**Make Your AI Pay:** the 45-day pilot-to-production programme',
+      'Multiple workflows across teams',
+      'Full AI infrastructure and governance',
       'Priority support and SLAs',
+      'Dedicated senior team',
     ],
     cta: 'Talk to Us',
   },

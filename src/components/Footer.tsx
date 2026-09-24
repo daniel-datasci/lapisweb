@@ -1,7 +1,18 @@
 import { Link } from 'react-router-dom';
-import { pillars } from '@/data/services';
+import { solutions } from '@/data/solutions';
+import { services } from '@/data/services';
+import { CONTACT_EMAIL } from '@/data/site';
 import logsImage from '@/data/logs.png';
 import './Footer.css';
+
+const companyLinks = [
+  { label: 'About', to: '/about' },
+  { label: 'How It Works', to: '/how-it-works' },
+  { label: 'Case Studies', to: '/case-studies' },
+  { label: 'Pricing', to: '/pricing' },
+  { label: 'Blog', to: '/blog' },
+  { label: 'Contact', to: '/contact' },
+];
 
 export default function Footer() {
   return (
@@ -18,62 +29,71 @@ export default function Footer() {
               </span>
             </Link>
             <p className="footer-blurb">
-              We build the systems that make &ldquo;we didn&rsquo;t know&rdquo; impossible. AI competitive
-              intelligence, custom agents, and the infrastructure underneath them.
+              The Lapis AI builds and runs the AI systems behind growing teams: more capacity, every lead answered, and
+              AI that pays. Serving businesses from Lagos to London, Toronto to Texas.
             </p>
           </div>
 
-          <div className="footer-col">
-            <h4 className="footer-heading">Services</h4>
+          <nav className="footer-col" aria-labelledby="footer-solutions">
+            <h2 className="footer-heading" id="footer-solutions">
+              Solutions
+            </h2>
             <ul>
-              {pillars.map((p) => (
-                <li key={p.slug}>
-                  <Link to={p.path}>{p.name}</Link>
+              {solutions.map((s) => (
+                <li key={s.id}>
+                  <Link to={s.path}>{s.name}</Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div className="footer-col">
-            <h4 className="footer-heading">Company</h4>
+          <nav className="footer-col" aria-labelledby="footer-services">
+            <h2 className="footer-heading" id="footer-services">
+              Services
+            </h2>
             <ul>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/how-it-works">How It Works</Link>
-              </li>
-              <li>
-                <Link to="/case-studies">Case Studies</Link>
-              </li>
-              <li>
-                <Link to="/blog">Blog</Link>
-              </li>
-              <li>
-                <Link to="/pricing">Pricing</Link>
-              </li>
+              {services.map((s) => (
+                <li key={s.slug}>
+                  <Link to={s.path}>{s.name}</Link>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
+
+          <nav className="footer-col" aria-labelledby="footer-company">
+            <h2 className="footer-heading" id="footer-company">
+              Company
+            </h2>
+            <ul>
+              {companyLinks.map((l) => (
+                <li key={l.to}>
+                  <Link to={l.to}>{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <div className="footer-col">
-            <h4 className="footer-heading">Contact</h4>
+            <h2 className="footer-heading">Contact</h2>
             <ul>
               <li>
-                <Link to="/contact">Get a Free Readiness Audit</Link>
+                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
               </li>
               <li>
-                <a href="mailto:hello@thelapisai.com">team@thelapisai.com.ng</a>
+                <Link to="/contact">Book a Free AI Audit</Link>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>&copy; {new Date().getFullYear()} The Lapis AI. All rights reserved.</span>
-          <div className="footer-legal">
+          <p className="footer-legal">
+            <span>&copy; The Lapis AI Limited</span>
+            <span aria-hidden="true">·</span>
             <Link to="/contact">Privacy</Link>
+            <span aria-hidden="true">·</span>
             <Link to="/contact">Terms</Link>
-          </div>
+          </p>
         </div>
       </div>
     </footer>

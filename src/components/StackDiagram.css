@@ -19,7 +19,7 @@
   bottom: 18px;
   transform: translateX(-50%);
   width: 2px;
-  background: linear-gradient(180deg, rgba(224, 188, 75, 0.8), rgba(224, 188, 75, 0.15));
+  background: linear-gradient(180deg, rgba(108, 227, 255, 0.8), rgba(108, 227, 255, 0.15));
 }
 
 .stack-layer {

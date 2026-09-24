@@ -1,57 +1,73 @@
-import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { useId, useState } from 'react';
+import { Search, Hammer, Activity, BarChart3, Plus, Minus, Check } from 'lucide-react';
+import Seo from '@/components/Seo';
 import PageHero from '@/components/PageHero';
+import SectionHeading from '@/components/SectionHeading';
+import ProcessSteps from '@/components/ProcessSteps';
 import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
-import { Search, Wrench, Activity, Plus, Minus, ClipboardList } from 'lucide-react';
 import { faqs } from '@/data/faqs';
+import { breadcrumbLd } from '@/data/site';
 import './HowItWorks.css';
 
-const heading = 'From free audit to live system in weeks.';
-
-const phases = [
+const steps = [
   {
-    icon: <Search size={32} />,
-    num: '01',
-    phase: 'Discovery',
-    duration: 'Week 1',
-    body: 'We start with a free readiness audit — a 60-minute conversation where we map your operations, your data, and your blind spots. You leave with a written roadmap identifying your top three AI opportunities.',
-    details: ['Readiness assessment across your operations', 'Data and systems audit', 'Opportunity prioritization', 'Written roadmap delivered'],
+    icon: <Search size={26} />,
+    phase: 'Week 1 · Audit',
+    title: 'Find the leaks',
+    body: "A free 60-minute conversation to map where you're losing time, leads and money. You leave with a written roadmap of your top three opportunities, and you keep it either way.",
+    points: ['Operations & data review', 'Opportunity ranking', 'Written roadmap'],
   },
   {
-    icon: <Wrench size={32} />,
-    num: '02',
-    phase: 'Build',
-    duration: 'Weeks 2–5',
-    body: 'We build your intelligence and agent systems on real infrastructure — data pipelines, integrations, model orchestration, and dashboards — connected to the tools your team already uses. You get something usable within the first month.',
-    details: ['Data pipelines and integrations built', 'Agent development and testing', 'Dashboard deployment', 'Team onboarding and training'],
+    icon: <Hammer size={26} />,
+    phase: 'Weeks 2–5 · Build',
+    title: 'Build it properly',
+    body: 'We build your automations and agents on real infrastructure, connected to the tools you already use, and test them on your real data.',
+    points: ['Pipelines & integrations', 'Agents & automations', 'Team onboarding'],
   },
   {
-    icon: <Activity size={32} />,
-    num: '03',
-    phase: 'Monitor',
-    duration: 'Ongoing',
-    body: 'Your system runs 24/7. Agents monitor your market, flag changes, and feed intelligence to your team. We maintain, optimize, and meet monthly to keep the system ahead of your competitors.',
-    details: ['24/7 monitoring and alerts', 'System maintenance and optimization', 'Monthly strategy reviews', 'Continuous improvement'],
+    icon: <Activity size={26} />,
+    phase: 'Ongoing · Run',
+    title: 'Keep it working',
+    body: 'We monitor every workflow around the clock, fix issues before your team notices and improve accuracy over time.',
+    points: ['24/7 monitoring', 'Maintenance & fixes', 'Continuous improvement'],
+  },
+  {
+    icon: <BarChart3 size={26} />,
+    phase: 'Monthly · Report',
+    title: 'Prove the value',
+    body: 'A monthly review of hours returned, leads answered and revenue recovered, plus a plan for what to automate next.',
+    points: ['Results report', 'Strategy review', 'Next-workflow plan'],
   },
 ];
 
 const expectations = [
-  'Access to the systems and data sources you want us to connect to',
-  'A point person on your team who can answer questions during the build',
-  'An hour for the free audit, and a few hours for onboarding after launch',
-  'Honesty about what’s working and what isn’t — we can’t fix what you don’t tell us',
+  'Access to the systems and channels you want us to connect',
+  'One point person who can answer questions during the build',
+  'An hour for the audit, and a few hours for onboarding after launch',
+  "Honesty about what's working and what isn't, because we can't fix what we can't see",
 ];
 
-function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
-  const [open, setOpen] = useState(false);
+function FaqItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const id = useId();
   return (
     <div className={`faq-item ${open ? 'faq-open' : ''}`}>
-      <button className="faq-question" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
-        <span className="faq-q-text">{q}</span>
-        <span className="faq-q-icon">{open ? <Minus size={20} /> : <Plus size={20} />}</span>
-      </button>
-      <div className="faq-answer">
+      <h3 className="faq-heading">
+        <button
+          type="button"
+          className="faq-question"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls={`${id}-answer`}
+        >
+          <span className="faq-q-text">{q}</span>
+          <span className="faq-q-icon" aria-hidden="true">
+            {open ? <Minus size={20} /> : <Plus size={20} />}
+          </span>
+        </button>
+      </h3>
+      <div className="faq-answer" id={`${id}-answer`} role="region" aria-hidden={!open}>
         <p>{a}</p>
       </div>
     </div>
@@ -61,137 +77,71 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
 export default function HowItWorks() {
   return (
     <>
-      <Helmet>
-        <title>How It Works | The Lapis AI</title>
-        <meta
-          name="description"
-          content="From free audit to live system in weeks. Three phases, zero fluff. See exactly how we build AI intelligence and agents for your business."
-        />
-        <link rel="canonical" href="https://thelapisai.com.ng/how-it-works" />
+      <Seo
+        title="How It Works | From Free Audit to Live AI System in 5 Weeks | The Lapis AI"
+        description="Audit, build, run and report. No six-month discovery phase. Something live within the first month, and a team that keeps it running."
+        path="/how-it-works"
+        jsonLd={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faqs.map((f) => ({
+              '@type': 'Question',
+              name: f.q,
+              acceptedAnswer: { '@type': 'Answer', text: f.a },
+            })),
+          },
+          breadcrumbLd([
+            { name: 'Home', path: '/' },
+            { name: 'How It Works', path: '/how-it-works' },
+          ]),
+        ]}
+      />
 
-        {/* Open Graph */}
-        <meta property="og:title" content="How It Works | The Lapis AI" />
-        <meta
-          property="og:description"
-          content="From free audit to live system in weeks. Three phases, zero fluff. See exactly how we build AI intelligence and agents for your business."
-        />
-        <meta property="og:url" content="https://thelapisai.com.ng/how-it-works" />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://thelapisai.com.ng/og-back.png" />
-        <meta property="og:site_name" content="The Lapis AI" />
-        <meta property="og:locale" content="en_NG" />
+      <PageHero
+        eyebrow="How it works"
+        text="Audit. Build. Run. Report."
+        splitIndex={0}
+        subtext="No six-month discovery phase and no vague timelines. Here's exactly what happens from your first conversation to a system that runs every day, and who keeps it running."
+      />
 
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://thelapisai.com.ng/og-back.png" />
-      </Helmet>
+      <section className="section section-paper">
+        <div className="container">
+          <ProcessSteps steps={steps} columns={4} />
+        </div>
+      </section>
 
-      {/* FAQPage structured data */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: faqs.map((f) => ({
-            '@type': 'Question',
-            name: f.q,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: f.a,
-            },
-          })),
-        })}
-      </script>
+      <section className="section section-dark">
+        <div className="container">
+          <SectionHeading eyebrow="What we need from you" title="Not much," accent="but it matters." />
+          <ul className="check-rows check-rows-single section-body">
+            {expectations.map((e, i) => (
+              <Reveal as="li" key={e} delay={((i % 2) + 1) as 1 | 2} className="check-row">
+                <span className="check-row-icon" aria-hidden="true">
+                  <Check size={16} strokeWidth={2.5} />
+                </span>
+                <span>{e}</span>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-      <div>
-        <PageHero
-          eyebrow="How It Works"
-          text={heading}
-          splitIndex={42}
-          subtext="No six-month discovery phase. No vague timelines. Here’s exactly what happens from your first conversation to a live system."
-          ctaLabel="Book a Free Readiness Audit"
-        />
-
-        {/* Timeline */}
-        <section className="section section-paper">
-          <div className="container">
-            <Reveal>
-              <span className="eyebrow">The Timeline</span>
-              <h2 className="section-title">
-                Three phases. <span className="accent">Five weeks to live.</span>
-              </h2>
-            </Reveal>
-            <div className="timeline" style={{ marginTop: 56 }}>
-              {phases.map((p, i) => (
-                <Reveal key={p.phase} delay={(i + 1) as 1 | 2 | 3}>
-                  <div className="timeline-card">
-                    <div className="timeline-left">
-                      <span className="timeline-num">{p.num}</span>
-                      <span className="timeline-icon">{p.icon}</span>
-                    </div>
-                    <div className="timeline-right">
-                      <span className="timeline-phase">{p.phase}</span>
-                      <span className="timeline-duration">{p.duration}</span>
-                      <p className="timeline-body">{p.body}</p>
-                      <ul className="timeline-details">
-                        {p.details.map((d) => (
-                          <li key={d}>{d}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+      <section className="section section-paper">
+        <div className="container faq-container">
+          <SectionHeading eyebrow="FAQ" title="Questions you're" accent="probably asking." />
+          <div className="faq-list section-body">
+            {faqs.map((f, i) => (
+              <FaqItem key={f.q} q={f.q} a={f.a} defaultOpen={i === 0} />
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* What we need from you */}
-        <section className="section section-navy">
-          <div className="container" style={{ maxWidth: 880 }}>
-            <Reveal>
-              <span className="eyebrow">What We Need From You</span>
-              <h2 className="section-title">
-                Not much. <span className="accent">But it matters.</span>
-              </h2>
-            </Reveal>
-            <ul className="expectations-list" style={{ marginTop: 40 }}>
-              {expectations.map((e, i) => (
-                <Reveal key={i} delay={((i % 2) + 1) as 1 | 2}>
-                  <li className="expectation-item">
-                    <span className="expectation-icon">
-                      <ClipboardList size={20} />
-                    </span>
-                    <span>{e}</span>
-                  </li>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="section section-paper">
-          <div className="container" style={{ maxWidth: 880 }}>
-            <Reveal>
-              <span className="eyebrow">FAQ</span>
-              <h2 className="section-title">
-                Questions you’re <span className="accent">probably asking.</span>
-              </h2>
-            </Reveal>
-            <div className="faq-list" style={{ marginTop: 40 }}>
-              {faqs.map((f, i) => (
-                <FaqItem key={i} q={f.q} a={f.a} index={i} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <CTASection
-          heading="Ready to see your blind spots close?"
-          subtext="The free audit is the first step. Sixty minutes, no obligation, a roadmap you keep."
-          ctaLabel="Book My Free Audit"
-        />
-      </div>
+      <CTASection
+        heading="Ready to see where you're leaking time, leads and money?"
+        subtext="Sixty minutes, no obligation, and a roadmap you keep."
+      />
     </>
   );
 }

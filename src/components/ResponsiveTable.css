@@ -1,0 +1,206 @@
+/* ---------- Responsive comparison / matrix tables ---------- */
+.rtable-wrap {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  box-shadow: 0 20px 54px rgba(1, 8, 18, 0.35);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+
+.rtable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.rtable thead th {
+  text-align: left;
+  padding: 18px 24px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--white-faint);
+  background: rgba(5, 14, 29, 0.6);
+  border-bottom: 1px solid var(--glass-border);
+  vertical-align: bottom;
+}
+
+.rtable tbody th,
+.rtable td {
+  text-align: left;
+  vertical-align: top;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(157, 202, 248, 0.12);
+}
+
+.rtable tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.rtable tbody th {
+  width: 24%;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--white);
+}
+
+.rtable td {
+  color: var(--ink-soft);
+}
+
+.rtable-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.rtable a {
+  color: var(--cyan-400);
+  font-weight: 600;
+  transition: color var(--speed-fast) ease;
+}
+
+.rtable a:hover {
+  color: var(--white);
+}
+
+.rtable-sub {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white-faint);
+}
+
+.rtable-quote {
+  font-style: italic;
+}
+
+/* vs variant: column 2 = typical provider, column 3 = Lapis */
+.rtable-vs td:nth-child(2) {
+  color: var(--white-faint);
+}
+
+.rtable-vs thead th:nth-child(3) {
+  color: var(--cyan-400);
+  background: rgba(30, 203, 255, 0.1);
+}
+
+.rtable-vs td:nth-child(3) {
+  color: var(--white);
+  background: rgba(30, 203, 255, 0.06);
+}
+
+.rtable-mark {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border-radius: 50%;
+}
+
+.rtable-mark-them {
+  background: rgba(194, 215, 243, 0.1);
+  color: var(--white-faint);
+}
+
+.rtable-mark-us {
+  background: rgba(30, 203, 255, 0.16);
+  color: var(--cyan-400);
+}
+
+/* Stacked cards on small screens: no horizontal scrolling */
+@media (max-width: 860px) {
+  .rtable-wrap {
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    overflow: visible;
+  }
+
+  .rtable thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .rtable,
+  .rtable tbody,
+  .rtable tr,
+  .rtable tbody th,
+  .rtable td {
+    display: block;
+    width: 100%;
+  }
+
+  .rtable tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .rtable tbody tr {
+    padding: 22px 20px;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    box-shadow: 0 16px 40px rgba(1, 8, 18, 0.3);
+  }
+
+  .rtable tbody th {
+    width: auto;
+    padding: 0 0 14px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(157, 202, 248, 0.14);
+  }
+
+  .rtable td {
+    padding: 12px 0 0;
+    border: 0;
+  }
+
+  .rtable td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--white-faint);
+  }
+
+  .rtable tbody tr > *:last-child {
+    border-bottom: 0;
+  }
+
+  .rtable-vs td:nth-child(3) {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+
+  .rtable-vs td:nth-child(3)::before {
+    color: var(--cyan-400);
+  }
+}
+
+@media (min-width: 861px) {
+  .industry-matrix .rtable tbody th {
+    width: 19%;
+  }
+}

@@ -1,117 +1,218 @@
+import type { PillarId } from './solutions';
+
+export type IndustrySlug =
+  | 'professional-services'
+  | 'healthcare'
+  | 'real-estate'
+  | 'hospitality'
+  | 'ecommerce-retail'
+  | 'logistics'
+  | 'education'
+  | 'saas';
+
 export type Industry = {
-  slug: string;
+  slug: IndustrySlug;
   path: string;
   name: string;
-  icon: string;
+  /** Shorter label for the header dropdown, where the doc uses one. */
+  navName?: string;
+  matrixName: string;
+  examples?: string;
   heroHeading: string;
-  painTitle: string;
-  pains: string[];
-  costTitle: string;
-  cost: string;
-  offer: string;
-  included: string[];
-  riskReversal: string;
-  crossSell: { label: string; path: string; icon: string }[];
-  finalCta: string;
+  heroSub: string;
+  /** Matrix cells: what we deploy for each pillar. */
+  deploy: Record<PillarId, string>;
+  /** "Sound familiar?" pains, one per pillar. */
+  pains: Record<PillarId, string>;
+  caseStudySlug?: string;
+  offer: 'lead-leak' | 'audit';
+  metaDescription: string;
 };
 
 export const industries: Industry[] = [
   {
-    slug: 'saas',
-    path: '/industries/saas',
-    name: 'SaaS',
-    icon: 'Cloud',
-    heroHeading:
-      'Your competitor changed their pricing page yesterday. You found out today from a customer.',
-    painTitle: 'The Pain',
-    pains: [
-      'A competitor launches a feature that undercuts your positioning — you hear about it from a churned customer.',
-      'Pricing pages change overnight and your sales team is quoting against stale intelligence.',
-      'Hiring signals, funding rounds, and GTM shifts in your category pass by unnoticed for weeks.',
-      'Product and marketing decisions are made on gut feel because no one has time to monitor the market manually.',
-    ],
-    costTitle: 'The Cost of Staying the Same',
-    cost: 'Every quarter you fly blind is a quarter your competitors compound an advantage you can\u2019t even see. Lost deals get attributed to \u201cprice\u201d or \u201ctiming\u201d when the real cause was an intelligence gap.',
-    offer:
-      'We monitor your top competitors\u2019 pricing, features, messaging, and hiring signals every single day — and alert you the moment something changes — so your team never walks into a deal blind again.',
-    included: [
-      'Daily monitoring of your top 5 competitors\u2019 pricing pages, feature pages, and changelogs',
-      'Real-time alerts when a competitor changes positioning, launches a feature, or shifts pricing',
-      'Weekly competitive intelligence brief summarizing what changed and what it means',
-      'Hiring and funding signal tracking across your category',
-      'A shared intelligence dashboard your whole GTM team can access',
-    ],
-    riskReversal:
-      'We\u2019ll run the monitoring for two weeks for free and show you exactly what your competitors changed this month. If it isn\u2019t useful, you owe nothing.',
-    crossSell: [
-      { label: 'AI Agents for GTM automation', path: '/services/ai-agents', icon: 'Bot' },
-      { label: 'AI Infrastructure for your data stack', path: '/services/ai-infrastructure', icon: 'Server' },
-    ],
-    finalCta: 'Show me what changed this month for free',
+    slug: 'professional-services',
+    path: '/industries/professional-services',
+    name: 'Professional Services',
+    matrixName: 'Professional services',
+    examples: 'Accounting, legal, consulting, agencies',
+    heroHeading: 'Spend your hours on clients, not admin.',
+    heroSub:
+      'We automate document review, client onboarding, timesheets and reporting, qualify every enquiry and book the consultation, and turn scattered GPT experiments into governed, firm-wide tools.',
+    deploy: {
+      capacity: 'Document review, client onboarding, timesheets, reporting and internal knowledge assistants',
+      leads: 'Enquiry qualification and consultation booking',
+      'ai-spend': 'Turning partner-built GPT experiments into governed, firm-wide tools',
+    },
+    pains: {
+      capacity: 'Document review, onboarding, timesheets and reporting eat the hours you should be spending on clients.',
+      leads: 'New enquiries wait days for a reply, and consultations never get booked.',
+      'ai-spend': 'Partners run their own GPT experiments, with no governance and no firm-wide tool to show for it.',
+    },
+    offer: 'lead-leak',
+    metaDescription:
+      'AI automation and agents for accounting, legal, consulting and agency firms: document review, onboarding, reporting, enquiry qualification and governed AI tools.',
+  },
+  {
+    slug: 'healthcare',
+    path: '/industries/healthcare',
+    name: 'Healthcare & Clinics',
+    matrixName: 'Healthcare & clinics',
+    examples: 'Clinics, dental, diagnostics',
+    heroHeading: 'Answer every patient, day and night, with less admin.',
+    heroSub:
+      'We handle WhatsApp and phone bookings 24/7, follow up on no-shows, and automate patient intake, reminders, records admin and billing, with the audit trails that safe, compliant AI use requires.',
+    deploy: {
+      capacity: 'Patient intake, reminders, records admin and billing',
+      leads: '24/7 WhatsApp and phone booking, plus no-show follow-up',
+      'ai-spend': 'Safe, compliant AI use with audit trails',
+    },
+    pains: {
+      capacity: 'Patient intake, reminders, records admin and billing keep your front desk busy all day.',
+      leads: 'Patients call or message after hours, get no answer and book somewhere else, and no-shows go unchased.',
+      'ai-spend': "You want to use AI, but not without the safety, compliance and audit trails that patient care demands.",
+    },
+    offer: 'lead-leak',
+    metaDescription:
+      'AI for clinics, dental practices and diagnostics: 24/7 WhatsApp and phone booking, no-show follow-up, automated patient admin and safe, compliant AI with audit trails.',
   },
   {
     slug: 'real-estate',
     path: '/industries/real-estate',
     name: 'Real Estate',
-    icon: 'Building2',
-    heroHeading:
-      'Your agents are the last to know. A competitor just dropped price three blocks from your listing.',
-    painTitle: 'The Pain',
-    pains: [
-      'Price reductions and new listings in your farm area happen daily — but your agents find out from MLS refreshes that lag behind.',
-      'A competitor underprices a comparable listing and you lose the buyer before you can react.',
-      'Neighborhood-level market shifts (inventory, days-on-market, price trends) are tracked manually, if at all.',
-      'Agents spend hours pulling comps instead of being in front of clients.',
-    ],
-    costTitle: 'The Cost of Staying the Same',
-    cost: 'In a market that shifts weekly, stale information costs you listings, buyers, and commission. The agent with the freshest intelligence wins the deal — and right now that isn\u2019t you.',
-    offer:
-      'We deploy agents that monitor your local market in real time — new listings, price changes, inventory shifts — and alert your agents the moment something changes in their farm area.',
-    included: [
-      'Real-time monitoring of new listings and price changes in your target neighborhoods',
-      'Instant alerts to your agents when a comparable property hits the market or drops price',
-      'Weekly local market intelligence brief: inventory trends, days-on-market, price movement',
-      'Automated comp reports so agents stop spending hours on manual research',
-      'A shared market dashboard visible to your whole brokerage',
-    ],
-    riskReversal:
-      'We\u2019ll monitor your top three farm areas for two weeks for free and show you every price change and new listing you missed. If it doesn\u2019t help your agents win more deals, you owe nothing.',
-    crossSell: [
-      { label: 'AI Agents for lead qualification', path: '/services/ai-agents', icon: 'Bot' },
-      { label: 'AI Infrastructure for MLS/CRM integration', path: '/services/ai-infrastructure', icon: 'Server' },
-    ],
-    finalCta: 'Show me my local market for free',
+    matrixName: 'Real estate',
+    heroHeading: 'Answer every buyer first. Spend less time in spreadsheets.',
+    heroSub:
+      'The agent who replies first and knows the market best wins the deal. We answer every property enquiry in under a minute and automate comparable-sales reports and market alerts, so your agents stay in front of clients.',
+    deploy: {
+      capacity: 'Automated comparable-sales reports, listing admin and market watch',
+      leads: 'Instant replies to property enquiries, viewing booking and follow-up',
+      'ai-spend': 'A combined view across CRM and listings data',
+    },
+    pains: {
+      capacity: 'Agents spend their mornings pulling comparable sales and doing listing admin by hand.',
+      leads: 'Property enquiries wait hours for a reply, and viewings and follow-ups slip through the cracks.',
+      'ai-spend': 'Your CRM and listings data sit in separate places, so nobody sees the full picture.',
+    },
+    caseStudySlug: 'real-estate-market-monitor',
+    offer: 'lead-leak',
+    metaDescription:
+      'AI for real estate agencies: instant replies to property enquiries, viewing booking and follow-up, automated comparable-sales reports and market alerts.',
   },
   {
     slug: 'hospitality',
     path: '/industries/hospitality',
     name: 'Hospitality',
-    icon: 'BedDouble',
-    heroHeading:
-      'Your revenue team is pricing rooms on yesterday\u2019s information in a market that changes by the hour.',
-    painTitle: 'The Pain',
-    pains: [
-      'Competitor rate changes and occupancy signals hit the market hourly — but your revenue team reviews pricing once a day, at best.',
-      'Events, demand spikes, and competitor sell-outs are spotted too late to adjust rates in time.',
-      'Channel managers and PMS systems hold the data, but nobody is watching it continuously.',
-      'Revenue decisions rely on lagging reports instead of live competitive intelligence.',
-    ],
-    costTitle: 'The Cost of Staying the Same',
-    cost: 'Every night you price a room off yesterday\u2019s data is revenue you never recover. In hospitality, the market doesn\u2019t wait for your morning report.',
-    offer:
-      'We deploy agents that continuously monitor your competitors\u2019 rates, occupancy signals, and local demand drivers — and alert your revenue team the moment the market shifts.',
-    included: [
-      'Continuous monitoring of competitor room rates across your compset',
-      'Real-time alerts when a competitor changes rates or sells out a category',
-      'Local demand signal tracking: events, search trends, and booking velocity',
-      'Hourly intelligence brief during high-demand windows',
-      'Integration with your PMS and channel manager so insights reach the system that prices your rooms',
-    ],
-    riskReversal:
-      'We\u2019ll monitor your compset\u2019s rates for two weeks for free and show you every rate change your team missed. If it doesn\u2019t change how you price, you owe nothing.',
-    crossSell: [
-      { label: 'AI Infrastructure for PMS & channel manager integration', path: '/services/ai-infrastructure', icon: 'Server' },
-    ],
-    finalCta: 'Show me my competitors\u2019 rates for free',
+    matrixName: 'Hospitality',
+    examples: 'Hotels, short-lets, restaurants',
+    heroHeading: 'Fill more rooms without adding more staff.',
+    heroSub:
+      "Every direct-booking enquiry answered instantly, guest messages handled day and night, and live competitor rates fed into your PMS, so your revenue team prices on today's market, not yesterday's report.",
+    deploy: {
+      capacity: 'Guest messaging, reviews and ops reporting',
+      leads: 'Direct-booking enquiries answered instantly on every channel',
+      'ai-spend': 'Rate intelligence integrated with your PMS and channel manager',
+    },
+    pains: {
+      capacity: "Guest messages, reviews and ops reporting pile up on a team that's already stretched.",
+      leads: 'Direct-booking enquiries sit unanswered, so guests book through someone else.',
+      'ai-spend': "Rates are set on yesterday's report because live market data never reaches your PMS and channel manager.",
+    },
+    caseStudySlug: 'hospitality-rate-intelligence',
+    offer: 'lead-leak',
+    metaDescription:
+      'AI for hotels, short-lets and restaurants: direct-booking enquiries answered instantly, guest messaging day and night, and rate intelligence integrated with your PMS.',
+  },
+  {
+    slug: 'ecommerce-retail',
+    path: '/industries/ecommerce-retail',
+    name: 'E-commerce & Retail',
+    matrixName: 'E-commerce & retail',
+    heroHeading: 'Sell on every channel without adding more staff.',
+    heroSub:
+      'Sales assistants answer every DM and WhatsApp message and follow up abandoned carts. Order updates, returns, stock alerts and supplier admin run automatically, and competitor prices and demand are monitored for you.',
+    deploy: {
+      capacity: 'Order updates, returns, stock alerts and supplier admin',
+      leads: 'DM and WhatsApp sales assistants, plus abandoned-cart follow-up',
+      'ai-spend': 'Competitor price monitoring and demand insight',
+    },
+    pains: {
+      capacity: "Order updates, returns, stock alerts and supplier admin swallow your team's day.",
+      leads: 'DMs and WhatsApp messages go unanswered, and abandoned carts never get a follow-up.',
+      'ai-spend': 'Competitors change their prices and you find out late, with no clear view of demand.',
+    },
+    offer: 'audit',
+    metaDescription:
+      'AI for e-commerce and retail: DM and WhatsApp sales assistants, abandoned-cart follow-up, automated order and supplier admin, and competitor price monitoring.',
+  },
+  {
+    slug: 'logistics',
+    path: '/industries/logistics',
+    name: 'Logistics',
+    matrixName: 'Logistics',
+    heroHeading: 'Quote faster. Spend less time on paperwork.',
+    heroSub:
+      'Quote requests answered and priced fast, dispatch updates, proof-of-delivery processing and invoicing automated, and live operations dashboards built from your fragmented systems.',
+    deploy: {
+      capacity: 'Dispatch updates, proof-of-delivery processing and invoicing',
+      leads: 'Quote requests answered and priced fast',
+      'ai-spend': 'Live operations dashboards built from fragmented systems',
+    },
+    pains: {
+      capacity: 'Dispatch updates, proof-of-delivery paperwork and invoicing keep your team at their desks.',
+      leads: 'Quote requests wait while someone works out the price, and the customer moves on.',
+      'ai-spend': "Your operations data is spread across fragmented systems, so there's no live view of what's happening.",
+    },
+    offer: 'audit',
+    metaDescription:
+      'AI for logistics: quote requests answered and priced fast, automated dispatch updates, proof-of-delivery processing and invoicing, and live operations dashboards.',
+  },
+  {
+    slug: 'education',
+    path: '/industries/education',
+    name: 'Education & Training',
+    navName: 'Education',
+    matrixName: 'Education & training',
+    heroHeading: 'Answer every prospective student. Give your staff their hours back.',
+    heroSub:
+      'Every prospective student enquiry answered and followed up, admissions admin, student questions and fee reminders automated, and responsible AI adoption across your staff.',
+    deploy: {
+      capacity: 'Admissions admin, student questions and fee reminders',
+      leads: 'Prospective student enquiries answered and followed up',
+      'ai-spend': 'Responsible AI adoption across staff',
+    },
+    pains: {
+      capacity: "Admissions admin, student questions and fee reminders take up your staff's week.",
+      leads: 'Prospective students enquire, hear nothing back and enrol somewhere else.',
+      'ai-spend': 'Staff are trying AI tools on their own, with no plan for adopting them responsibly.',
+    },
+    offer: 'lead-leak',
+    metaDescription:
+      'AI for schools and training providers: prospective student enquiries answered and followed up, automated admissions admin and fee reminders, and responsible AI adoption.',
+  },
+  {
+    slug: 'saas',
+    path: '/industries/saas',
+    name: 'SaaS & Tech',
+    matrixName: 'SaaS & tech',
+    heroHeading: 'Scale revenue and support without scaling headcount.',
+    heroSub:
+      'Inbound leads routed and answered in minutes, support triaged automatically, competitor changes flagged the same day, and your internal AI pilots finally in production.',
+    deploy: {
+      capacity: 'Support triage, onboarding and internal reporting',
+      leads: 'Inbound lead response and routing within minutes',
+      'ai-spend': 'Taking internal AI pilots to production, plus competitor watch',
+    },
+    pains: {
+      capacity: 'Support tickets, onboarding and internal reporting grow faster than your team.',
+      leads: 'Inbound leads sit in a queue for hours before anyone routes or answers them.',
+      'ai-spend': 'Internal AI pilots never reach production, and competitor changes go unnoticed for weeks.',
+    },
+    caseStudySlug: 'saas-competitive-intelligence',
+    offer: 'audit',
+    metaDescription:
+      'AI for SaaS and tech companies: inbound lead response and routing in minutes, support triage, onboarding and reporting automation, competitor watch and AI pilots in production.',
   },
 ];
+
+export const industryBySlug = (slug?: string) => industries.find((i) => i.slug === slug);

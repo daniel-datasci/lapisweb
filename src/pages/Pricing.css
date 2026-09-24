@@ -5,7 +5,12 @@
   align-items: stretch;
 }
 
+.pricing-grid > .reveal {
+  height: 100%;
+}
+
 .pricing-card {
+  height: 100%;
   position: relative;
   background: linear-gradient(165deg, rgba(9, 25, 50, 0.84), rgba(5, 14, 30, 0.94));
   border: 1px solid rgba(130, 198, 255, 0.3);
@@ -48,7 +53,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 16px;
-  background: linear-gradient(110deg, rgba(108, 227, 255, 0.95), rgba(201, 162, 39, 0.9));
+  background: linear-gradient(110deg, var(--cyan-400), var(--cyan-500));
   color: #031122;
   font-size: 12px;
   font-weight: 600;
@@ -93,13 +98,10 @@
   color: var(--cyan-400);
 }
 
-.pricing-cadence {
-  font-size: 14px;
-  color: var(--white-faint);
-}
-
-.pricing-popular .pricing-cadence {
-  color: var(--white-faint);
+.pricing-tagline strong,
+.pricing-features strong {
+  color: var(--white);
+  font-weight: 600;
 }
 
 .pricing-tagline {
@@ -165,11 +167,22 @@
 }
 
 .pricing-bottom-cta p {
-  font-family: var(--font-display);
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--white-soft);
+}
+
+.pricing-bottom-cta a {
+  color: var(--cyan-400);
   font-weight: 600;
-  font-size: 20px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pricing-bottom-cta a:hover {
   color: var(--white);
-  margin-bottom: 24px;
 }
 
 @media (max-width: 1024px) {
@@ -180,5 +193,14 @@
   }
   .pricing-popular {
     order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-card {
+    padding: 36px 24px;
+  }
+  .pricing-bottom-cta {
+    padding: 28px 22px;
   }
 }

@@ -1,35 +1,51 @@
+import type { PillarId } from './solutions';
+
 export type BlogPost = {
   slug: string;
   title: string;
-  category: 'AI Consulting' | 'Market Intelligence' | 'AI Agents' | 'Infrastructure';
+  category: PillarId;
   excerpt: string;
   date: string;
   readTime: string;
+  /**
+   * Paragraphs. A line starting with "## " is a subheading, "- " is a list item
+   * (consecutive items are grouped) and "> " is a pull quote.
+   */
   body: string[];
 };
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'what-is-ai-competitive-intelligence',
-    title:
-      'What Is AI Competitive Intelligence, and Why Most Businesses Are Flying Blind Without It',
-    category: 'Market Intelligence',
+    slug: 'market-watch-what-competitors-changed-this-week',
+    title: 'Market Watch: How to Know What Competitors Changed This Week',
+    category: 'capacity',
     excerpt:
-      'If you\u2019re finding out about a competitor\u2019s move from a customer, you\u2019re already behind. Here\u2019s what continuous competitive intelligence actually means \u2014 and why it\u2019s the first AI system most businesses should build.',
+      "Checking competitor websites by hand is a job nobody has time for, so it doesn't get done. Here's how a market watch workflow tells you what changed this week, without adding it to anyone's to-do list.",
     date: '2026-07-15',
-    readTime: '6 min read',
+    readTime: '5 min read',
     body: [
-      'Most businesses don\u2019t have a competitive intelligence problem because they don\u2019t care. They have one because monitoring competitors manually is a full-time job nobody has time to do.',
-      'So it doesn\u2019t get done. And the first sign that a competitor changed their pricing, launched a feature, or shifted their positioning arrives in the form of a lost deal, a churned customer, or a surprised sales rep.',
-      'AI competitive intelligence closes that gap. Instead of a person checking competitor websites once a quarter, a system of agents monitors them continuously \u2014 every pricing page, every feature page, every changelog, every job posting \u2014 and alerts you the moment something changes.',
-      'The result isn\u2019t more data. It\u2019s less surprise. Your team walks into every deal, every quarter, every planning conversation knowing what the market just did \u2014 not what it did three months ago.',
-      'If you\u2019re operating without this, you\u2019re flying blind. And the cost isn\u2019t the monitoring system you didn\u2019t build. It\u2019s the deals you lost without knowing why.',
+      "Ask most growing businesses what their competitors changed this week and you'll get a shrug. Not because nobody cares, but because checking prices, launches and job posts by hand is a job nobody has time for. So it slips down the list, and the first sign of a change arrives as a lost deal or a surprised customer.",
+      "That's a capacity problem, not a strategy problem. The information is usually out there. What's missing is the hours to collect it, check it and turn it into something your team can act on.",
+      '## What a market watch workflow does',
+      "Market watch is one of the workflows we run under Grow Without Hiring. Agents track competitors' prices, launches and hiring, plus market shifts, and send you a short brief, so you always know what changed. Nobody on your team has to open a single competitor website to get there.",
+      "For one B2B SaaS company, competitors' price and feature changes used to go unnoticed for weeks, and the sales team kept losing deals it couldn't explain. We put 6+ agents to work watching five competitors, feeding alerts and a weekly brief to the sales and marketing team. Market changes are now spotted and flagged in under four hours.",
+      "> We used to find out about a competitor's price change from a lost deal. Now we know the same day they do. It changed how our whole team sells. (VP of Sales, Mid-Market SaaS Platform)",
+      '## It works outside software too',
+      'A regional real estate brokerage uses the same idea across 12 local areas. Its agents used to spend their mornings pulling comparable sales by hand, and were the last to know about price drops and new listings in their own areas. Now automated comparable-sales reports and instant alerts do that work. Agents got 8+ hours a week back, and spent them with clients.',
+      "A boutique hotel group runs continuous rate and demand monitoring across its competitive set, integrated with its PMS, so the revenue team prices on today's market, not yesterday's report.",
+      '## What makes a market watch worth having',
+      '- It is run, not just built. We monitor every workflow 24/7 and fix issues before your team notices.',
+      '- It is short. The goal isn\'t more data. It\'s a brief your team actually reads, with the changes that matter.',
+      '- It is checked. Guardrails, testing and human handoff are built in, so anything unusual goes to a person.',
+      '- It proves its value. Each month, you get a report of hours returned, tasks completed and errors caught.',
+      '## Where to start',
+      "If you want to know what your competitors changed this week without giving someone another job, start with a free AI audit. In 60 minutes, we'll map where your team's time goes and show you the first three workflows to automate. Market watch may well be one of them.",
     ],
   },
   {
     slug: 'ai-consulting-vs-hiring-ai-engineer',
-    title: 'AI Consulting vs. Hiring an AI Engineer: What Growing Businesses Actually Need First',
-    category: 'AI Consulting',
+    title: 'AI Consulting vs. Hiring an AI Engineer: What Growing Businesses Need First',
+    category: 'ai-spend',
     excerpt:
       'Before you hire an AI engineer, make sure you know what to build. The most expensive AI mistake isn\u2019t hiring the wrong person \u2014 it\u2019s building the wrong thing.',
     date: '2026-07-10',
@@ -43,8 +59,8 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: 'why-ai-agent-pilots-never-reach-production',
-    title: 'Why Most AI Agent Pilots Never Reach Production',
-    category: 'AI Agents',
+    title: 'Why Most AI Pilots Never Reach Production',
+    category: 'ai-spend',
     excerpt:
       'A demo that works on three clean examples is not a production system. Here are the four reasons your AI agent pilot will stall \u2014 and how to avoid them.',
     date: '2026-07-05',
@@ -59,24 +75,43 @@ export const blogPosts: BlogPost[] = [
     ],
   },
   {
-    slug: 'cost-of-finding-competitor-price-change-too-late',
-    title: 'The Real Cost of Finding Out About a Competitor\u2019s Price Change Too Late',
-    category: 'Market Intelligence',
+    slug: 'real-cost-of-a-slow-reply',
+    title: 'The Real Cost of a Slow Reply',
+    category: 'leads',
     excerpt:
-      'A competitor drops their price on Monday. You find out on Thursday from a lost deal. What did that four-day gap actually cost you?',
+      'They messaged you at 9pm. By the time you replied, someone else already had. Here is what a slow reply really costs, and how to stop the leak.',
     date: '2026-06-28',
-    readTime: '4 min read',
+    readTime: '5 min read',
     body: [
-      'Let\u2019s say a competitor drops their entry-level price by 15% on Monday morning. Your sales team doesn\u2019t know. On Tuesday, they quote a prospect at your standard rate. The prospect goes silent.',
-      'On Wednesday, two more deals go quiet. On Thursday, a lost deal tells your rep: \u201cYour competitor was 15% cheaper.\u201d Now you know.',
-      'In that four-day window, how many deals did you quote at the wrong price? How many prospects are now comparing you against a number you\u2019ve never seen? How many of your reps are losing confidence because they keep getting price objections they can\u2019t explain?',
-      'The cost of late intelligence isn\u2019t just the lost deals \u2014 it\u2019s the deals you\u2019re still going to lose for the next two weeks while you figure out a response. Continuous monitoring compresses that window from days to hours. That\u2019s the entire value proposition.',
+      'A customer messages you at 9pm. Another calls while your team is with a client. A third fills in the form on your website and waits. And while they wait, someone else replies.',
+      "None of them tell you they're leaving. They just go elsewhere. That's what makes a slow reply so expensive: the cost never shows up on a report, so it's easy to believe it isn't there.",
+      '## Speed wins the lead',
+      'Harvard Business Review research from 2011 found that firms that reply to an enquiry within an hour are about seven times more likely to qualify the lead than those that wait longer. It is not a new study, but the lesson has not changed: the business that replies first gets the first real conversation.',
+      '## Where replies go missing',
+      "It's rarely because nobody cares. Most leaks come from the same few places:",
+      '- Calls go to voicemail at your busiest times.',
+      '- After-hours and weekend enquiries go cold by Monday.',
+      '- Follow-ups depend on someone remembering.',
+      "- Customer conversations sit on staff's personal phones, and leave when they do.",
+      '- Leads arrive on five channels and nobody sees them all.',
+      'Business owners describe it the same way. As one small business owner put it:',
+      '> I counted 6 enquiries that went cold before I could properly respond to them. All of them came in during busy periods or after hours.',
+      "A dental practice was blunter: “One missed call and they are on to the next opportunity.” And even when the first reply happens, the follow-up often doesn't. In one service business owner's words: “I lose so many potential clients because I send one email and then just… don't follow up.”",
+      "## Why a generic bot isn't the answer",
+      'Plenty of businesses have tried a chatbot once, and found it annoyed customers more than it helped. Generic scripts sometimes invent answers, bot-only conversations hit frustrating dead ends, and the tool is measured on messages sent rather than bookings made.',
+      '## What fixing it looks like',
+      'The fix is one response system instead of five disconnected tools. WhatsApp, phone, website chat, email, Instagram and Facebook all feed one system, so no enquiry falls through the gaps. An AI assistant answers in under 60 seconds, 24/7, using your real prices, services and policies. It asks the right questions, scores the lead and books it straight into your calendar or CRM.',
+      'High-value, complex or emotional conversations go to the right person on your team immediately, with the full context. Polite, personal follow-ups continue until the lead books or says no, so nobody is forgotten. AI for speed, humans for judgement.',
+      '## Measure what you recover',
+      "The point isn't to send more messages. It's to win more customers. So the number that matters is revenue recovered: a monthly report of enquiries answered, response times, bookings made and the revenue they represent.",
+      '## Find your leak',
+      "Most businesses have never measured how many enquiries go unanswered, or how long replies really take. That's what a free Lead Leak Audit is for. We'll review your enquiry channels and show you how many leads went unanswered, how long replies took and what that likely cost you.",
     ],
   },
   {
     slug: 'ai-infrastructure-101',
     title: 'AI Infrastructure 101: What\u2019s Actually Underneath a \u201cSmart\u201d Dashboard',
-    category: 'Infrastructure',
+    category: 'ai-spend',
     excerpt:
       'A smart dashboard is the tip of the iceberg. Here\u2019s the four-layer stack underneath it \u2014 and why skipping any layer makes the whole thing collapse.',
     date: '2026-06-20',
@@ -93,7 +128,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'build-vs-buy-ai-agent',
     title: 'Build vs. Buy: When a Custom AI Agent Beats an Off-the-Shelf Tool',
-    category: 'AI Agents',
+    category: 'ai-spend',
     excerpt:
       'Off-the-shelf AI tools are fast to start and slow to fit. Custom agents are slow to start and exact. Here\u2019s how to decide which one your workflow actually needs.',
     date: '2026-06-12',
@@ -107,4 +142,7 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-export const blogCategories = ['All', 'AI Consulting', 'Market Intelligence', 'AI Agents', 'Infrastructure'] as const;
+export const blogPostBySlug = (slug?: string) => blogPosts.find((p) => p.slug === slug);
+
+export const formatPostDate = (date: string) =>
+  new Date(`${date}T00:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });

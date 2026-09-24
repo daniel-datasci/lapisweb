@@ -619,6 +619,9 @@ img {
   .border-wrap {
     width: 100%;
   }
+  .border-wrap > .btn {
+    width: 100%;
+  }
 }
 
 /* ---------- Modern glass system inspired by reference ---------- */
@@ -718,21 +721,16 @@ img {
   color: var(--cyan-400);
 }
 
-.blog-filter {
-  background: rgba(11, 29, 53, 0.58);
-  border-color: var(--glass-border);
-  color: var(--white-soft);
-}
-
-.blog-filter:hover {
-  border-color: var(--glass-border-strong);
-  color: var(--white);
-}
-
-.blog-filter-active {
-  background: linear-gradient(120deg, rgba(30, 203, 255, 0.95), rgba(201, 162, 39, 0.84));
-  border-color: transparent;
-  color: #031122;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .diff-without {

@@ -1,35 +1,12 @@
-.blog-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.blog-filter {
-  padding: 8px 18px;
-  border-radius: var(--radius-pill);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--white-soft);
-  border: 1px solid rgba(130, 198, 255, 0.28);
-  background: rgba(8, 24, 45, 0.58);
-  transition: all 0.3s ease;
-}
-
-.blog-filter:hover {
-  border-color: rgba(112, 206, 255, 0.58);
-  color: var(--white);
-}
-
-.blog-filter-active {
-  background: linear-gradient(120deg, rgba(108, 227, 255, 0.95), rgba(201, 162, 39, 0.88));
-  color: #031122;
-  border-color: transparent;
-}
-
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  align-items: stretch;
+}
+
+.blog-grid > .reveal {
+  height: 100%;
 }
 
 .blog-card {

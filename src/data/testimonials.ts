@@ -1,86 +1,85 @@
+import type { PillarId } from './solutions';
+
 export type CaseStudy = {
   slug: string;
-  client: string;
+  pillar: PillarId;
   industry: string;
+  client: string;
+  title: string;
   problem: string;
-  approach: string;
   built: string;
-  results: { label: string; value: number; suffix?: string; prefix?: string }[];
-  testimonial: { quote: string; name: string; title: string; company: string };
+  results: { value: string; label: string }[];
+  testimonial: { quote: string; name: string; company: string };
   featured?: boolean;
 };
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: 'saas-competitive-intelligence',
-    client: 'Mid-Market SaaS Platform',
-    industry: 'SaaS',
-    problem:
-      'A B2B SaaS company was losing deals to a competitor they couldn\u2019t track. Pricing changes, feature launches, and positioning shifts went unnoticed for weeks — until churned customers told them about it.',
-    approach:
-      'We ran a readiness audit to map their competitive landscape, then deployed a continuous monitoring system tracking their top five competitors\u2019 pricing pages, feature pages, changelogs, and hiring signals.',
-    built:
-      'A network of scraping and verification agents feeding an alert engine and a shared intelligence dashboard. The system flagged competitor changes within hours and delivered a weekly brief to the GTM team.',
-    results: [
-      { label: 'Agents working 24/7', value: 6, suffix: '+' },
-      { label: 'Hours to detect changes', value: 4, prefix: '<' },
-      { label: 'Weeks to live system', value: 5 },
-    ],
-    testimonial: {
-      quote:
-        'We used to find out about a competitor\u2019s price change from a lost deal. Now we know the same day they do. It changed how our whole team sells.',
-      name: 'VP of Sales',
-      title: 'VP of Sales',
-      company: 'Mid-Market SaaS Platform',
-    },
-    featured: true,
-  },
-  {
     slug: 'real-estate-market-monitor',
-    client: 'Regional Real Estate Brokerage',
+    pillar: 'capacity',
     industry: 'Real Estate',
+    client: 'Regional Real Estate Brokerage',
+    title: 'Agents got 8+ hours a week back, and spent them with clients.',
     problem:
-      'A regional brokerage\u2019s agents were the last to know about price reductions and new listings in their own farm areas. By the time they reacted, buyers had already moved on.',
-    approach:
-      'We built a real-time local market monitor that tracked new listings, price changes, and inventory shifts across the brokerage\u2019s top three farm areas, with instant alerts sent directly to agents.',
+      'Agents spent their mornings pulling comparable sales by hand, and were the last to know about price drops and new listings in their own areas.',
     built:
-      'Agent-based monitoring of MLS feeds and listing sources, with an alert pipeline that notified agents within minutes of a change in their assigned neighborhoods, plus a shared market dashboard.',
+      'A local market monitor across 12 areas, with automated comparable-sales reports and instant alerts sent to agents.',
     results: [
-      { label: 'Minutes to alert agents', value: 5 },
-      { label: 'Farm areas monitored', value: 12 },
-      { label: 'Hours saved per agent weekly', value: 8, suffix: '+' },
+      { value: '8+', label: 'hrs saved / agent / week' },
+      { value: '5 min', label: 'to alert' },
+      { value: '12', label: 'areas covered' },
     ],
     testimonial: {
       quote:
-        'My agents used to spend their mornings pulling comps. Now they wake up to alerts telling them exactly what changed overnight. They\u2019re in front of clients instead of spreadsheets.',
+        "My agents used to spend their mornings pulling comps. Now they wake up to alerts telling them exactly what changed overnight. They're in front of clients instead of spreadsheets.",
       name: 'Managing Broker',
-      title: 'Managing Broker',
       company: 'Regional Real Estate Brokerage',
     },
   },
   {
     slug: 'hospitality-rate-intelligence',
-    client: 'Boutique Hotel Group',
+    pillar: 'leads',
     industry: 'Hospitality',
+    client: 'Boutique Hotel Group',
+    title: "A 14% RevPAR lift by pricing on today's market.",
     problem:
-      'A boutique hotel group was pricing rooms on yesterday\u2019s data while competitors adjusted rates hourly. They were leaving revenue on the table every high-demand night.',
-    approach:
-      'We deployed continuous rate-monitoring agents across the compset, integrated with their PMS, so the revenue team saw competitor rate changes and local demand signals in real time.',
+      "A boutique hotel group was pricing rooms on yesterday's data while competitors adjusted hourly, and was leaving revenue behind every high-demand night.",
     built:
-      'A rate intelligence system that monitored competitor pricing across booking channels, tracked local demand drivers, and fed alerts and recommendations into the revenue team\u2019s workflow and PMS.',
+      'Continuous rate and demand monitoring across its competitive set, integrated with the PMS so the revenue team acts in real time.',
     results: [
-      { label: 'Competitor rates monitored', value: 24, suffix: '/7' },
-      { label: 'RevPAR improvement', value: 14, suffix: '%' },
-      { label: 'Weeks to deployment', value: 6 },
+      { value: '14%', label: 'RevPAR' },
+      { value: '24/7', label: 'monitoring' },
+      { value: '6 wks', label: 'to live' },
     ],
     testimonial: {
       quote:
         'We went from pricing on a daily report to pricing on live market intelligence. The difference on high-demand nights was immediate.',
       name: 'Director of Revenue',
-      title: 'Director of Revenue',
       company: 'Boutique Hotel Group',
     },
   },
+  {
+    slug: 'saas-competitive-intelligence',
+    pillar: 'leads',
+    industry: 'SaaS',
+    client: 'Mid-Market SaaS Platform',
+    title: "The sales team stopped losing deals it couldn't explain.",
+    problem:
+      "A B2B SaaS company was losing deals because competitors' price and feature changes went unnoticed for weeks.",
+    built: '6+ agents watching five competitors, feeding alerts and a weekly brief to the sales and marketing team.',
+    results: [
+      { value: '<4 hrs', label: 'to detect' },
+      { value: '6+', label: 'agents' },
+      { value: '5 wks', label: 'to live' },
+    ],
+    testimonial: {
+      quote:
+        "We used to find out about a competitor's price change from a lost deal. Now we know the same day they do. It changed how our whole team sells.",
+      name: 'VP of Sales',
+      company: 'Mid-Market SaaS Platform',
+    },
+    featured: true,
+  },
 ];
 
-export const testimonials = caseStudies.map((c) => c.testimonial);
+export const caseStudyBySlug = (slug?: string) => caseStudies.find((c) => c.slug === slug);

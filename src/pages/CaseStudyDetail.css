@@ -1,8 +1,36 @@
+.case-hero-meta {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 24px;
+}
+
+.case-pillar-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(108, 227, 255, 0.45);
+  background: rgba(30, 203, 255, 0.1);
+  color: var(--cyan-400);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: background 0.3s var(--ease-standard), color 0.3s var(--ease-standard);
+}
+
+.case-pillar-tag:hover {
+  background: rgba(30, 203, 255, 0.2);
+  color: var(--white);
+}
+
 .case-back {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 32px;
   font-size: 14px;
   font-weight: 500;
   color: var(--cyan-400);
@@ -18,79 +46,4 @@
   line-height: 1.7;
   color: var(--white-soft);
   margin-top: 20px;
-}
-
-.case-detail-results {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.case-detail-result {
-  text-align: center;
-  padding: 32px;
-  background: linear-gradient(165deg, rgba(10, 27, 52, 0.9), rgba(6, 16, 32, 0.95));
-  border: 1px solid rgba(130, 198, 255, 0.28);
-  border-radius: 18px;
-  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(10px);
-}
-
-.case-detail-result-value {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 56px;
-  line-height: 1;
-  color: var(--white);
-  letter-spacing: -1px;
-}
-
-.case-detail-result-label {
-  font-size: 14px;
-  color: var(--white-soft);
-  margin-top: 12px;
-}
-
-.case-testimonial {
-  text-align: center;
-}
-
-.case-testimonial-mark {
-  color: var(--cyan-400);
-  margin: 0 auto 24px;
-  display: block;
-}
-
-.case-testimonial-quote {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(22px, 3vw, 32px);
-  line-height: 1.4;
-  color: var(--white);
-  letter-spacing: -0.3px;
-}
-
-.case-testimonial-attr {
-  margin-top: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.case-testimonial-name {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--white);
-}
-
-.case-testimonial-title {
-  font-size: 14px;
-  color: var(--white-faint);
-}
-
-@media (max-width: 768px) {
-  .case-detail-results {
-    grid-template-columns: 1fr;
-  }
 }

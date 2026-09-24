@@ -1,193 +1,152 @@
-import { Helmet } from 'react-helmet-async';
+import { Compass, Cpu, Activity } from 'lucide-react';
+import Seo from '@/components/Seo';
 import PageHero from '@/components/PageHero';
 import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
-import ProcessSteps from '@/components/ProcessSteps';
-import { Target, Eye, ShieldCheck } from 'lucide-react';
+import SectionHeading from '@/components/SectionHeading';
+import InfoCards from '@/components/InfoCards';
+import { breadcrumbLd, organizationLd } from '@/data/site';
 import './About.css';
 
-const heading = 'We build systems that make missed information impossible.';
-
-const values = [
+const principles = [
   {
-    icon: <Eye size={28} />,
-    title: 'Visibility First',
-    body: 'Every business problem we solve starts with the same root cause: someone didn\u2019t know something soon enough. We close that gap.',
+    title: 'Outcomes, not output',
+    body: 'We measure success in hours returned and revenue recovered, not in features shipped.',
   },
   {
-    icon: <Target size={28} />,
-    title: 'Strategy Before Software',
-    body: 'We won\u2019t build you a model until we know what decision it\u2019s supposed to inform. The hardest part of AI isn&rsquo;t the code \u2014 it\u2019s knowing what to build.',
+    title: 'Strategy before software',
+    body: "We won't build anything until we know what problem it solves and how we'll measure it.",
   },
   {
-    icon: <ShieldCheck size={28} />,
-    title: 'Production, Not Pilots',
-    body: 'A demo that works on three clean examples isn\u2019t a system. We build infrastructure, evaluation loops, and workflows that hold up in the real world.',
+    title: 'Built to last',
+    body: 'Real infrastructure, testing and monitoring underneath everything, so it works on your real data and not just in a demo.',
+  },
+  {
+    title: 'We stay',
+    body: "We run what we build. If something breaks, it's our problem, not yours.",
   },
 ];
 
 const team = [
-  { name: 'Founder & CEO', role: 'AI Strategy & Architecture', initials: 'LA' },
-  { name: 'Head of Engineering', role: 'Agent & Infrastructure Systems', initials: 'JM' },
-  { name: 'Head of Intelligence', role: 'Market & Competitive Monitoring', initials: 'RK' },
+  { role: 'Founder & CEO', focus: 'AI strategy and solution architecture', icon: <Compass size={32} /> },
+  { role: 'Head of Engineering', focus: 'Automation, agents and infrastructure', icon: <Cpu size={32} /> },
+  {
+    role: 'Head of Operations & Intelligence',
+    focus: 'Running client systems, monitoring and results reporting',
+    icon: <Activity size={32} />,
+  },
 ];
 
 export default function About() {
   return (
     <>
-      <Helmet>
-        <title>About | The Lapis AI</title>
-        <meta
-          name="description"
-          content="The Lapis AI exists to close the blind spots that cost businesses. We build always-on intelligence systems, AI agents, and the infrastructure underneath them."
-        />
-        <link rel="canonical" href="https://thelapisai.com.ng/about" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content="About | The Lapis AI" />
-        <meta
-          property="og:description"
-          content="The Lapis AI exists to close the blind spots that cost businesses. We build always-on intelligence systems, AI agents, and the infrastructure underneath them."
-        />
-        <meta property="og:url" content="https://thelapisai.com.ng/about" />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://thelapisai.com.ng/og-back.png" />
-        <meta property="og:site_name" content="The Lapis AI" />
-        <meta property="og:locale" content="en_NG" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://thelapisai.com.ng/og-back.png" />
-      </Helmet>
-
-      {/* Organization structured data – vital for brand search and AI tools */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'Organization',
-          name: 'The Lapis AI',
-          url: 'https://thelapisai.com.ng',
-          logo: 'https://thelapisai.com.ng/og-back.png',
-          description:
-            'The Lapis AI builds always-on intelligence systems, AI agents, and the infrastructure underneath them so businesses stop losing to information gaps.',
-          foundingDate: '2022',
-          founder: {
-            '@type': 'Person',
-            name: 'Founder & CEO', // Ideally replace with the real name
+      <Seo
+        title="About Us | The Team That Stays | The Lapis AI"
+        description="Founded in 2022, The Lapis AI builds and runs AI systems for growing businesses, from Lagos to London."
+        path="/about"
+        jsonLd={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'AboutPage',
+            name: 'About The Lapis AI',
+            url: 'https://thelapisai.com.ng/about',
+            mainEntity: organizationLd,
           },
-          sameAs: [
-            'https://twitter.com/thelapisai', // adjust when you have social profiles
-            'https://linkedin.com/company/thelapisai',
-          ],
-          contactPoint: {
-            '@type': 'ContactPoint',
-            contactType: 'sales',
-            url: 'https://thelapisai.com.ng/contact',
-            availableLanguage: ['English'],
-          },
-        })}
-      </script>
+          breadcrumbLd([
+            { name: 'Home', path: '/' },
+            { name: 'About', path: '/about' },
+          ]),
+        ]}
+      />
 
-      <div>
-        <PageHero
-          eyebrow="About"
-          text={heading}
-          splitIndex={0}
-          subtext="The Lapis AI exists for one reason: most businesses operate blind not because they don&rsquo;t care, but because building systems that close blind spots is hard. We make it possible."
-          ctaLabel="Work With Us"
-        />
+      <PageHero
+        eyebrow="About"
+        text="We're the AI team that stays."
+        splitIndex={0}
+        subtext="The Lapis AI exists because growing businesses deserve AI that keeps working after the launch party. We build it, run it, and prove what it's worth, every single month."
+        ctaLabel=""
+      />
 
-        {/* Origin / mission */}
-        <section className="section section-paper">
-          <div className="container" style={{ maxWidth: 880 }}>
-            <Reveal>
-              <span className="eyebrow">Our Story</span>
-              <h2 className="section-title">
-                We started where every client starts: <span className="accent">with a blind spot.</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={2}>
-              <div className="about-narrative" style={{ marginTop: 32 }}>
-                <p>
-                  Established in 2022, The Lapis AI was born from a simple, frustrating observation: businesses don&rsquo;t lose to
-                  competitors because their competitors are smarter. They lose because their competitors know
-                  something they don&rsquo;t, and they find out too late.
-                </p>
-                <p>
-                  A price change missed for a week. A feature launch spotted from a churned customer. A market shift
-                  that showed up in a quarterly report instead of a real-time alert. The pattern is always the same:
-                  the information existed, but nobody was watching for it.
-                </p>
-                <p>
-                  We built The Lapis AI to fix that, not with another dashboard or another chatbot, but with
-                  always-on systems that monitor, alert, and inform. Strategy first, infrastructure underneath, agents
-                  doing the work. The kind of system that makes &ldquo;we didn&rsquo;t know&rdquo; a phrase that
-                  never comes up in your next leadership meeting.
-                </p>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* Values */}
-        <section className="section section-navy">
-          <div className="container">
-            <Reveal>
-              <span className="eyebrow">Our Approach</span>
-              <h2 className="section-title">
-                Three principles <span className="accent">we don&rsquo;t compromise on.</span>
-              </h2>
-            </Reveal>
-            <div className="grid grid-3" style={{ marginTop: 56 }}>
-              {values.map((v, i) => (
-                <Reveal key={v.title} delay={(i + 1) as 1 | 2 | 3}>
-                  <div className="card card-dark">
-                    <span className="card-icon-gold">{v.icon}</span>
-                    <h3 className="card-title-light">{v.title}</h3>
-                    <p className="card-body-light">{v.body}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Methodology reuse */}
-        <ProcessSteps />
-
-        {/* Team */}
-        <section className="section section-paper">
-          <div className="container">
-            <Reveal>
-              <span className="eyebrow">The Team</span>
-              <h2 className="section-title">
-                The people <span className="accent">building your systems.</span>
-              </h2>
-              <p className="section-intro">
-                A small, senior team. You work with the people who design and build your system, not a layer of
-                account managers.
+      <section className="section section-paper">
+        <div className="container" style={{ maxWidth: 880 }}>
+          <SectionHeading eyebrow="Our story" title="We kept seeing" accent="the same three walls." />
+          <Reveal delay={2}>
+            <div className="about-narrative" style={{ marginTop: 32 }}>
+              <p>
+                The Lapis AI was founded in 2022 to help businesses see what was happening in their markets before it
+                cost them. Working with teams across real estate, hospitality and SaaS, we noticed that the businesses
+                struggling most had the same three problems, whatever their industry.
               </p>
-            </Reveal>
-            <div className="grid grid-3" style={{ marginTop: 56 }}>
-              {team.map((member, i) => (
-                <Reveal key={member.name} delay={(i + 1) as 1 | 2 | 3}>
-                  <div className="team-card">
-                    <div className="team-avatar">{member.initials}</div>
-                    <h3 className="team-name">{member.name}</h3>
-                    <p className="team-role">{member.role}</p>
-                  </div>
-                </Reveal>
-              ))}
+              <p>
+                First, too much of the work ran through too few people, so growth meant hiring, and the founders were
+                exhausted. Second, customers slipped through the cracks: missed calls, WhatsApp messages answered the
+                next day, follow-ups that never happened. Third, many had already spent money on AI tools, agencies or
+                consultants, and had very little to show for it.
+              </p>
+              <p>
+                The technology wasn't the problem. The problem was that most providers built something, handed it over
+                and left. So we decided to be different.{' '}
+                <strong>
+                  We build it properly, we stay to run it, and we show you every month exactly what it's worth.
+                </strong>
+              </p>
+              <p>
+                Today, we help growing businesses from Lagos to London do more without hiring more, answer every
+                customer, and finally get a return on AI.
+              </p>
             </div>
-          </div>
-        </section>
+          </Reveal>
+        </div>
+      </section>
 
-        <CTASection
-          heading="Let&rsquo;s make - we didn&rsquo;t know - impossible for your business."
-          subtext="It starts with a free audit. Sixty minutes, a roadmap you keep, no obligation."
-          ctaLabel="Book My Free Audit"
-        />
-      </div>
+      <section className="section section-dark">
+        <div className="container">
+          <Reveal>
+            <div className="about-mission">
+              <h2 className="eyebrow about-mission-label">Mission</h2>
+              <p className="about-mission-line">To make AI the most dependable member of every growing team.</p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section section-navy">
+        <div className="container">
+          <SectionHeading eyebrow="How we work" title="Four principles" accent="we don't compromise on." />
+          <div className="section-body">
+            <InfoCards items={principles} columns={4} dark />
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-paper">
+        <div className="container">
+          <SectionHeading
+            eyebrow="The team"
+            title="Small, senior"
+            accent="and hands-on."
+            intro="You work directly with the people who design, build and run your systems. There are no account managers and no hand-offs to juniors."
+          />
+          <div className="grid grid-3 equal-grid section-body">
+            {team.map((member, i) => (
+              <Reveal key={member.role} delay={(i + 1) as 1 | 2 | 3}>
+                <div className="team-card">
+                  <div className="team-avatar" aria-hidden="true">
+                    {member.icon}
+                  </div>
+                  <h3 className="team-name">{member.role}</h3>
+                  <p className="team-role">{member.focus}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CTASection
+        heading={`Let's make "we can't take on more" a thing of the past.`}
+        subtext="Start with a free audit: sixty minutes, and a roadmap you keep."
+      />
     </>
   );
 }

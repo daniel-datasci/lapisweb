@@ -1,6 +1,24 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/services/market-intelligence",
+      "destination": "/solutions/grow-without-hiring#market-watch",
+      "statusCode": 301
+    },
+    { "source": "/services/ai-agents", "destination": "/services/agentic-workflows", "statusCode": 301 },
+    {
+      "source": "/blog/cost-of-finding-competitor-price-change-too-late",
+      "destination": "/blog/real-cost-of-a-slow-reply",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-is-ai-competitive-intelligence",
+      "destination": "/blog/market-watch-what-competitors-changed-this-week",
+      "statusCode": 301
+    }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
