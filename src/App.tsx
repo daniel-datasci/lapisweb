@@ -61,6 +61,7 @@ function App() {
             <Route path="/services/ai-automation" element={<ServiceDetail slug="ai-automation" />} />
             <Route path="/services/agentic-workflows" element={<ServiceDetail slug="agentic-workflows" />} />
             <Route path="/services/ai-infrastructure" element={<ServiceDetail slug="ai-infrastructure" />} />
+            <Route path="/services/ai-analytics-training" element={<ServiceDetail slug="ai-analytics-training" />} />
             <Route path="/industries" element={<Industries />} />
             <Route path="/industries/:slug" element={<IndustryPage />} />
             <Route path="/how-it-works" element={<HowItWorks />} />

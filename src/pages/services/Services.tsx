@@ -7,7 +7,8 @@ import { services, lapisRun } from '@/data/services';
 import { serviceIcon } from '@/data/icons';
 import { breadcrumbLd, organizationLd, SITE_URL } from '@/data/site';
 
-const DESCRIPTION = 'Four capabilities and one team that stays. The services behind every Lapis solution.';
+const DESCRIPTION =
+  'Five capabilities and one team that stays. The services behind every Lapis solution, from AI consulting and automation to team training.';
 
 export default function Services() {
   const cards: InfoCard[] = services.map((s) => ({
@@ -24,7 +25,7 @@ export default function Services() {
   return (
     <>
       <Seo
-        title="AI Consulting, Automation, Agentic Workflows & Infrastructure | The Lapis AI"
+        title="AI Consulting, Automation, Agents, Infrastructure & Training | The Lapis AI"
         description={DESCRIPTION}
         path="/services"
         jsonLd={[
@@ -53,15 +54,15 @@ export default function Services() {
 
       <PageHero
         eyebrow="Services"
-        text="Four capabilities, delivered and run by one team."
+        text="Five capabilities, delivered and run by one team."
         splitIndex={0}
-        subtext="Our solutions are built from four capabilities that work together. Most providers offer one and leave you to stitch the rest together. We deliver all four, then run what we build."
+        subtext="Our solutions are built from five capabilities that work together. Most providers offer one and leave you to stitch the rest together. We deliver all five, then run what we build."
         ctaLabel=""
       />
 
       <section className="section section-paper">
         <div className="container">
-          <InfoCards items={cards} columns={2} dark />
+          <InfoCards items={cards} columns={2} dark className="services-grid" />
         </div>
       </section>
 

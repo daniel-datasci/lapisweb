@@ -100,6 +100,8 @@ const included: InfoCard[] = [
     icon: <GraduationCap size={26} />,
     title: 'Adoption & training',
     body: 'We design the system around how your team works, then train them until they actually rely on it.',
+    to: '/services/ai-analytics-training',
+    linkLabel: 'Explore AI & Analytics Training',
   },
   {
     icon: <LineChart size={26} />,

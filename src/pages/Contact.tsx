@@ -18,13 +18,23 @@ const problems: { value: ProblemValue; label: string }[] = [
   { value: 'capacity', label: "We can't take on more without hiring" },
   { value: 'leads', label: "We're losing leads to slow replies" },
   { value: 'ai-spend', label: "Our AI spend isn't paying off" },
+  { value: 'training', label: 'We want to train our team on AI and analytics' },
   { value: 'not-sure', label: 'Not sure yet' },
 ];
 
 const teamSizes = ['1–10', '11–50', '51–200', '201–1,000', '1,000+'];
 
-const topicToProblem = (topic: string | null): ProblemValue | '' =>
-  topic === 'capacity' || topic === 'leads' || topic === 'ai-spend' ? topic : '';
+const topicSources: Record<AuditTopic, string> = {
+  capacity: 'Grow Without Hiring audit link',
+  leads: 'Lead Leak Audit link',
+  'ai-spend': 'AI Spend Audit link',
+  training: 'AI & Analytics Training page',
+};
+
+const isTopic = (topic: string | null): topic is AuditTopic =>
+  topic !== null && Object.prototype.hasOwnProperty.call(topicSources, topic);
+
+const topicToProblem = (topic: string | null): ProblemValue | '' => (isTopic(topic) ? topic : '');
 
 const escapeHtml = (value: string) =>
   value
@@ -97,6 +107,11 @@ export default function Contact() {
     }
 
     const problemLabel = problems.find((p) => p.value === form.problem)?.label ?? form.problem;
+    const isTraining = form.problem === 'training';
+    const emailTitle = isTraining ? 'New AI &amp; Analytics Training Enquiry' : 'New Free AI Audit Request';
+    const emailIntro = isTraining
+      ? 'A new training enquiry came in from The Lapis AI website.'
+      : 'A new audit request came in from The Lapis AI website.';
     const message = form.message.trim() || 'No additional message provided.';
     const safe = {
       name: escapeHtml(form.name),
@@ -105,7 +120,7 @@ export default function Contact() {
       country: escapeHtml(form.country),
       problem: escapeHtml(problemLabel),
       teamSize: escapeHtml(form.teamSize),
-      topic: escapeHtml(topic ?? ''),
+      source: escapeHtml(isTopic(topic) ? topicSources[topic] : ''),
       message: escapeHtml(message),
     };
 
@@ -132,8 +147,8 @@ export default function Contact() {
           email_content: `
             <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto; color: #0f172a;">
               <div style="background: linear-gradient(135deg, #0b1a33 0%, #142a4d 100%); padding: 24px 32px; border-radius: 12px 12px 0 0;">
-                <h2 style="margin: 0; color: #f7f8f6; font-size: 24px;">New Free AI Audit Request</h2>
-                <p style="margin: 8px 0 0; color: #d9dfe8;">A new audit request came in from The Lapis AI website.</p>
+                <h2 style="margin: 0; color: #f7f8f6; font-size: 24px;">${emailTitle}</h2>
+                <p style="margin: 8px 0 0; color: #d9dfe8;">${emailIntro}</p>
               </div>
               <div style="padding: 24px 32px; background: #f8fafc; border: 1px solid #e2e8f0; border-top: 0; border-radius: 0 0 12px 12px;">
                 <p style="margin: 0 0 12px;"><strong>Name:</strong> ${safe.name}</p>
@@ -142,7 +157,7 @@ export default function Contact() {
                 <p style="margin: 0 0 12px;"><strong>Country:</strong> ${safe.country}</p>
                 <p style="margin: 0 0 12px;"><strong>What's costing them most:</strong> ${safe.problem}</p>
                 <p style="margin: 0 0 12px;"><strong>Team size:</strong> ${safe.teamSize}</p>
-                ${safe.topic ? `<p style="margin: 0 0 12px;"><strong>Came from:</strong> ${safe.topic} audit link</p>` : ''}
+                ${safe.source ? `<p style="margin: 0 0 12px;"><strong>Came from:</strong> ${safe.source}</p>` : ''}
                 <p style="margin: 0 0 12px;"><strong>Anything else:</strong></p>
                 <div style="padding: 14px 16px; background: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; white-space: pre-wrap;">${safe.message}</div>
                 <p style="margin: 20px 0 0; font-size: 13px; color: #64748b;">Reply directly to this sender by using the reply function in your email client.</p>

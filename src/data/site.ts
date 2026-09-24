@@ -4,7 +4,7 @@ export const CONTACT_EMAIL = 'team@thelapisai.com.ng';
 
 export const DEFAULT_OG_TITLE = 'Grow without adding headcount, losing leads, or wasting money on AI.';
 
-export type AuditTopic = 'capacity' | 'leads' | 'ai-spend';
+export type AuditTopic = 'capacity' | 'leads' | 'ai-spend' | 'training';
 
 export const auditLink = (topic?: AuditTopic) => (topic ? `/contact?topic=${topic}` : '/contact');
 

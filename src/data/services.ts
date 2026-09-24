@@ -1,6 +1,18 @@
 import type { PillarId } from './solutions';
+import { auditLink } from './site';
 
-export type ServiceSlug = 'ai-consulting' | 'ai-automation' | 'agentic-workflows' | 'ai-infrastructure';
+export type ServiceSlug =
+  | 'ai-consulting'
+  | 'ai-automation'
+  | 'agentic-workflows'
+  | 'ai-infrastructure'
+  | 'ai-analytics-training';
+
+export type Programme = {
+  title: string;
+  body: string;
+  points: string[];
+};
 
 export type Service = {
   slug: ServiceSlug;
@@ -13,6 +25,12 @@ export type Service = {
   powersLine: string;
   powers: PillarId[];
   seoTitle: string;
+  /** Training-style services list programmes instead of the "What's included" rows. */
+  programmes?: Programme[];
+  heroCta?: { label: string; to: string; secondaryLabel?: string; secondaryHash?: string };
+  /** Replaces the Lapis Run block for services that aren't "run" after delivery. */
+  callout?: { label: string; title: string; body: string };
+  cta?: { heading: string; subtext: string; label: string; to: string };
 };
 
 export const services: Service[] = [
@@ -87,6 +105,74 @@ export const services: Service[] = [
     powersLine: 'all three solutions · essential for Make Your AI Pay',
     powers: ['capacity', 'leads', 'ai-spend'],
     seoTitle: 'AI Infrastructure | The Lapis AI',
+  },
+  {
+    slug: 'ai-analytics-training',
+    num: 5,
+    name: 'AI & Analytics Training',
+    path: '/services/ai-analytics-training',
+    headline: 'AI & Analytics Training: help your team use AI and data with confidence.',
+    body: 'New tools only pay off when your people know how to use them. We train your team to get ready for AI, get more from your data, and use AI in the spreadsheets and reports they already work in.',
+    bullets: [
+      'Training on AI Integration & Readiness for Businesses',
+      'Advanced Analytics',
+      'AI on Spreadsheets & Reporting',
+    ],
+    powersLine: 'Make Your AI Pay · Grow Without Hiring',
+    powers: ['ai-spend', 'capacity'],
+    seoTitle: 'AI & Analytics Training | The Lapis AI',
+    programmes: [
+      {
+        title: 'Training on AI Integration & Readiness for Businesses',
+        body: "For leaders and teams getting ready to bring AI into the business. We explain in plain language what AI can and can't do, where it fits in your work, and what needs to be in place before you start.",
+        points: [
+          "What AI can and can't do for a business like yours",
+          'Spotting the tasks and workflows where AI will actually help',
+          'Getting your data, tools and processes ready',
+          'Safe use: data handling, access and an AI usage policy',
+          'Planning adoption so your team actually uses it',
+        ],
+      },
+      {
+        title: 'Advanced Analytics',
+        body: 'For teams that want more from the data they already have. We teach the methods and tools to find patterns, track what matters and turn numbers into decisions.',
+        points: [
+          'Cleaning, combining and preparing business data',
+          'Choosing the metrics that matter to your business',
+          'Finding trends, patterns and outliers',
+          'Forecasting and planning from your own numbers',
+          'Building dashboards and presenting results clearly',
+        ],
+      },
+      {
+        title: 'AI on Spreadsheets & Reporting',
+        body: 'For anyone who spends their day in spreadsheets. We show your team how to use AI to spend less time on formulas, clean-up and routine reports.',
+        points: [
+          'Using AI features in Excel and Google Sheets',
+          'Writing and checking formulas with AI',
+          'Cleaning up messy data faster',
+          'Automating recurring reports and summaries',
+          'Checking AI output before it reaches a client or the board',
+        ],
+      },
+    ],
+    heroCta: {
+      label: 'Talk to Us About Training',
+      to: auditLink('training'),
+      secondaryLabel: 'See the Programmes',
+      secondaryHash: 'programmes',
+    },
+    callout: {
+      label: 'After the training',
+      title: 'Ready to put it to work? We can build and run it too.',
+      body: "When training turns up a workflow worth automating, the same team can build it with you. Once it's live, Lapis Run keeps it monitored, fixed and improving, with a monthly results report.",
+    },
+    cta: {
+      heading: 'Give your team the skills to make AI pay.',
+      subtext: "Tell us who you'd like to train and what they work on. We'll suggest the programme that fits.",
+      label: 'Talk to Us About Training',
+      to: auditLink('training'),
+    },
   },
 ];
 
