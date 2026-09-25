@@ -170,9 +170,10 @@ export default function Home() {
                 className="hero-title"
               />
               <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>
-                The Lapis AI builds and runs the AI systems behind growing businesses. We take repetitive work off your
-                team, answer every enquiry in under a minute, and turn stalled AI projects into systems that pay for
-                themselves. Then we stay: we keep everything running and show you the results every month.
+                The Lapis AI builds and runs the AI systems behind growing businesses. We take repetitive work off your team, 
+                answer every enquiry in under a minute, turn stalled AI projects into systems that pay for themselves, 
+                and train your team in Advanced Analytics so your data starts paying its way too. Then we stay: 
+                we keep everything running and show you the results every month.
               </p>
               <div className="hero-cta-row fade-up" style={{ animationDelay: '1.8s' }}>
                 <Button to="/contact" variant="primary" size="lg" borderWrap icon>
