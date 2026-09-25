@@ -161,7 +161,7 @@ export default function Home() {
         <section className="page-hero page-hero-navy home-hero">
           <div className="container home-hero-grid">
             <div className="home-hero-left">
-              <span className="eyebrow hero-eyebrow">AI systems for growing teams · Lagos · London · Toronto · New York</span>
+              <span className="eyebrow hero-eyebrow">· Lagos · London · Toronto · New York</span>
               <TypewriterHeading
                 text={heroText}
                 splitIndex={31}
