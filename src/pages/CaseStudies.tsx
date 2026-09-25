@@ -8,10 +8,11 @@ import CaseCard from '@/components/CaseCard';
 import FilterChips from '@/components/FilterChips';
 import { caseStudies } from '@/data/testimonials';
 import { pillarFilters, type PillarId } from '@/data/solutions';
-import { auditLink } from '@/data/site';
+import { DISCOVERY_CTA, discoveryLink } from '@/data/site';
 import { useHydrated } from '@/hooks/useHydrated';
 import { PAGES, caseStudyMeta, crumbsFor } from '@/seo/routes';
 import { itemListId, itemListNode } from '@/seo/schema';
+import '@/components/PricingBlocks.css';
 
 const crumbs = crumbsFor(PAGES.caseStudies);
 
@@ -79,12 +80,17 @@ export default function CaseStudies() {
                 <span className="card-kicker">③ Make Your AI Pay</span>
                 <h2 className="card-title">No published case study for this one yet.</h2>
                 <p className="card-body">
-                  We only publish results we've measured. Book a free AI spend audit. We'll tell you honestly what's
-                  working, what isn't, and which one workflow will pay for the rest.
+                  We only publish results we've measured. The 45-Day AI Rescue takes one stalled AI project into
+                  production in 45 days, or we keep working free until it's live. Start with a free discovery call.
                 </p>
-                <Button to={auditLink('ai-spend')} variant="primary" size="lg" borderWrap icon>
-                  Book My Free AI Spend Audit
-                </Button>
+                <div className="cta-row-center">
+                  <Button to={discoveryLink('ai-spend', 'ai-rescue')} variant="primary" size="lg" borderWrap icon>
+                    {DISCOVERY_CTA}
+                  </Button>
+                  <Button to="/solutions/make-your-ai-pay" variant="ghost-light" size="lg">
+                    See the 45-Day AI Rescue
+                  </Button>
+                </div>
               </div>
             </Reveal>
           )}
@@ -93,7 +99,7 @@ export default function CaseStudies() {
 
       <CTASection
         heading="Want results like these?"
-        subtext="Every engagement starts with a free audit. We'll show you where you're leaking time, leads and money, and what fixing it is worth."
+        subtext="Every engagement starts with a free 30-minute discovery call. We'll talk through where you're leaking time, leads and money, and which AI workers would fix it."
       />
     </>
   );

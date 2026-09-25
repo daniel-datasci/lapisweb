@@ -5,7 +5,17 @@
  */
 import { solutions } from '@/data/solutions';
 import { services } from '@/data/services';
-import { pricingTiers } from '@/data/pricing';
+import {
+  EXTRA_WORKER,
+  PRICING_NOTE,
+  aiWorkforce,
+  extras,
+  leadDesk,
+  pricePair,
+  type Extra,
+  type Money,
+  type Product,
+} from '@/data/pricing';
 import type { FaqItem } from '@/data/faqs';
 import {
   ALTERNATE_NAME,
@@ -62,6 +72,8 @@ const KNOWS_ABOUT = [
   'AI training',
   'Business analytics',
   'AI return on investment',
+  'Managed AI services',
+  'AI workers',
 ];
 
 const catalogItem = (name: string, path: string, description: string) => ({
@@ -219,15 +231,14 @@ export const webPageNode = ({
   };
 };
 
-type PriceSpec = { price: string; unitCode?: string; description: string };
-
 export type ServiceInput = {
   path: string;
   name: string;
   description: string;
   serviceType: string;
   audience?: string;
-  offers?: { name: string; description: string; price: string; specs?: PriceSpec[] }[];
+  /** Offer nodes from the price book (see `offersFor`). */
+  offers?: JsonLdNode[];
 };
 
 export const serviceNode = ({ path, name, description, serviceType, audience, offers }: ServiceInput): JsonLdNode => ({
@@ -242,94 +253,157 @@ export const serviceNode = ({ path, name, description, serviceType, audience, of
   areaServed: AREA_SERVED,
   mainEntityOfPage: { '@id': webpageId(path) },
   ...(audience ? { audience: { '@type': 'BusinessAudience', audienceType: audience } } : {}),
-  ...(offers?.length
-    ? {
-        offers: offers.map((o) => ({
-          '@type': 'Offer',
-          name: o.name,
-          description: o.description,
-          price: o.price,
-          priceCurrency: 'USD',
-          url: absoluteUrl('/pricing'),
-          seller: orgRef,
-          ...(o.specs?.length
-            ? {
-                priceSpecification: o.specs.map((s) => ({
-                  '@type': 'UnitPriceSpecification',
-                  price: s.price,
-                  priceCurrency: 'USD',
-                  description: s.description,
-                  ...(s.unitCode
-                    ? { referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: s.unitCode } }
-                    : {}),
-                })),
-              }
-            : {}),
-        })),
-      }
-    : {}),
+  ...(offers?.length ? { offers } : {}),
 });
 
-/** Turns "$2,790" into "2790". */
-export const priceNumber = (price: string) => price.replace(/[^0-9.]/g, '');
+/* ---------- Price book offers ---------- */
 
-const stripMarkup = (s: string) => s.replace(/\*/g, '');
+type Currency = 'USD' | 'NGN';
+const CURRENCIES: { code: Currency; key: keyof Money; note: string }[] = [
+  { code: 'USD', key: 'usd', note: 'Global clients, billed in USD' },
+  { code: 'NGN', key: 'ngn', note: 'Nigeria-based clients, billed in NGN' },
+];
 
-type OfferInput = NonNullable<ServiceInput['offers']>[number];
+const PRICING_URL = absoluteUrl('/pricing');
+const offerId = (id: string) => `${PRICING_URL}#offer-${id}`;
 
-/** An offer built from the current pricing tiers, or undefined for unpriced ("Custom") tiers. */
-export const tierOffer = (tierName: string): OfferInput | undefined => {
-  const tier = pricingTiers.find((t) => t.name === tierName);
-  if (!tier || !/\d/.test(tier.price)) return undefined;
-  const monthly = tier.tagline.match(/\$([\d,.]+)\/month/);
-  const oneTime = priceNumber(tier.price);
-  return {
-    name: tier.name,
-    description: stripMarkup(tier.tagline),
-    price: oneTime,
-    specs: monthly
-      ? [
-          { price: oneTime, description: 'One-time build' },
-          { price: priceNumber(monthly[1]), unitCode: 'MON', description: 'Lapis Run, per month' },
-        ]
-      : undefined,
-  };
+const perMonth = { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' };
+
+/** Monthly fee in both currencies. `from` makes it a starting price. */
+const monthlySpecs = (m: Money, label: string, from = false): JsonLdNode[] =>
+  CURRENCIES.map(({ code, key, note }) => ({
+    '@type': 'UnitPriceSpecification',
+    ...(from ? { minPrice: m[key] } : { price: m[key] }),
+    priceCurrency: code,
+    unitCode: 'MON',
+    referenceQuantity: perMonth,
+    valueAddedTaxIncluded: false,
+    description: `${label}${from ? ', from' : ''}, per month. ${note}.`,
+  }));
+
+/** One-off fee (or fee range) in both currencies. */
+const oneOffSpecs = (m: Money, label: string, max?: Money): JsonLdNode[] =>
+  CURRENCIES.map(({ code, key, note }) => ({
+    '@type': 'PriceSpecification',
+    ...(max ? { minPrice: m[key], maxPrice: max[key] } : { price: m[key] }),
+    priceCurrency: code,
+    valueAddedTaxIncluded: false,
+    description: `${label}. ${note}.`,
+  }));
+
+type OfferInput = {
+  id: string;
+  name: string;
+  description: string;
+  anchor: string;
+  category: string;
+  specs: JsonLdNode[];
+  /** Headline USD price, when the offer has a single fixed price. */
+  usdPrice?: number;
 };
 
-export const PRICING_CATALOG_ID = `${absoluteUrl('/pricing')}#offers`;
+const offerNode = ({ id, name, description, anchor, category, specs, usdPrice }: OfferInput): JsonLdNode => ({
+  '@type': 'Offer',
+  '@id': offerId(id),
+  name,
+  description,
+  category,
+  url: `${PRICING_URL}#${anchor}`,
+  seller: orgRef,
+  ...(usdPrice !== undefined ? { price: usdPrice, priceCurrency: 'USD' } : {}),
+  priceSpecification: specs,
+  itemOffered: { '@type': 'Service', name, description, provider: orgRef },
+});
+
+const planOffers = (product: Product): JsonLdNode[] =>
+  (product.tiers ?? []).map((tier) =>
+    offerNode({
+      id: tier.id,
+      name: `${product.name} ${tier.name}`,
+      description: `${tier.summary} ${tier.features.join('; ')}. Onboarding: ${
+        tier.onboarding ? pricePair(tier.onboarding) : tier.onboardingNote
+      }.`,
+      anchor: product.anchor,
+      category: 'Subscription',
+      usdPrice: tier.from ? undefined : tier.monthly.usd,
+      specs: [
+        ...monthlySpecs(tier.monthly, `${product.name} ${tier.name} subscription`, tier.from),
+        ...(tier.onboarding ? oneOffSpecs(tier.onboarding, 'One-off onboarding fee, billed at signing') : []),
+      ],
+    }),
+  );
+
+const extraOffer = (e: Extra, anchor = 'projects'): JsonLdNode | undefined => {
+  if (!e.price) return undefined;
+  const monthly = e.cadence === 'month';
+  return offerNode({
+    id: e.id,
+    name: e.name,
+    description: e.description,
+    anchor,
+    category: e.kind,
+    usdPrice: e.maxPrice ? undefined : e.price.usd,
+    specs: monthly
+      ? monthlySpecs(e.price, e.name)
+      : oneOffSpecs(e.price, e.cadence === 'conversation' ? `${e.name}, per conversation` : `${e.name}, one-off fee`, e.maxPrice),
+  });
+};
+
+const extraWorkerOffer = (): JsonLdNode =>
+  offerNode({
+    id: 'extra-ai-worker',
+    name: 'Extra AI worker',
+    description: 'An additional AI worker on any AI Workforce tier.',
+    anchor: 'ai-workforce',
+    category: 'Add-on',
+    usdPrice: EXTRA_WORKER.usd,
+    specs: monthlySpecs(EXTRA_WORKER, 'Extra AI worker'),
+  });
+
+const extraById = (id: string) => {
+  const e = extras.find((x) => x.id === id);
+  return e ? extraOffer(e) : undefined;
+};
+
+export type OfferGroup = 'lead-desk' | 'ai-workforce' | 'audit' | 'ai-rescue' | 'fractional-head-of-ai' | 'market-watch' | 'workshop';
+
+/** Offer nodes for the products a page describes. */
+export const offersFor = (...groups: OfferGroup[]): JsonLdNode[] =>
+  groups.flatMap((g) => {
+    if (g === 'lead-desk') return planOffers(leadDesk);
+    if (g === 'ai-workforce') return [...planOffers(aiWorkforce), extraWorkerOffer()];
+    const node = extraById(g);
+    return node ? [node] : [];
+  });
+
+export const PRICING_CATALOG_ID = `${PRICING_URL}#offers`;
 
 export const pricingCatalogNode = (): JsonLdNode => ({
   '@type': 'OfferCatalog',
   '@id': PRICING_CATALOG_ID,
-  name: `${SITE_NAME} pricing`,
-  url: absoluteUrl('/pricing'),
-  itemListElement: pricingTiers.map((t) => {
-    const offer = tierOffer(t.name);
-    return {
-      '@type': 'Offer',
-      name: t.name,
-      description: stripMarkup(t.tagline),
-      seller: orgRef,
-      itemOffered: { '@type': 'Service', name: t.name, description: t.features.map(stripMarkup).join('; ') },
-      ...(offer
-        ? {
-            price: offer.price,
-            priceCurrency: 'USD',
-            ...(offer.specs
-              ? {
-                  priceSpecification: offer.specs.map((s) => ({
-                    '@type': 'UnitPriceSpecification',
-                    price: s.price,
-                    priceCurrency: 'USD',
-                    description: s.description,
-                    ...(s.unitCode
-                      ? { referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: s.unitCode } }
-                      : {}),
-                  })),
-                }
-              : {}),
-          }
-        : {}),
-    };
-  }),
+  name: `${SITE_NAME} pricing: AI workers on subscription`,
+  description: PRICING_NOTE,
+  url: PRICING_URL,
+  itemListElement: [
+    {
+      '@type': 'OfferCatalog',
+      name: leadDesk.name,
+      description: leadDesk.blurb,
+      url: `${PRICING_URL}#lead-desk`,
+      itemListElement: planOffers(leadDesk),
+    },
+    {
+      '@type': 'OfferCatalog',
+      name: aiWorkforce.name,
+      description: aiWorkforce.blurb,
+      url: `${PRICING_URL}#ai-workforce`,
+      itemListElement: [...planOffers(aiWorkforce), extraWorkerOffer()],
+    },
+    {
+      '@type': 'OfferCatalog',
+      name: 'Projects, retainers and add-ons',
+      url: `${PRICING_URL}#projects`,
+      itemListElement: extras.map((e) => extraOffer(e)).filter((n): n is JsonLdNode => !!n),
+    },
+  ],
 });

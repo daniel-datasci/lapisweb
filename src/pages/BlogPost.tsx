@@ -10,7 +10,7 @@ import { pillarTag, solutionById } from '@/data/solutions';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import NotFound from '@/pages/NotFound';
 import '@/components/ContentBlocks.css';
-import { absoluteUrl } from '@/data/site';
+import { absoluteUrl, DISCOVERY_CTA, discoveryLink } from '@/data/site';
 import { ogImagePath } from '@/seo/og';
 import { PAGES, blogPostMeta, crumbsFor } from '@/seo/routes';
 import { orgRef, webpageId } from '@/seo/schema';
@@ -128,10 +128,12 @@ export default function BlogPost() {
             </Reveal>
 
             <Reveal>
-              <aside className="blog-post-cta" aria-label="Book a free AI audit">
-                <p className="blog-post-cta-text">Want this working in your business? It starts with a free AI audit.</p>
-                <Button to="/contact" variant="primary" size="lg" borderWrap icon>
-                  Book My Free AI Audit
+              <aside className="blog-post-cta" aria-label="Book a free discovery call">
+                <p className="blog-post-cta-text">
+                  Want this working in your business? It starts with a free 30-minute discovery call.
+                </p>
+                <Button to={discoveryLink(solution.topic)} variant="primary" size="lg" borderWrap icon>
+                  {DISCOVERY_CTA}
                 </Button>
                 <Link to={solution.path} className="blog-post-cta-link">
                   See how {solution.name} works <ArrowRight size={16} aria-hidden="true" />
@@ -169,7 +171,7 @@ export default function BlogPost() {
 
       <CTASection
         heading="Ready to put this into practice?"
-        subtext="Book a free AI audit and find out where your business is leaking time, leads and money."
+        subtext="Book a free 30-minute discovery call and find out where your business is leaking time, leads and money."
       />
     </>
   );

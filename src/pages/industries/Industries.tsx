@@ -49,7 +49,9 @@ export default function Industries() {
 
       <CTASection
         heading="Find out where your business is leaking time, leads and money."
-        subtext="A free 60-minute AI audit. You leave with a written roadmap of your top three opportunities, whether or not you work with us."
+        subtext="Book a free 30-minute discovery call. We'll talk through where AI workers would help most in your industry, and which plan fits, whether or not you work with us."
+        secondaryLabel="See Plans & Pricing"
+        secondaryTo="/pricing"
       />
     </>
   );

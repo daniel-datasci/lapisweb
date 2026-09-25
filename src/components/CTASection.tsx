@@ -1,5 +1,6 @@
 import Button from './Button';
 import Reveal from './Reveal';
+import { DISCOVERY_CTA } from '@/data/site';
 import './CTASection.css';
 
 type Props = {
@@ -9,6 +10,8 @@ type Props = {
   ctaTo?: string;
   secondaryLabel?: string;
   secondaryTo?: string;
+  /** External link for the secondary button, e.g. WhatsApp. */
+  secondaryHref?: string;
   variant?: 'navy' | 'gold';
   eyebrow?: string;
 };
@@ -16,10 +19,11 @@ type Props = {
 export default function CTASection({
   heading,
   subtext,
-  ctaLabel = 'Book My Free AI Audit',
+  ctaLabel = DISCOVERY_CTA,
   ctaTo = '/contact',
   secondaryLabel,
   secondaryTo,
+  secondaryHref,
   variant = 'navy',
   eyebrow = 'Get Started',
 }: Props) {
@@ -34,8 +38,8 @@ export default function CTASection({
             <Button to={ctaTo} variant={variant === 'gold' ? 'light' : 'primary'} size="lg" borderWrap icon>
               {ctaLabel}
             </Button>
-            {secondaryLabel && secondaryTo && (
-              <Button to={secondaryTo} variant="ghost-light" size="lg">
+            {secondaryLabel && (secondaryTo || secondaryHref) && (
+              <Button to={secondaryTo} href={secondaryHref} variant="ghost-light" size="lg">
                 {secondaryLabel}
               </Button>
             )}

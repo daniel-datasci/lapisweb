@@ -25,7 +25,8 @@ export type Industry = {
   /** "Sound familiar?" pains, one per pillar. */
   pains: Record<PillarId, string>;
   caseStudySlug?: string;
-  offer: 'lead-leak' | 'audit';
+  /** The product the offer box leads with: Lead Desk where lost leads dominate, otherwise AI Workforce. */
+  offer: 'lead-desk' | 'ai-workforce';
   metaDescription: string;
   seoTitle: string;
 };
@@ -50,7 +51,7 @@ export const industries: Industry[] = [
       leads: 'New enquiries wait days for a reply, and consultations never get booked.',
       'ai-spend': 'Partners run their own GPT experiments, with no governance and no firm-wide tool to show for it.',
     },
-    offer: 'lead-leak',
+    offer: 'lead-desk',
     metaDescription:
       'AI automation for accounting, legal, consulting and agency firms: document review, client onboarding, reporting, enquiry qualification and governed AI tools.',
     seoTitle: 'AI Automation for Professional Services | The Lapis AI',
@@ -74,7 +75,7 @@ export const industries: Industry[] = [
       leads: 'Patients call or message after hours, get no answer and book somewhere else, and no-shows go unchased.',
       'ai-spend': "You want to use AI, but not without the safety, compliance and audit trails that patient care demands.",
     },
-    offer: 'lead-leak',
+    offer: 'lead-desk',
     metaDescription:
       'AI for clinics, dental practices and diagnostics: 24/7 WhatsApp and phone booking, no-show follow-up, automated patient admin and safe, compliant AI use.',
     seoTitle: 'AI for Clinics & Healthcare: 24/7 Booking | The Lapis AI',
@@ -98,7 +99,7 @@ export const industries: Industry[] = [
       'ai-spend': 'Your CRM and listings data sit in separate places, so nobody sees the full picture.',
     },
     caseStudySlug: 'real-estate-market-monitor',
-    offer: 'lead-leak',
+    offer: 'lead-desk',
     metaDescription:
       'AI for real estate agencies: instant replies to property enquiries, viewing booking and follow-up, automated comparable-sales reports and market alerts.',
     seoTitle: 'AI for Real Estate Agencies & Brokerages | The Lapis AI',
@@ -123,7 +124,7 @@ export const industries: Industry[] = [
       'ai-spend': "Rates are set on yesterday's report because live market data never reaches your PMS and channel manager.",
     },
     caseStudySlug: 'hospitality-rate-intelligence',
-    offer: 'lead-leak',
+    offer: 'lead-desk',
     metaDescription:
       'AI for hotels, short-lets and restaurants: direct-booking enquiries answered instantly, guest messaging day and night, and rate intelligence linked to your PMS.',
     seoTitle: 'AI for Hotels, Short-Lets & Restaurants | The Lapis AI',
@@ -146,7 +147,7 @@ export const industries: Industry[] = [
       leads: 'DMs and WhatsApp messages go unanswered, and abandoned carts never get a follow-up.',
       'ai-spend': 'Competitors change their prices and you find out late, with no clear view of demand.',
     },
-    offer: 'audit',
+    offer: 'ai-workforce',
     metaDescription:
       'AI for e-commerce and retail: DM and WhatsApp sales assistants, abandoned-cart follow-up, automated order and supplier admin, and competitor price monitoring.',
     seoTitle: 'AI for E-commerce & Retail Businesses | The Lapis AI',
@@ -169,7 +170,7 @@ export const industries: Industry[] = [
       leads: 'Quote requests wait while someone works out the price, and the customer moves on.',
       'ai-spend': "Your operations data is spread across fragmented systems, so there's no live view of what's happening.",
     },
-    offer: 'audit',
+    offer: 'ai-workforce',
     metaDescription:
       'AI for logistics: quote requests answered and priced fast, automated dispatch updates, proof-of-delivery processing and invoicing, and live ops dashboards.',
     seoTitle: 'AI for Logistics: Faster Quotes, Less Admin | The Lapis AI',
@@ -193,7 +194,7 @@ export const industries: Industry[] = [
       leads: 'Prospective students enquire, hear nothing back and enrol somewhere else.',
       'ai-spend': 'Staff are trying AI tools on their own, with no plan for adopting them responsibly.',
     },
-    offer: 'lead-leak',
+    offer: 'lead-desk',
     metaDescription:
       'AI for schools and training providers: student enquiries answered and followed up, automated admissions admin and fee reminders, and responsible AI adoption.',
     seoTitle: 'AI for Schools & Training Providers | The Lapis AI',
@@ -217,7 +218,7 @@ export const industries: Industry[] = [
       'ai-spend': 'Internal AI pilots never reach production, and competitor changes go unnoticed for weeks.',
     },
     caseStudySlug: 'saas-competitive-intelligence',
-    offer: 'audit',
+    offer: 'ai-workforce',
     metaDescription:
       'AI for SaaS and tech companies: inbound lead response and routing in minutes, support triage, onboarding and reporting automation, and competitor watch.',
     seoTitle: 'AI for SaaS & Tech: Scale Without Headcount | The Lapis AI',

@@ -57,6 +57,10 @@
   color: var(--white-faint);
 }
 
+.home-plans-cta {
+  margin-top: 36px;
+}
+
 @media (max-width: 1024px) {
   .home-hero-grid {
     grid-template-columns: 1fr;
@@ -108,6 +112,9 @@
     white-space: nowrap;
   }
   .home-hero .hero-cta-row .btn-icon {
+    display: none;
+  }
+  .home-hero .hero-cta-row .hide-xs {
     display: none;
   }
   .home-hero-left .hero-sub {

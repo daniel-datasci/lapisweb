@@ -7,7 +7,7 @@ export const FOUNDING_YEAR = '2022';
 export const CONTACT_EMAIL = 'team@thelapisai.com.ng';
 
 export const SITE_DESCRIPTION =
-  'The Lapis AI builds and runs the AI systems behind growing businesses: more capacity without new hires, every lead answered in under 60 seconds, and AI that pays.';
+  'The Lapis AI builds, runs and reports on AI workers for growing businesses, on a monthly subscription: every lead answered in under 60 seconds, more capacity without new hires, and AI that pays.';
 
 export const LOCATION = {
   city: 'Lagos',
@@ -64,9 +64,41 @@ export const OG_IMAGE_HEIGHT = 630;
 
 export const DEFAULT_OG_TITLE = 'Grow without adding headcount, losing leads, or wasting money on AI.';
 
-export type AuditTopic = 'capacity' | 'leads' | 'ai-spend' | 'training';
+/** Legacy `?topic=` values: the business problem a visitor arrived with. */
+export type ContactTopic = 'capacity' | 'leads' | 'ai-spend' | 'training';
 
-export const auditLink = (topic?: AuditTopic) => (topic ? `/contact?topic=${topic}` : '/contact');
+/** `?plan=` values: the product a visitor is interested in. */
+export type InterestPlan =
+  | 'lead-desk'
+  | 'ai-workforce'
+  | 'ai-rescue'
+  | 'audit'
+  | 'fractional-head-of-ai'
+  | 'workshop'
+  | 'not-sure';
+
+/** Global primary CTA: the free 30-minute discovery call. */
+export const DISCOVERY_CTA = 'Book a Free Discovery Call';
+/** Shorter variant for tight spaces (header pill, small buttons). */
+export const DISCOVERY_CTA_SHORT = 'Free Discovery Call';
+export const AUDIT_CTA = 'Book your audit';
+export const WHATSAPP_CTA = 'Talk to us on WhatsApp';
+
+export const WHATSAPP_LINK = PHONE_LINES[0].whatsapp;
+
+export const contactLink = ({ topic, plan }: { topic?: ContactTopic; plan?: InterestPlan } = {}) => {
+  const params = new URLSearchParams();
+  if (plan) params.set('plan', plan);
+  if (topic) params.set('topic', topic);
+  const query = params.toString();
+  return query ? `/contact?${query}` : '/contact';
+};
+
+/** Discovery-call link, optionally pre-tagged with the problem or product. */
+export const discoveryLink = (topic?: ContactTopic, plan?: InterestPlan) => contactLink({ topic, plan });
+
+/** Link to book the paid AI Opportunity Audit. */
+export const auditLink = (topic?: ContactTopic) => contactLink({ plan: 'audit', topic });
 
 /** Canonical absolute URL: the homepage keeps its slash, every other page has none. */
 export const absoluteUrl = (path: string) => (path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path}`);

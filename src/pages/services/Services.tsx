@@ -17,7 +17,7 @@ export default function Services() {
     title: s.headline,
     body: s.body,
     points: s.bullets,
-    note: `Powers: ${s.powersLine}`,
+    note: `${s.delivery.short} Powers: ${s.powersLine}.`,
     to: s.path,
     linkLabel: `Explore ${s.name}`,
   }));
@@ -37,7 +37,7 @@ export default function Services() {
         eyebrow="Services"
         text="Five capabilities, delivered and run by one team."
         splitIndex={0}
-        subtext="Our solutions are built from five capabilities that work together. Most providers offer one and leave you to stitch the rest together. We deliver all five, then run what we build."
+        subtext="Five capabilities sit behind every AI worker we run. You don't buy them one by one: they're delivered through Lapis Lead Desk, Lapis AI Workforce and the 45-Day AI Rescue, and run by the same team every month."
         ctaLabel=""
       />
 
@@ -51,7 +51,9 @@ export default function Services() {
 
       <CTASection
         heading="Not sure which service you need?"
-        subtext="You don't have to know. Start with the free audit and we'll tell you."
+        subtext="You don't have to know. Book a free 30-minute discovery call and we'll tell you where to start."
+        secondaryLabel="See plans & pricing"
+        secondaryTo="/pricing"
       />
     </>
   );

@@ -41,8 +41,8 @@ const destinations: RelatedLink[] = [
   },
   {
     kicker: 'How it works',
-    title: 'Audit, build, run, report',
-    body: 'Something live within the first month, and a team that keeps it running.',
+    title: 'Discover, onboard, run, report',
+    body: 'Live in 2–4 weeks after signing, run by a team that reports on it every month.',
     to: PAGES.howItWorks.path,
     linkLabel: 'See how it works',
   },
@@ -59,8 +59,8 @@ export default function NotFound() {
         text="This page doesn't exist, or it has moved."
         splitIndex={0}
         staticHeading
-        subtext="The link may be out of date, or the address may have a typo. Pick up from one of the sections below, or book a free AI audit with our team."
-        ctaLabel="Book My Free AI Audit"
+        subtext="The link may be out of date, or the address may have a typo. Pick up from one of the sections below, or book a free discovery call with our team."
+        ctaLabel="Book a Free Discovery Call"
         ctaTo={PAGES.contact.path}
         secondaryLabel="Go to the Homepage"
         secondaryTo={PAGES.home.path}

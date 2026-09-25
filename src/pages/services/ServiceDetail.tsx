@@ -10,6 +10,7 @@ import StackDiagram from '@/components/StackDiagram';
 import InfoCards from '@/components/InfoCards';
 import FaqSection from '@/components/FaqList';
 import RelatedLinks from '@/components/RelatedLinks';
+import { AuditOffer } from '@/components/PricingBlocks';
 import NotFound from '@/pages/NotFound';
 import { programmeIcon } from '@/data/icons';
 import { serviceBySlug, lapisRun, ServiceSlug } from '@/data/services';
@@ -17,8 +18,23 @@ import { solutionById } from '@/data/solutions';
 import { caseStudies } from '@/data/testimonials';
 import { serviceFaqs } from '@/data/faqs';
 import { caseStudyLink } from '@/data/related';
+import type { ContactTopic } from '@/data/site';
 import { PAGES, crumbsFor, serviceMeta } from '@/seo/routes';
-import { serviceId, serviceNode, tierOffer } from '@/seo/schema';
+import { offersFor, serviceId, serviceNode, type OfferGroup } from '@/seo/schema';
+
+const SERVICE_OFFERS: Record<ServiceSlug, OfferGroup[]> = {
+  'ai-consulting': ['audit', 'fractional-head-of-ai'],
+  'ai-automation': ['ai-workforce'],
+  'agentic-workflows': ['lead-desk', 'ai-workforce', 'market-watch'],
+  'ai-infrastructure': [],
+  'ai-analytics-training': ['workshop'],
+};
+
+const AUDIT_TOPIC: Partial<Record<ServiceSlug, ContactTopic>> = {
+  'ai-consulting': 'ai-spend',
+  'ai-automation': 'capacity',
+  'ai-analytics-training': 'training',
+};
 
 export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
   const service = serviceBySlug[slug];
@@ -29,7 +45,8 @@ export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
   const faqs = serviceFaqs[slug];
   const { programmes, heroCta } = service;
   const callout = service.callout ?? lapisRun;
-  const auditOffer = slug === 'ai-consulting' ? tierOffer('Free AI Audit') : undefined;
+  const { delivery } = service;
+  const offers = offersFor(...SERVICE_OFFERS[slug]);
 
   const powers = service.powers.map((id) => {
     const s = solutionById[id];
@@ -58,7 +75,7 @@ export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
             description: service.body,
             serviceType: service.name,
             audience: 'Growing businesses',
-            offers: auditOffer ? [auditOffer] : undefined,
+            offers: offers.length ? offers : undefined,
           }),
         ]}
       />
@@ -134,6 +151,37 @@ export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
         </div>
       </section>
 
+      <section className="section section-dark" id="pricing">
+        <div className="container">
+          <SectionHeading
+            eyebrow="How it's delivered & priced"
+            title={delivery.title}
+            accent={delivery.accent}
+            intro={delivery.body}
+          />
+          <div className="section-body">
+            <InfoCards
+              columns={delivery.items.length === 2 ? 2 : 3}
+              dark
+              items={delivery.items.map((d) => ({
+                kicker: d.kicker,
+                title: d.title,
+                body: d.body,
+                note: d.price,
+                to: d.to,
+                linkLabel: d.linkLabel,
+              }))}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-paper">
+        <div className="container">
+          <AuditOffer topic={AUDIT_TOPIC[slug]} />
+        </div>
+      </section>
+
       <DarkCallout eyebrow={callout.label} title={callout.title} body={callout.body} />
 
       <FaqSection items={faqs} title={`${service.name}:`} accent="your questions answered." />
@@ -150,7 +198,7 @@ export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
       ) : (
         <CTASection
           heading="Find out where your business is leaking time, leads and money."
-          subtext="A free 60-minute AI audit. You leave with a written roadmap of your top three opportunities, whether or not you work with us."
+          subtext="Book a free 30-minute discovery call. We'll talk through where AI could help and which plan, if any, fits your business."
         />
       )}
     </>

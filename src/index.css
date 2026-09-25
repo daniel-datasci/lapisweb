@@ -283,6 +283,16 @@ img {
   z-index: 1;
 }
 
+.btn-label:has(> .btn-lead-icon) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-lead-icon {
+  flex-shrink: 0;
+}
+
 .btn-icon {
   flex-shrink: 0;
 }

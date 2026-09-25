@@ -10,17 +10,18 @@ import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
 import FaqSection from '@/components/FaqList';
 import RelatedLinks from '@/components/RelatedLinks';
-import { auditLink } from '@/data/site';
+import { AuditOffer, FeeCovers, GuaranteeNote, TierGrid } from '@/components/PricingBlocks';
+import { discoveryLink } from '@/data/site';
+import { leadDesk } from '@/data/pricing';
 import { solutionFaqs } from '@/data/faqs';
 import { solutionRelated } from '@/data/related';
 import { PAGES, crumbsFor, solutionMeta } from '@/seo/routes';
-import { serviceId, serviceNode, tierOffer } from '@/seo/schema';
+import { offersFor, serviceId, serviceNode } from '@/seo/schema';
 
 const META = solutionMeta('leads');
 const PATH = META.path;
 const CRUMBS = crumbsFor(PAGES.solutions, META);
 const FAQS = solutionFaqs.leads;
-const GROWTH_OFFER = tierOffer('Growth System');
 const pains = [
   'Calls go to voicemail at your busiest times.',
   'After-hours and weekend enquiries go cold by Monday.',
@@ -82,6 +83,7 @@ const compareRows = [
   ['Customer experience', 'Bot-only, frustrating dead ends', 'AI for speed, humans for judgement'],
   ['Measured on', 'Messages sent', 'Bookings and revenue recovered'],
   ['After setup', 'Self-serve, on your own', 'Monitored, tuned and improved monthly by our team'],
+  ['How you pay', 'A software licence you set up and run yourself', 'One monthly fee that covers running, fixes and reporting'],
 ];
 
 export default function NeverMissALead() {
@@ -99,21 +101,20 @@ export default function NeverMissALead() {
             description: META.description,
             serviceType: 'AI lead response and lead qualification',
             audience: 'Growing businesses',
-            offers: GROWTH_OFFER ? [GROWTH_OFFER] : undefined,
+            offers: offersFor('lead-desk', 'audit'),
           }),
         ]}
       />
 
       <PageHero
         crumbs={CRUMBS}
-        eyebrow="Solution ② · Revenue response"
+        eyebrow="Solution ② · Lapis Lead Desk"
         text="Every enquiry answered in under 60 seconds. On every channel."
         splitIndex={0}
-        subtext="Calls, WhatsApp messages, Instagram DMs, web forms and emails are answered, qualified and booked into your calendar, day and night. Your team steps in when it matters, and every month you see exactly how much revenue we recovered."
-        ctaLabel="Get a Free Lead Leak Audit"
-        ctaTo={auditLink('leads')}
-        secondaryLabel="See How It Works"
-        secondaryTo={`${PATH}#how-it-works`}
+        subtext="Lapis Lead Desk answers, qualifies and books every call, WhatsApp message, Instagram DM, web form and email, day and night. Your team steps in when it matters, and every month you see exactly what it recovered. From $390/month · ₦250,000/month."
+        ctaTo={discoveryLink('leads', 'lead-desk')}
+        secondaryLabel="See Lead Desk plans"
+        secondaryTo={`${PATH}#plans`}
       />
 
       <section className="section section-paper">
@@ -150,12 +151,12 @@ export default function NeverMissALead() {
           />
           <div className="section-body">
             <ResponsiveTable
-              caption="Typical AI receptionist or AI SDR compared with Lapis Revenue Response"
+              caption="Typical AI receptionist or AI SDR compared with Lapis Lead Desk"
               variant="vs"
               columns={[
                 { label: 'Compared on', hideLabel: true },
                 { label: 'Typical AI receptionist / AI SDR' },
-                { label: 'Lapis Revenue Response' },
+                { label: 'Lapis Lead Desk' },
               ]}
               rows={compareRows}
             />
@@ -176,30 +177,42 @@ export default function NeverMissALead() {
         </div>
       </section>
 
-      <section className="section section-paper">
+      <section className="section section-paper" id="plans">
         <div className="container">
-          <Reveal>
-            <div className="offer-box">
-              <span className="eyebrow">Free Lead Leak Audit</span>
-              <h2 className="section-title">See what you're missing, free.</h2>
-              <p className="section-intro">
-                We'll review your enquiry channels and show you how many leads went unanswered, how long replies took and
-                what that likely cost you. If it doesn't change how you handle leads, you owe nothing.
-              </p>
-            </div>
-          </Reveal>
+          <SectionHeading
+            eyebrow="Lapis Lead Desk · Plans"
+            title="Three plans."
+            accent="No enquiry left waiting."
+            intro="A monthly subscription, not a one-off build: we set it up, run it and report on it every month. Prices exclude VAT; annual plans get 2 months free."
+          />
+          <div className="section-body">
+            <TierGrid product={leadDesk} />
+          </div>
+          <FeeCovers />
+          <GuaranteeNote text="if we miss the response-time SLA in a calendar month, that month's fee is credited." />
         </div>
       </section>
 
-      <RelatedLinks title="Go deeper on" accent="Never Miss a Lead." items={solutionRelated('leads')} />
+      <section className="section section-dark">
+        <div className="container">
+          <AuditOffer
+            topic="leads"
+            title="Want to see what you're missing first?"
+            body="The AI Opportunity Audit ($490 · ₦250,000) reviews your enquiry channels and lead handling, and shows where leads go unanswered, with a ranked plan of what to fix and what it's worth each month. The fee is credited back when you start."
+          />
+        </div>
+      </section>
 
       <FaqSection items={FAQS} title="Never Miss a Lead:" accent="your questions answered." />
 
+      <RelatedLinks title="Go deeper on" accent="Never Miss a Lead." items={solutionRelated('leads')} />
+
       <CTASection
         heading="Stop losing customers to slow replies."
-        subtext="Book a free audit and we'll show you exactly where your leads are leaking, and how quickly we can fix it."
-        ctaLabel="Get My Free Lead Leak Audit"
-        ctaTo={auditLink('leads')}
+        subtext="Book a free 30-minute discovery call. We'll look at how enquiries reach you today and which Lead Desk plan fits."
+        ctaTo={discoveryLink('leads', 'lead-desk')}
+        secondaryLabel="See Lead Desk pricing"
+        secondaryTo="/pricing#lead-desk"
       />
     </>
   );

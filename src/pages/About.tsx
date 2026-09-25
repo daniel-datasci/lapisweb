@@ -132,7 +132,9 @@ export default function About() {
 
       <CTASection
         heading={`Let's make "we can't take on more" a thing of the past.`}
-        subtext="Start with a free audit: sixty minutes, and a roadmap you keep."
+        subtext="Start with a free 30-minute discovery call. No obligation, and a straight answer on whether AI workers can help."
+        secondaryLabel="See Plans & Pricing"
+        secondaryTo="/pricing"
       />
     </>
   );

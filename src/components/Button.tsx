@@ -44,6 +44,8 @@ export default function Button({
   type = 'button',
   disabled = false,
 }: ButtonProps) {
+  const external = !!href && /^https?:\/\//.test(href);
+  const linkProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
   const classes = `${variantClass[variant]} ${sizeClass[size]} ${slideRight ? 'btn-slide-right' : ''} ${className}`.trim();
   const content = (
     <>
@@ -58,7 +60,7 @@ export default function Button({
         {content}
       </Link>
     ) : href ? (
-      <a href={href} className={classes} onClick={onClick}>
+      <a href={href} className={classes} onClick={onClick} {...linkProps}>
         {content}
       </a>
     ) : (
@@ -78,7 +80,7 @@ export default function Button({
   }
   if (href) {
     return (
-      <a href={href} className={classes} onClick={onClick}>
+      <a href={href} className={classes} onClick={onClick} {...linkProps}>
         {content}
       </a>
     );

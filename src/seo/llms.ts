@@ -7,7 +7,24 @@ import { services } from '@/data/services';
 import { industries } from '@/data/industries';
 import { caseStudies } from '@/data/testimonials';
 import { blogPosts } from '@/data/blog';
-import { pricingTiers } from '@/data/pricing';
+import {
+  PRICING_NOTE,
+  commercialTerms,
+  everyPlanIncludes,
+  extraNgn,
+  extras,
+  extraUsd,
+  guarantees,
+  ngn,
+  ownership,
+  pricingFaqs,
+  productFromPrice,
+  products,
+  runStandard,
+  usd,
+  workerEssentials,
+  type Product,
+} from '@/data/pricing';
 import { faqs, serviceFaqs, solutionFaqs, type FaqItem } from '@/data/faqs';
 import { clientExpectations, processSteps } from '@/data/process';
 import {
@@ -42,7 +59,17 @@ const keyFacts = () => [
   `- Google Business Profile: ${SOCIAL_LINKS.googleBusiness}`,
 ];
 
-const tierLine = (t: (typeof pricingTiers)[number]) => `${t.name} (${t.price}): ${plain(t.tagline)}`;
+const AUDIT = extras.find((e) => e.id === 'audit')!;
+
+const productLine = (p: Product) => `${p.name} (${p.kind.toLowerCase()}, ${p.pillar}): ${p.blurb} ${productFromPrice(p)}.`;
+
+const tierLines = (p: Product) =>
+  (p.tiers ?? []).map(
+    (t) =>
+      `- ${t.name}${t.popular ? ' (most popular)' : ''}: ${t.from ? 'from ' : ''}${usd(t.monthly.usd)}/month · ${t.from ? 'from ' : ''}${ngn(t.monthly.ngn)}/month. ${t.features.join('; ')}. Onboarding: ${
+        t.onboarding ? `${usd(t.onboarding.usd)} · ${ngn(t.onboarding.ngn)}` : t.onboardingNote
+      }.`,
+  );
 
 export function buildLlmsTxt(): string {
   const lines = [
@@ -50,7 +77,7 @@ export function buildLlmsTxt(): string {
     '',
     `> ${SITE_DESCRIPTION}`,
     '',
-    `${SITE_NAME} is an AI automation and AI agents company based in ${LOCATION.label}. It builds AI systems for growing businesses and then runs them: monitoring, maintenance, fixes and a monthly report of hours returned, leads answered and revenue recovered. Every engagement starts with a free 60-minute AI audit.`,
+    `${SITE_NAME} is an AI automation and AI agents company based in ${LOCATION.label}. It sells operated AI on subscription: "Hire AI workers, not more staff. We build them, run them, and show you what they did every month." Every AI worker comes with a job description, a KPI, an operator (Lapis monitors and fixes it under an SLA) and a monthly impact report. Every engagement starts with a free 30-minute discovery call.`,
     '',
     '## Key facts',
     '',
@@ -77,7 +104,10 @@ export function buildLlmsTxt(): string {
     '',
     '## Pricing',
     '',
-    ...pricingTiers.map((t) => `- ${tierLine(t)}`),
+    ...products.map((p) => `- ${productLine(p)}`),
+    `- ${AUDIT.name}: ${extraUsd(AUDIT)} · ${extraNgn(AUDIT)}. ${AUDIT.description}`,
+    `- Every plan includes: ${everyPlanIncludes.join('; ')}.`,
+    `- ${PRICING_NOTE}`,
     link('Pricing', PAGES.pricing.path, PAGES.pricing.description),
     '',
     '## Case studies',
@@ -91,7 +121,7 @@ export function buildLlmsTxt(): string {
     '## Company',
     '',
     link(PAGES.about.label, PAGES.about.path, PAGES.about.description),
-    link('Book a free AI audit', PAGES.contact.path, PAGES.contact.description),
+    link('Book a free discovery call', PAGES.contact.path, PAGES.contact.description),
     '',
     '## Optional',
     '',
@@ -156,6 +186,8 @@ export function buildLlmsFullTxt(): string {
       '',
       ...s.bullets.map((b) => `- ${plain(b)}`),
       '',
+      `How it's delivered and priced: ${s.delivery.title}. ${s.delivery.body}`,
+      '',
     );
     for (const p of s.programmes ?? []) {
       out.push(`Programme: ${p.title}. ${plain(p.body)}`, '', ...p.points.map((pt) => `- ${plain(pt)}`), '');
@@ -187,9 +219,28 @@ export function buildLlmsFullTxt(): string {
   out.push('### Frequently asked questions', '', ...faqBlock(faqs).map((l) => (l.startsWith('### ') ? `#${l}` : l)));
 
   out.push('## Pricing', '', `URL: ${absoluteUrl(PAGES.pricing.path)}`, '');
-  for (const t of pricingTiers) {
-    out.push(`### ${t.name}: ${t.price}`, '', plain(t.tagline), '', ...t.features.map((f) => `- ${plain(f)}`), '');
+  out.push(
+    'Hire AI workers, not more staff. We build them, run them and report what they did every month, for a fraction of the cost of a hire. No large upfront build fees and no systems left behind after launch.',
+    '',
+    `Global clients are billed in USD; Nigeria-based clients are billed in NGN. ${PRICING_NOTE}`,
+    '',
+    '### Every AI worker comes with',
+    '',
+    ...workerEssentials.map((w) => `- ${w.title}: ${w.text}`),
+    '',
+  );
+  for (const p of products) {
+    out.push(`### ${p.name}: ${p.promise}`, '', `${p.kind}. ${p.blurb} ${productFromPrice(p)}. Solution page: ${absoluteUrl(p.solutionPath)}`, '');
+    if (p.tiers) out.push(...tierLines(p), '');
+    if (p.tierNote) out.push(p.tierNote, '');
   }
+  out.push('### Projects, retainers and add-ons', '');
+  out.push(...extras.map((e) => `- ${e.name} (${e.kind.toLowerCase()}): ${e.priceText ?? `${extraUsd(e)} · ${extraNgn(e)}`}. ${e.description}`), '');
+  out.push('### The Lapis Run standard: what the monthly fee pays for', '', ...runStandard.map((r) => `- ${r.title}: ${r.text}`), '');
+  for (const g of [...commercialTerms, guarantees, ownership]) {
+    out.push(`### ${g.title}`, '', ...g.items.map((i) => `- ${i}`), '');
+  }
+  out.push('### Pricing questions', '', ...pricingFaqs.flatMap((f) => [`**${f.q}**`, '', f.a, '']));
 
   out.push('## Case studies', '');
   for (const c of caseStudies) {
@@ -228,7 +279,7 @@ export function buildLlmsFullTxt(): string {
   out.push(
     '## Contact',
     '',
-    `Book a free 60-minute AI audit: ${absoluteUrl(PAGES.contact.path)}`,
+    `Book a free 30-minute discovery call: ${absoluteUrl(PAGES.contact.path)}`,
     '',
     ...PHONE_LINES.map((p) => `- Phone and WhatsApp (${p.country}): ${p.display} (${p.whatsapp})`),
     `- Email: ${CONTACT_EMAIL}`,

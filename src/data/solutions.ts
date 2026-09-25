@@ -1,4 +1,5 @@
-import type { AuditTopic } from './site';
+import type { ContactTopic } from './site';
+import type { ProductId } from './pricing';
 
 export type PillarId = 'capacity' | 'leads' | 'ai-spend';
 
@@ -8,8 +9,11 @@ export type Solution = {
   name: string;
   path: string;
   theme: string;
+  /** The product this pillar is sold as. */
+  product: string;
+  productId: ProductId;
   navDescription: string;
-  topic: AuditTopic;
+  topic: ContactTopic;
   quote: string;
   body: string;
   stat: string;
@@ -24,10 +28,12 @@ export const solutions: Solution[] = [
     name: 'Grow Without Hiring',
     path: '/solutions/grow-without-hiring',
     theme: 'Capacity',
-    navDescription: 'Get hours back and scale without new salaries',
+    product: 'Lapis AI Workforce',
+    productId: 'ai-workforce',
+    navDescription: 'AI workers that give your team hours back',
     topic: 'capacity',
     quote: 'If I stop, everything stops.',
-    body: 'Every approval, question and report runs through you or a few overloaded people. Growth means hiring, and hiring is slow and expensive. We automate the work that bottlenecks you so your team can do more without new salaries.',
+    body: 'Every approval, question and report runs through you or a few overloaded people. Growth means hiring, and hiring is slow and expensive. Our AI workers take on the work that bottlenecks you, so your team can move to higher-value work.',
     stat: '80% of workers and leaders say they lack the time or energy to do their work.',
     statSource: 'Microsoft Work Trend Index 2025',
     linkLabel: 'Get your hours back',
@@ -38,6 +44,8 @@ export const solutions: Solution[] = [
     name: 'Never Miss a Lead',
     path: '/solutions/never-miss-a-lead',
     theme: 'Revenue response',
+    product: 'Lapis Lead Desk',
+    productId: 'lead-desk',
     navDescription: 'Answer every enquiry in under 60 seconds',
     topic: 'leads',
     quote: 'How many customers went elsewhere today?',
@@ -52,6 +60,8 @@ export const solutions: Solution[] = [
     name: 'Make Your AI Pay',
     path: '/solutions/make-your-ai-pay',
     theme: 'AI to production',
+    product: '45-Day AI Rescue',
+    productId: 'ai-rescue',
     navDescription: 'Turn stalled AI into measurable return',
     topic: 'ai-spend',
     quote: 'We paid for AI and have nothing to show.',

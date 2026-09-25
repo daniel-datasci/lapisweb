@@ -158,7 +158,7 @@ export default function CaseStudyDetail() {
 
       <CTASection
         heading="Want results like these?"
-        subtext="Every engagement starts with a free audit. We'll show you where you're leaking time, leads and money, and what fixing it is worth."
+        subtext="Every engagement starts with a free 30-minute discovery call. We'll talk through where you're leaking time, leads and money, and which AI workers would fix it."
       />
     </>
   );

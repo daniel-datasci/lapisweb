@@ -2,7 +2,17 @@ import { Link } from 'react-router-dom';
 import { Instagram, Linkedin, MapPin } from 'lucide-react';
 import { solutions } from '@/data/solutions';
 import { services } from '@/data/services';
-import { CONTACT_EMAIL, LOCATION, PHONE_LINES, SITE_NAME, SOCIAL_LINKS } from '@/data/site';
+import {
+  CONTACT_EMAIL,
+  DISCOVERY_CTA,
+  LOCATION,
+  PHONE_LINES,
+  SITE_NAME,
+  SOCIAL_LINKS,
+  WHATSAPP_CTA,
+  WHATSAPP_LINK,
+  discoveryLink,
+} from '@/data/site';
 import logsImage from '@/data/logo-mark.webp';
 import './Footer.css';
 
@@ -36,8 +46,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="footer-blurb">
-              The Lapis AI builds and runs the AI systems behind growing teams: more capacity, every lead answered, and
-              AI that pays. Serving businesses from Lagos to London, Toronto to Texas.
+              The Lapis AI builds, runs and reports on AI workers for growing teams, on a monthly subscription: more
+              capacity, every lead answered, and AI that pays. Serving businesses from Lagos to London, Toronto to Texas.
             </p>
             <ul className="footer-social" aria-label={`${SITE_NAME} online`}>
               {socialLinks.map(({ label, href, Icon }) => (
@@ -114,7 +124,12 @@ export default function Footer() {
                   <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
                 </li>
                 <li>
-                  <Link to="/contact">Book a Free AI Audit</Link>
+                  <Link to={discoveryLink()}>{DISCOVERY_CTA}</Link>
+                </li>
+                <li>
+                  <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
+                    {WHATSAPP_CTA}
+                  </a>
                 </li>
               </ul>
             </address>

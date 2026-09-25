@@ -25,12 +25,15 @@ import PersonaGrid from '@/components/PersonaGrid';
 import ProcessSteps from '@/components/ProcessSteps';
 import QuoteGrid from '@/components/QuoteGrid';
 import CTASection from '@/components/CTASection';
+import Reveal from '@/components/Reveal';
+import { ProductCards, WorkerEssentialCards } from '@/components/PricingBlocks';
 import { caseStudies } from '@/data/testimonials';
-import { DEFAULT_OG_TITLE } from '@/data/site';
+import { AUDIT_PRICE, PRICING_NOTE, everyPlanIncludes, leadDesk, ngn, pricePair, usd } from '@/data/pricing';
+import { DEFAULT_OG_TITLE, discoveryLink } from '@/data/site';
 import { PAGES } from '@/seo/routes';
 import './Home.css';
 
-const heroText = 'Grow without adding headcount, losing leads, or wasting money on AI.';
+const heroText = 'Hire AI workers, not more staff.';
 
 const whyItFails: InfoCard[] = [
   {
@@ -56,19 +59,20 @@ const whyItFails: InfoCard[] = [
 ];
 
 const differenceRows = [
-  ['After launch', "Handover, then you're on your own", 'We run, monitor and fix it under a service agreement'],
-  ['Proof of value', '"It\'s working" (probably)', 'A monthly report on hours returned, leads answered and revenue recovered'],
+  ['After launch', "Handover, then you're on your own", 'An operator runs, monitors and fixes it under a service-level agreement'],
+  ['Proof of value', '"It\'s working" (probably)', 'A monthly impact report on hours returned, leads answered and revenue recovered'],
+  ['How you pay', 'A project fee, then extra for every fix', 'One monthly fee with running, fixes, upgrades and hosting included. No hourly billing'],
   ['Your data', 'Tested on clean demo examples', 'Built on data pipelines that handle your real, messy data'],
   ['Customers', 'The bot handles everything, badly', 'AI handles the routine; your people step in when it matters'],
   ['Fit', 'One-size-fits-all templates', 'Designed around your workflows, tools and market'],
-  ['Who you work with', 'Account managers', 'The senior team that designs and builds your system'],
+  ['Who you work with', 'Account managers', 'The senior team that designs and builds your AI workers'],
 ];
 
 const results = [
   { value: '8+ hrs', label: 'returned per agent, every week (real estate)' },
   { value: '14%', label: 'RevPAR improvement (hospitality)' },
   { value: '<4 hrs', label: 'to spot and flag market changes (SaaS)' },
-  { value: '5 weeks', label: 'from free audit to a live system' },
+  { value: '2–4 wks', label: 'to go live after signing' },
 ];
 
 const personas = [
@@ -111,8 +115,8 @@ const nigeria: InfoCard[] = [
   },
   {
     icon: <Coins size={26} />,
-    title: 'Local & global pricing',
-    body: 'Pay in naira in Nigeria, or in dollars, pounds or euros abroad. The same senior team either way.',
+    title: 'Priced in naira and dollars',
+    body: 'Every plan has a naira and a US dollar price. Nigeria-based businesses pay in naira by card, direct debit or bank transfer.',
   },
   {
     icon: <ShieldCheck size={26} />,
@@ -124,21 +128,21 @@ const nigeria: InfoCard[] = [
 const steps = [
   {
     icon: <Search size={26} />,
-    phase: 'Week 1 · Audit',
-    title: 'Find the leaks',
-    body: "A free 60-minute audit to map where you're losing time, leads and money. You leave with a written roadmap of your top three opportunities.",
+    phase: 'Step 1 · Discover',
+    title: 'Find the right AI workers',
+    body: `A free 30-minute discovery call, then a paid AI Opportunity Audit (${pricePair(AUDIT_PRICE)}, credited if you subscribe) that ranks the AI workers worth hiring and what each is worth every month.`,
   },
   {
     icon: <Hammer size={26} />,
-    phase: 'Weeks 2–5 · Build',
+    phase: 'Weeks 1–4 · Onboard',
     title: 'Build it properly',
-    body: 'We build your automations and agents on solid infrastructure, connected to the tools you already use. You have something live within the first month.',
+    body: 'Pick a plan and we build your AI workers on solid infrastructure, connected to the tools you already use. They go live 2–4 weeks after signing.',
   },
   {
     icon: <Activity size={26} />,
-    phase: 'Ongoing · Run',
+    phase: 'Every month · Run',
     title: 'Run it and prove it',
-    body: 'We monitor, maintain and improve your systems 24/7, and meet with you monthly to review hours returned and revenue recovered.',
+    body: 'We monitor, fix and improve your AI workers 24/7, and send a monthly impact report. At 90 days, we propose the next AI worker.',
   },
 ];
 
@@ -159,27 +163,28 @@ export default function Home() {
               <span className="eyebrow hero-eyebrow">Lagos · London · Toronto · New York</span>
               <TypewriterHeading
                 text={heroText}
-                splitIndex={31}
+                splitIndex={17}
                 colorBefore="var(--white)"
                 colorAfter="var(--cyan-400)"
                 className="hero-title"
               />
               <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>
-                The Lapis AI builds and runs the AI systems behind growing businesses. We take repetitive work off your team, 
-                answer every enquiry in under a minute, turn stalled AI projects into systems that pay for themselves, 
-                and train your team in Advanced Analytics so your data starts paying its way too. Then we stay: 
-                we keep everything running and show you the results every month.
+                We build them, run them, and show you what they did every month. The Lapis AI gives growing businesses
+                operated AI on subscription: AI workers that answer every enquiry in under a minute, take repetitive work
+                off your team and turn stalled AI projects into systems that pay their way. Each one comes with a job
+                description, a KPI, an operator and a monthly impact report.
               </p>
               <div className="hero-cta-row fade-up" style={{ animationDelay: '1.8s' }}>
-                <Button to="/contact" variant="primary" size="lg" borderWrap icon>
-                  Book My Free AI Audit
+                <Button to={discoveryLink()} variant="primary" size="lg" borderWrap icon>
+                  <span className="hide-xs">Book a </span>Free Discovery Call
                 </Button>
-                <Button to="/how-it-works" variant="ghost-light" size="lg">
-                  See How It Works
+                <Button to="/pricing" variant="ghost-light" size="lg">
+                  See Plans &amp; Pricing
                 </Button>
               </div>
               <p className="home-trust fade-up" style={{ animationDelay: '2s' }}>
-                Free 60-minute audit · Written roadmap you keep · No obligation
+                Free 30-minute discovery call · Plans from {usd(leadDesk.startingPrice.usd)}/month (
+                {ngn(leadDesk.startingPrice.ngn)}) · No hourly billing
               </p>
             </div>
             <div className="home-hero-right">
@@ -206,6 +211,48 @@ export default function Home() {
         <section className="section section-dark">
           <div className="container">
             <SectionHeading
+              eyebrow="Operated AI"
+              title="Every AI worker comes with four things."
+              intro="You're not buying software or a one-off build. You're hiring an AI worker with a clear job, and we stay accountable for it."
+            />
+            <div className="section-body">
+              <WorkerEssentialCards />
+            </div>
+          </div>
+        </section>
+
+        <section className="section section-paper">
+          <div className="container">
+            <SectionHeading
+              eyebrow="Plans & pricing"
+              title="Three ways to hire AI workers."
+              accent="One monthly fee."
+              intro={`Start with the problem that costs you most. ${PRICING_NOTE}`}
+            />
+            <div className="section-body">
+              <ProductCards />
+            </div>
+            <Reveal>
+              <p className="pricing-includes">
+                <strong>Every plan includes:</strong> {everyPlanIncludes.join(' · ')}.
+              </p>
+            </Reveal>
+            <Reveal>
+              <div className="cta-row-center home-plans-cta">
+                <Button to="/pricing" variant="primary" borderWrap icon>
+                  See Plans &amp; Pricing
+                </Button>
+                <Button to={discoveryLink()} variant="ghost-light">
+                  Book a Free Discovery Call
+                </Button>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="section section-dark">
+          <div className="container">
+            <SectionHeading
               eyebrow="Why most AI help fails"
               title="The problem isn't AI."
               accent="It's how AI gets sold to you."
@@ -223,7 +270,7 @@ export default function Home() {
               eyebrow="The Lapis difference"
               title="We don't just build it."
               accent="We run it."
-              intro="Every Lapis system comes with a team that monitors it, maintains it and improves it, plus a monthly report that shows you exactly what it's worth."
+              intro="Every Lapis AI worker has an operator who monitors it, maintains it and improves it, plus a monthly impact report that shows you exactly what it's worth."
             />
             <div className="section-body">
               <ResponsiveTable
@@ -272,11 +319,18 @@ export default function Home() {
           <div className="container">
             <SectionHeading
               eyebrow="How it works"
-              title="From first conversation to a system that runs itself, in weeks."
+              title="From first call to AI workers on the job, in weeks."
             />
             <div className="section-body">
               <ProcessSteps steps={steps} />
             </div>
+            <Reveal>
+              <div className="cta-row-center home-plans-cta">
+                <Button to="/how-it-works" variant="ghost-light">
+                  See How It Works
+                </Button>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -290,8 +344,11 @@ export default function Home() {
         </section>
 
         <CTASection
-          heading="Find out where your business is leaking time, leads and money."
-          subtext="A free 60-minute AI audit. You leave with a written roadmap of your top three opportunities, whether or not you work with us."
+          heading="Find out which AI worker to hire first."
+          subtext="Book a free 30-minute discovery call. We'll talk through where your business is losing time, leads and money, and which plan fits, whether or not you work with us."
+          ctaTo={discoveryLink()}
+          secondaryLabel="See Plans & Pricing"
+          secondaryTo="/pricing"
         />
       </div>
     </>

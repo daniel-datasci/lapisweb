@@ -1,23 +1,34 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Check, ChevronDown, Mail, MapPin, Phone } from 'lucide-react';
+import { Check, ChevronDown, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import Seo from '@/components/Seo';
 import TypewriterHeading from '@/components/TypewriterHeading';
 import Button from '@/components/Button';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { AREA_SERVED_LABEL, CONTACT_EMAIL, LOCATION, PHONE_LINES, type AuditTopic } from '@/data/site';
+import {
+  AREA_SERVED_LABEL,
+  CONTACT_EMAIL,
+  LOCATION,
+  PHONE_LINES,
+  WHATSAPP_CTA,
+  WHATSAPP_LINK,
+  type ContactTopic,
+  type InterestPlan,
+} from '@/data/site';
+import { PLAN_OPTIONS } from '@/data/pricing';
 import { useHydrated } from '@/hooks/useHydrated';
 import { PAGES, crumbsFor } from '@/seo/routes';
 import { ORG_ID } from '@/seo/schema';
 import './Contact.css';
 
-const heading = "Let's find where your business is leaking time, leads and money.";
+// Word joiners keep "30-minute" together on narrow screens.
+const heading = 'Book a free 30\u2060-\u2060minute discovery call.';
 
 const crumbs = crumbsFor(PAGES.contact);
 
 const countries = ['Nigeria', 'Ghana', 'Kenya', 'South Africa', 'UK', 'US', 'Canada', 'EU', 'Other'];
 
-type ProblemValue = AuditTopic | 'not-sure';
+type ProblemValue = ContactTopic | 'not-sure';
 
 const problems: { value: ProblemValue; label: string }[] = [
   { value: 'capacity', label: "We can't take on more without hiring" },
@@ -29,17 +40,39 @@ const problems: { value: ProblemValue; label: string }[] = [
 
 const teamSizes = ['1–10', '11–50', '51–200', '201–1,000', '1,000+'];
 
-const topicSources: Record<AuditTopic, string> = {
-  capacity: 'Grow Without Hiring audit link',
-  leads: 'Lead Leak Audit link',
-  'ai-spend': 'AI Spend Audit link',
+const topicSources: Record<ContactTopic, string> = {
+  capacity: 'Grow Without Hiring page',
+  leads: 'Never Miss a Lead page',
+  'ai-spend': 'Make Your AI Pay page',
   training: 'AI & Analytics Training page',
 };
 
-const isTopic = (topic: string | null): topic is AuditTopic =>
+/** The plan each problem most often leads to, used when a link only carries ?topic=. */
+const topicPlans: Record<ContactTopic, InterestPlan> = {
+  capacity: 'ai-workforce',
+  leads: 'lead-desk',
+  'ai-spend': 'ai-rescue',
+  training: 'workshop',
+};
+
+const planProblems: Partial<Record<InterestPlan, ContactTopic>> = {
+  'ai-workforce': 'capacity',
+  'lead-desk': 'leads',
+  'ai-rescue': 'ai-spend',
+  workshop: 'training',
+};
+
+const isTopic = (topic: string | null): topic is ContactTopic =>
   topic !== null && Object.prototype.hasOwnProperty.call(topicSources, topic);
 
-const topicToProblem = (topic: string | null): ProblemValue | '' => (isTopic(topic) ? topic : '');
+const isPlan = (plan: string | null): plan is InterestPlan =>
+  plan !== null && PLAN_OPTIONS.some((p) => p.value === plan);
+
+const initialProblem = (topic: string | null, plan: string | null): ProblemValue | '' =>
+  isTopic(topic) ? topic : isPlan(plan) ? (planProblems[plan] ?? '') : '';
+
+const initialPlan = (topic: string | null, plan: string | null): InterestPlan | '' =>
+  isPlan(plan) ? plan : isTopic(topic) ? topicPlans[topic] : '';
 
 const escapeHtml = (value: string) =>
   value
@@ -57,35 +90,46 @@ type Form = {
   company: string;
   country: string;
   problem: ProblemValue | '';
+  plan: InterestPlan | '';
   teamSize: string;
   message: string;
 };
 
 export default function Contact() {
   const [params] = useSearchParams();
-  // The prerendered page has no query string, so ?topic= is read once hydrated to keep both renders identical.
+  // The prerendered page has no query string, so ?topic= and ?plan= are read once hydrated to keep both renders identical.
   const hydrated = useHydrated();
   const topic = hydrated ? params.get('topic') : null;
+  const planParam = hydrated ? params.get('plan') : null;
+  const linkKey = `${topic ?? ''}|${planParam ?? ''}`;
 
   const [form, setForm] = useState<Form>({
     name: '',
     email: '',
     company: '',
     country: '',
-    problem: topicToProblem(topic),
+    problem: initialProblem(topic, planParam),
+    plan: initialPlan(topic, planParam),
     teamSize: '',
     message: '',
   });
-  const [prevTopic, setPrevTopic] = useState(topic);
+  const [prevLinkKey, setPrevLinkKey] = useState(linkKey);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Follow in-app navigation between ?topic= links while the page stays mounted.
-  if (topic !== prevTopic) {
-    setPrevTopic(topic);
-    const next = topicToProblem(topic);
-    if (next) setForm((prev) => ({ ...prev, problem: next }));
+  // Follow in-app navigation between ?topic= / ?plan= links while the page stays mounted.
+  if (linkKey !== prevLinkKey) {
+    setPrevLinkKey(linkKey);
+    const nextProblem = initialProblem(topic, planParam);
+    const nextPlan = initialPlan(topic, planParam);
+    if (nextProblem || nextPlan) {
+      setForm((prev) => ({
+        ...prev,
+        problem: nextProblem || prev.problem,
+        plan: nextPlan || prev.plan,
+      }));
+    }
   }
 
   const handleChange = <K extends keyof Form>(field: K, value: Form[K]) => {
@@ -93,10 +137,23 @@ export default function Contact() {
     setError('');
   };
 
+  const isAudit = form.plan === 'audit';
+  const submitLabel = isAudit ? 'Request My AI Opportunity Audit' : 'Book My Free Discovery Call';
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.company || !form.country || !form.problem || !form.teamSize) {
-      setError("Please fill in your name, work email, company, country, what's costing you most and your team size.");
+    if (
+      !form.name ||
+      !form.email ||
+      !form.company ||
+      !form.country ||
+      !form.problem ||
+      !form.plan ||
+      !form.teamSize
+    ) {
+      setError(
+        "Please fill in your name, work email, company, country, what's costing you most, what you're interested in and your team size.",
+      );
       return;
     }
     if (!EMAIL_PATTERN.test(form.email)) {
@@ -114,20 +171,32 @@ export default function Contact() {
     }
 
     const problemLabel = problems.find((p) => p.value === form.problem)?.label ?? form.problem;
-    const isTraining = form.problem === 'training';
-    const emailTitle = isTraining ? 'New AI &amp; Analytics Training Enquiry' : 'New Free AI Audit Request';
-    const emailIntro = isTraining
-      ? 'A new training enquiry came in from The Lapis AI website.'
-      : 'A new audit request came in from The Lapis AI website.';
+    const planLabel = PLAN_OPTIONS.find((p) => p.value === form.plan)?.label ?? form.plan;
+    const isWorkshop = form.plan === 'workshop';
+    const emailTitle = isWorkshop
+      ? 'New Team AI Workshop Enquiry'
+      : isAudit
+        ? 'New AI Opportunity Audit Request'
+        : 'New Free Discovery Call Request';
+    const emailIntro = isWorkshop
+      ? 'A new workshop enquiry came in from The Lapis AI website.'
+      : isAudit
+        ? 'A new AI Opportunity Audit request came in from The Lapis AI website.'
+        : 'A new discovery call request came in from The Lapis AI website.';
     const message = form.message.trim() || 'No additional message provided.';
+    const sourceParts = [
+      isTopic(topic) ? topicSources[topic] : '',
+      isPlan(planParam) ? `plan link: ${PLAN_OPTIONS.find((p) => p.value === planParam)?.label ?? planParam}` : '',
+    ].filter(Boolean);
     const safe = {
       name: escapeHtml(form.name),
       email: escapeHtml(form.email),
       company: escapeHtml(form.company),
       country: escapeHtml(form.country),
       problem: escapeHtml(problemLabel),
+      plan: escapeHtml(planLabel),
       teamSize: escapeHtml(form.teamSize),
-      source: escapeHtml(isTopic(topic) ? topicSources[topic] : ''),
+      source: escapeHtml(sourceParts.join(' · ')),
       message: escapeHtml(message),
     };
 
@@ -145,9 +214,10 @@ export default function Contact() {
           company: form.company,
           country: form.country,
           problem: problemLabel,
+          plan: planLabel,
           team_size: form.teamSize,
           topic: topic ?? '',
-          interest: problemLabel,
+          interest: planLabel,
           stage: form.teamSize,
           message,
           to_email: 'info.thelapisai@gmail.com',
@@ -164,6 +234,7 @@ export default function Contact() {
                 <p style="margin: 0 0 12px;"><strong>Company:</strong> ${safe.company}</p>
                 <p style="margin: 0 0 12px;"><strong>Country:</strong> ${safe.country}</p>
                 <p style="margin: 0 0 12px;"><strong>What's costing them most:</strong> ${safe.problem}</p>
+                <p style="margin: 0 0 12px;"><strong>Interested in:</strong> ${safe.plan}</p>
                 <p style="margin: 0 0 12px;"><strong>Team size:</strong> ${safe.teamSize}</p>
                 ${safe.source ? `<p style="margin: 0 0 12px;"><strong>Came from:</strong> ${safe.source}</p>` : ''}
                 <p style="margin: 0 0 12px;"><strong>Anything else:</strong></p>
@@ -199,7 +270,7 @@ export default function Contact() {
               </span>
               <h1 className="contact-success-title">Thanks. We've got it.</h1>
               <p className="contact-success-body">
-                Expect a reply from a senior member of our team within one business day.
+                Expect a reply from a senior member of our team within one business day to find a time that suits you.
               </p>
               <Button to="/" variant="ghost-light" size="lg">
                 Back to Home
@@ -221,8 +292,9 @@ export default function Contact() {
             <span className="eyebrow hero-eyebrow">Contact</span>
             <TypewriterHeading text={heading} splitIndex={0} className="hero-title" />
             <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>
-              Book your free AI audit: sixty minutes, no obligation, and a written roadmap you keep. Tell us a little
-              about your business and we'll reply within one business day.
+              Thirty minutes with a senior member of our team, with no obligation. We'll talk through where your
+              business is losing time, leads or money, and which AI workers would help. Tell us a little about your
+              business and we'll reply within one business day to book a time.
             </p>
             <address className="contact-details fade-up" style={{ animationDelay: '1.7s' }}>
               <h2 className="contact-details-title">Prefer to call, WhatsApp or email?</h2>
@@ -269,6 +341,12 @@ export default function Contact() {
                 </li>
               </ul>
             </address>
+            <div className="contact-whatsapp fade-up" style={{ animationDelay: '1.8s' }}>
+              <Button href={WHATSAPP_LINK} variant="ghost-light">
+                <MessageCircle size={18} aria-hidden="true" className="btn-lead-icon" />
+                {WHATSAPP_CTA}
+              </Button>
+            </div>
           </div>
 
           <div className="contact-right fade-up" style={{ animationDelay: '1.8s' }}>
@@ -359,6 +437,29 @@ export default function Contact() {
               </div>
 
               <div className="form-field form-field-full">
+                <label htmlFor="plan">Interested in *</label>
+                <div className="select-wrap">
+                  <select
+                    id="plan"
+                    aria-required="true"
+                    value={form.plan}
+                    onChange={(e) => handleChange('plan', e.target.value as InterestPlan)}
+                    className={form.plan ? 'has-value' : ''}
+                  >
+                    <option value="" disabled>
+                      Select a plan or service
+                    </option>
+                    {PLAN_OPTIONS.map((p) => (
+                      <option key={p.value} value={p.value}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown size={18} className="select-arrow" aria-hidden="true" />
+                </div>
+              </div>
+
+              <div className="form-field form-field-full">
                 <label htmlFor="teamSize">Team size *</label>
                 <div className="select-wrap">
                   <select
@@ -408,7 +509,7 @@ export default function Contact() {
                   className="contact-submit"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Sending…' : 'Book My Free AI Audit'}
+                  {isSubmitting ? 'Sending…' : submitLabel}
                 </Button>
               </div>
 

@@ -5,6 +5,7 @@ import Button from './Button';
 import { solutions } from '@/data/solutions';
 import { services } from '@/data/services';
 import { industries } from '@/data/industries';
+import { DISCOVERY_CTA, DISCOVERY_CTA_SHORT, discoveryLink } from '@/data/site';
 import './Header.css';
 import logsImage from '@/data/logo-mark.webp';
 
@@ -185,8 +186,8 @@ export default function Header() {
         </nav>
 
         <div className="header-actions">
-          <Button to="/contact" variant="primary" size="sm" borderWrap icon>
-            Book a Free AI Audit
+          <Button to={discoveryLink()} variant="primary" size="sm" borderWrap icon>
+            {DISCOVERY_CTA_SHORT}
           </Button>
           <button
             type="button"
@@ -255,8 +256,8 @@ export default function Header() {
             );
           })}
         </nav>
-        <Button to="/contact" variant="primary" size="lg" borderWrap icon>
-          Book a Free AI Audit
+        <Button to={discoveryLink()} variant="primary" size="lg" borderWrap icon>
+          {DISCOVERY_CTA}
         </Button>
       </div>
     </header>

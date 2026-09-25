@@ -8,7 +8,7 @@ import { services } from '@/data/services';
 import { industries } from '@/data/industries';
 import { caseStudies } from '@/data/testimonials';
 import { blogPosts } from '@/data/blog';
-import { pricingTiers } from '@/data/pricing';
+import { aiRescue, aiWorkforce, leadDesk, ngn, usd } from '@/data/pricing';
 import { DEFAULT_OG_TITLE, SLOGAN } from '@/data/site';
 
 export type ShareImage = { eyebrow: string; headline: string };
@@ -31,19 +31,15 @@ export type SiteRoute = PageMeta & {
   lastmod?: string;
 };
 
-const growth = pricingTiers.find((t) => t.name === 'Growth System');
-const growthMonthly = growth?.tagline.match(/\$[\d,.]+\/month/)?.[0];
-const pricingDescription =
-  growth && growthMonthly
-    ? `AI automation pricing: start with a free AI audit, then a Growth System at ${growth.price} one-time plus ${growthMonthly} to run it, with a monthly report of results.`
-    : "AI automation pricing: start with a free AI audit, then pay for systems that are built, run and measured, with a monthly report of what they're worth.";
+/** Built from the price book, so the snippet always matches the Pricing page. */
+const pricingDescription = `Lead Desk from ${usd(leadDesk.startingPrice.usd)}/month (${ngn(leadDesk.startingPrice.ngn)}), AI Workforce from ${usd(aiWorkforce.startingPrice.usd)} per AI worker and the 45-Day AI Rescue from ${usd(aiRescue.startingPrice.usd)}. Monitoring, fixes and reports included.`;
 
 export const PAGES = {
   home: {
     path: '/',
-    title: 'AI Automation & AI Agents for Growing Teams | The Lapis AI',
+    title: 'AI Automation & AI Workers on Subscription | The Lapis AI',
     description:
-      'We build and run AI automation and AI agents for growing businesses: more capacity, every lead answered in under 60 seconds and AI that pays. Book a free audit.',
+      'Hire AI workers, not more staff. We build, run and report on AI automation and AI agents for growing businesses, from $390/month. Book a free discovery call.',
     label: 'Home',
     og: { eyebrow: SLOGAN, headline: DEFAULT_OG_TITLE },
   },
@@ -51,14 +47,14 @@ export const PAGES = {
     path: '/solutions',
     title: 'AI Solutions for Capacity, Leads and ROI | The Lapis AI',
     description:
-      'Grow without hiring, never miss a lead and make your AI investment pay. Three problems, one team that builds and runs the fix. Start with a free AI audit.',
+      'Grow without hiring, never miss a lead and make your AI pay: Lead Desk, AI Workforce and the 45-Day AI Rescue, built and run for you by one team every month.',
     label: 'Solutions',
   },
   services: {
     path: '/services',
     title: 'AI Consulting, Automation & Agent Services | The Lapis AI',
     description:
-      'AI consulting, AI automation, agentic workflows, AI infrastructure and AI training: five services and one team that builds and runs them. Book a free audit.',
+      'AI consulting, automation, agentic workflows, infrastructure and training, delivered as AI workers on a monthly subscription. Book a free discovery call.',
     label: 'Services',
   },
   industries: {
@@ -71,14 +67,14 @@ export const PAGES = {
   },
   howItWorks: {
     path: '/how-it-works',
-    title: 'How It Works: Audit, Build, Run & Report | The Lapis AI',
+    title: 'How It Works: From Discovery Call to Go-Live | The Lapis AI',
     description:
-      'How we work: audit, build, run and report. No six-month discovery phase, something live within the first month and a team that keeps it running. Start free.',
+      'Six steps from a free 30-minute discovery call to AI workers on the job: a paid audit, a proposal, onboarding, go-live in 2–4 weeks and a monthly impact report.',
     label: 'How It Works',
   },
   pricing: {
     path: '/pricing',
-    title: 'AI Automation Pricing & Free AI Audit | The Lapis AI',
+    title: 'AI Automation Pricing: Plans From $390/Month | The Lapis AI',
     description: pricingDescription,
     label: 'Pricing',
   },
@@ -105,16 +101,16 @@ export const PAGES = {
   },
   contact: {
     path: '/contact',
-    title: 'Contact Us: Book a Free 60-Minute AI Audit | The Lapis AI',
+    title: 'Contact Us: Book a Free Discovery Call | The Lapis AI',
     description:
-      'Book a free 60-minute AI audit with The Lapis AI. No obligation, a written roadmap you keep, and a reply within one business day. Call, WhatsApp or email us.',
+      'Book a free 30-minute discovery call with The Lapis AI. No obligation and a reply within one business day. Call, WhatsApp or email our team in Lagos, Nigeria.',
     label: 'Contact',
   },
   notFound: {
     path: '/404',
     title: 'Page Not Found | The Lapis AI',
     description:
-      "The page you're looking for doesn't exist or has moved. Explore our AI solutions, services and industries, or book a free AI audit with our team.",
+      "The page you're looking for doesn't exist or has moved. Explore our AI solutions, pricing and industries, or book a free discovery call with our team.",
     label: 'Page not found',
   },
 } satisfies Record<string, PageMeta>;
@@ -125,21 +121,21 @@ const SOLUTION_META: Record<PillarId, SolutionMeta> = {
   capacity: {
     title: 'Grow Without Hiring | AI Automation & Agents | The Lapis AI',
     description:
-      'Take on more work without taking on more people. We automate the admin, operations and reporting that bottleneck your team, and we run it for you.',
+      'Take on more work without more people. Lapis AI Workforce runs managed AI workers for your admin, operations and reporting, from $1,250 per AI worker a month.',
     headline: 'Take on more work without taking on more people.',
     source: 'src/pages/solutions/GrowWithoutHiring.tsx',
   },
   leads: {
     title: 'AI Lead Response on WhatsApp, Phone & Web | The Lapis AI',
     description:
-      'AI lead response on WhatsApp, phone and web chat: every enquiry answered in under 60 seconds, qualified and booked, day and night. Get a free Lead Leak Audit.',
+      'Lapis Lead Desk answers every enquiry on WhatsApp, phone and web chat in under 60 seconds, qualifies it and books it, day and night. From $390 a month.',
     headline: 'Every enquiry answered in under 60 seconds. On every channel.',
     source: 'src/pages/solutions/NeverMissALead.tsx',
   },
   'ai-spend': {
     title: 'AI Pilot to Production in 45 Days, With ROI | The Lapis AI',
     description:
-      'Stalled AI pilots, unused licences, no ROI? We audit your AI spend and take the highest-return workflow into production in 45 days, ROI tracked from day one.',
+      'Stalled AI pilots, unused licences, no ROI? The 45-Day AI Rescue takes your AI into production in 45 days, or we keep working for free until it is live.',
     headline: "You've tried AI. Now make it pay.",
     source: 'src/pages/solutions/MakeYourAIPay.tsx',
   },

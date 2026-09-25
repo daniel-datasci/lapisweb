@@ -11,14 +11,39 @@ import Button from '@/components/Button';
 import Reveal from '@/components/Reveal';
 import { industryBySlug } from '@/data/industries';
 import { caseStudyBySlug } from '@/data/testimonials';
-import { pricingTiers } from '@/data/pricing';
+import { aiWorkforce, leadDesk, productFromPrice, workerEssentials } from '@/data/pricing';
 import { pillarTag, solutions } from '@/data/solutions';
 import NotFound from '@/pages/NotFound';
-import { auditLink } from '@/data/site';
+import { DISCOVERY_CTA, discoveryLink } from '@/data/site';
 import { PAGES, crumbsFor, industryMeta } from '@/seo/routes';
-import { serviceId, serviceNode } from '@/seo/schema';
+import { offersFor, serviceId, serviceNode } from '@/seo/schema';
+import './PricingBlocks.css';
 
-const freeAudit = pricingTiers[0];
+const OFFERS = {
+  'lead-desk': {
+    product: leadDesk,
+    topic: 'leads',
+    title: 'Never miss another enquiry.',
+    intro:
+      'Lapis Lead Desk answers, qualifies and books every enquiry in under 60 seconds, day and night. We run it for you and show you what it recovered every month.',
+    points: [
+      'Every enquiry answered in under 60 seconds, 24/7',
+      'Leads qualified and booked into your calendar or CRM',
+      'A monthly lead report, in plain numbers',
+      "Miss the response-time SLA in a month, and that month's fee is credited",
+    ],
+    plansLabel: 'See Lead Desk plans',
+  },
+  'ai-workforce': {
+    product: aiWorkforce,
+    topic: 'capacity',
+    title: 'AI workers for the work that slows you down.',
+    intro:
+      'Lapis AI Workforce gives you AI workers that take repetitive work off your team, run by us under an SLA, so your people can move to higher-value work.',
+    points: workerEssentials.map((e) => `${e.title}: ${e.text}`),
+    plansLabel: 'See AI Workforce plans',
+  },
+} as const;
 
 export default function IndustryPage() {
   const { slug } = useParams();
@@ -29,7 +54,8 @@ export default function IndustryPage() {
   const crumbs = crumbsFor(PAGES.industries, meta);
 
   const study = caseStudyBySlug(industry.caseStudySlug);
-  const leadLeak = industry.offer === 'lead-leak';
+  const offer = OFFERS[industry.offer];
+  const ctaTo = discoveryLink(offer.topic, offer.product.plan);
 
   const pains = solutions.map((s) => ({ tag: pillarTag(s.id), text: industry.pains[s.id] }));
   const deploy: InfoCard[] = solutions.map((s) => ({
@@ -53,6 +79,7 @@ export default function IndustryPage() {
             description: industry.metaDescription,
             serviceType: 'AI automation and AI agents',
             audience: industry.examples ?? industry.name,
+            offers: offersFor(industry.offer),
           }),
         ]}
       />
@@ -63,8 +90,9 @@ export default function IndustryPage() {
         text={industry.heroHeading}
         splitIndex={0}
         subtext={industry.heroSub}
-        ctaLabel={leadLeak ? 'Get a Free Lead Leak Audit' : 'Book My Free AI Audit'}
-        ctaTo={leadLeak ? auditLink('leads') : '/contact'}
+        ctaTo={ctaTo}
+        secondaryLabel={offer.plansLabel}
+        secondaryTo={`/pricing#${offer.product.anchor}`}
       />
 
       <section className="section section-paper">
@@ -113,41 +141,33 @@ export default function IndustryPage() {
       <section className="section section-dark">
         <div className="container">
           <Reveal>
-            {leadLeak ? (
-              <div className="offer-box">
-                <span className="eyebrow">Free Lead Leak Audit</span>
-                <h2 className="section-title">See what you're missing, free.</h2>
-                <p className="section-intro">
-                  We'll review your enquiry channels and show you how many leads went unanswered, how long replies took
-                  and what that likely cost you. If it doesn't change how you handle leads, you owe nothing.
-                </p>
-                <Button to={auditLink('leads')} variant="primary" size="lg" borderWrap icon>
-                  Get a Free Lead Leak Audit
+            <div className="offer-box">
+              <span className="eyebrow">{offer.product.name}</span>
+              <h2 className="section-title">{offer.title}</h2>
+              <p className="section-intro">{offer.intro}</p>
+              <p className="product-price">{productFromPrice(offer.product)}</p>
+              <ul className="check-list offer-list">
+                {offer.points.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+              <div className="cta-row-center">
+                <Button to={ctaTo} variant="primary" size="lg" borderWrap icon>
+                  {DISCOVERY_CTA}
+                </Button>
+                <Button to={`/pricing#${offer.product.anchor}`} variant="ghost-light" size="lg">
+                  {offer.plansLabel}
                 </Button>
               </div>
-            ) : (
-              <div className="offer-box">
-                <span className="eyebrow">
-                  {freeAudit.name} · {freeAudit.price}
-                </span>
-                <h2 className="section-title">{freeAudit.tagline}</h2>
-                <ul className="check-list offer-list">
-                  {freeAudit.features.map((f) => (
-                    <li key={f}>{f}</li>
-                  ))}
-                </ul>
-                <Button to="/contact" variant="primary" size="lg" borderWrap icon>
-                  Book My Free AI Audit
-                </Button>
-              </div>
-            )}
+            </div>
           </Reveal>
         </div>
       </section>
 
       <CTASection
         heading="Find out where your business is leaking time, leads and money."
-        subtext="A free 60-minute AI audit. You leave with a written roadmap of your top three opportunities, whether or not you work with us."
+        subtext="Book a free 30-minute discovery call. We'll talk through where AI workers would help most, and which plan fits, whether or not you work with us."
+        ctaTo={ctaTo}
       />
     </>
   );

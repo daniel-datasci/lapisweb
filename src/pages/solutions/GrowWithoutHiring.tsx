@@ -22,17 +22,18 @@ import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
 import FaqSection from '@/components/FaqList';
 import RelatedLinks from '@/components/RelatedLinks';
-import { auditLink } from '@/data/site';
+import { AuditOffer, FeeCovers, TierGrid } from '@/components/PricingBlocks';
+import { discoveryLink } from '@/data/site';
+import { MARKET_WATCH_PRICE, aiWorkforce, monthlyPair } from '@/data/pricing';
 import { solutionFaqs } from '@/data/faqs';
 import { solutionRelated } from '@/data/related';
 import { PAGES, crumbsFor, solutionMeta } from '@/seo/routes';
-import { serviceId, serviceNode, tierOffer } from '@/seo/schema';
+import { offersFor, serviceId, serviceNode } from '@/seo/schema';
 
 const META = solutionMeta('capacity');
 const PATH = META.path;
 const CRUMBS = crumbsFor(PAGES.solutions, META);
 const FAQS = solutionFaqs.capacity;
-const GROWTH_OFFER = tierOffer('Growth System');
 const pains = [
   'Every decision, approval and customer issue ends up on your desk.',
   'Your team answers the same questions all day, every day.',
@@ -102,7 +103,8 @@ const workflows: InfoCard[] = [
     id: 'market-watch',
     icon: <Radar size={26} />,
     title: 'Market watch',
-    body: "Agents track competitors' prices, launches and hiring, plus market shifts, and send you a short brief, so you always know what changed.",
+    body: "An AI worker tracks competitors' prices, launches and hiring, plus market shifts, and sends you a short brief, so you always know what changed.",
+    note: `Add-on AI worker: ${monthlyPair(MARKET_WATCH_PRICE)}`,
   },
 ];
 
@@ -111,10 +113,10 @@ const steps = [
   {
     phase: 'Step 2',
     title: 'Build',
-    body: 'We build the automations and agents on top of your existing tools, with proper data pipelines underneath.',
+    body: 'We build each AI worker on top of your existing tools, with a job description, a KPI and proper data pipelines underneath.',
   },
-  { phase: 'Step 3', title: 'Run', body: 'We monitor every workflow 24/7 and fix issues before your team notices.' },
-  { phase: 'Step 4', title: 'Prove', body: 'Each month, you get a report of hours returned, tasks completed and errors caught.' },
+  { phase: 'Step 3', title: 'Run', body: 'We monitor every AI worker 24/7 and fix issues before your team notices.' },
+  { phase: 'Step 4', title: 'Prove', body: 'Each month, you get an impact report of hours returned, tasks completed and errors caught.' },
 ];
 
 export default function GrowWithoutHiring() {
@@ -132,21 +134,20 @@ export default function GrowWithoutHiring() {
             description: META.description,
             serviceType: 'AI automation and AI agents for business operations',
             audience: 'Growing businesses',
-            offers: GROWTH_OFFER ? [GROWTH_OFFER] : undefined,
+            offers: offersFor('ai-workforce', 'market-watch', 'audit'),
           }),
         ]}
       />
 
       <PageHero
         crumbs={CRUMBS}
-        eyebrow="Solution ① · Capacity"
+        eyebrow="Solution ① · Lapis AI Workforce"
         text="Take on more work without taking on more people."
         splitIndex={0}
-        subtext="When everything runs through you, the business can only grow as fast as you can work. We automate the repetitive work, handoffs and approvals that clog your team's week, then run those systems for you. You get more capacity, with no new salaries and no one to babysit."
-        ctaLabel="Find My Lost Hours: Free Audit"
-        ctaTo={auditLink('capacity')}
-        secondaryLabel="See What We Automate"
-        secondaryTo={`${PATH}#what-we-automate`}
+        subtext="When everything runs through you, the business can only grow as fast as you can work. Lapis AI Workforce gives you AI workers that take the repetitive work, handoffs and approvals off your team's plate, and we run them for you, so your people move to higher-value work. From $1,250/month · ₦750,000/month for your first AI worker."
+        ctaTo={discoveryLink('capacity', 'ai-workforce')}
+        secondaryLabel="See AI Workforce plans"
+        secondaryTo={`${PATH}#plans`}
       />
 
       <section className="section section-paper">
@@ -164,9 +165,9 @@ export default function GrowWithoutHiring() {
       <section className="section section-dark" id="what-we-automate">
         <div className="container">
           <SectionHeading
-            eyebrow="What we automate"
+            eyebrow="What our AI workers do"
             title="Your AI workforce, built around how you actually work."
-            intro="Every business is different, but these are the workflows that most often give growing teams their hours back."
+            intro="Every business is different, but these are the jobs that most often give growing teams their hours back. Each one becomes an AI worker with a job description, a KPI, an operator and a monthly impact report."
           />
           <div className="section-body">
             <InfoCards items={workflows} columns={3} />
@@ -229,13 +230,41 @@ export default function GrowWithoutHiring() {
         </div>
       </section>
 
+      <section className="section section-dark" id="plans">
+        <div className="container">
+          <SectionHeading
+            eyebrow="Lapis AI Workforce · Plans"
+            title="Priced per AI worker."
+            accent="Run by us, every month."
+            intro="Start with one AI worker and add more as each one proves itself. Prices exclude VAT; annual plans get 2 months free."
+          />
+          <div className="section-body">
+            <TierGrid product={aiWorkforce} />
+          </div>
+          <FeeCovers />
+        </div>
+      </section>
+
+      <section className="section section-paper">
+        <div className="container">
+          <AuditOffer
+            topic="capacity"
+            title="Find your lost hours first."
+            body="The AI Opportunity Audit ($490 · ₦250,000) maps where your team's time goes and gives you a ranked plan of AI workers, with the monthly value of each. The fee is credited back when you start."
+          />
+        </div>
+      </section>
+
       <RelatedLinks title="Go deeper on" accent="Grow Without Hiring." items={solutionRelated('capacity')} />
 
       <FaqSection items={FAQS} title="Grow Without Hiring:" accent="your questions answered." />
 
       <CTASection
         heading="Find out how many hours a week you could get back."
-        subtext="In a free 60-minute audit, we'll map where your team's time goes and show you the first three workflows to automate."
+        subtext="Book a free 30-minute discovery call. We'll talk through where your team's time goes and which AI worker to start with."
+        ctaTo={discoveryLink('capacity', 'ai-workforce')}
+        secondaryLabel="See AI Workforce pricing"
+        secondaryTo="/pricing#ai-workforce"
       />
     </>
   );

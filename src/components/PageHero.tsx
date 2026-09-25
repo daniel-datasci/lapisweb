@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import TypewriterHeading from './TypewriterHeading';
+import { DISCOVERY_CTA } from '@/data/site';
 import Button from './Button';
 import Breadcrumbs from './Breadcrumbs';
 import type { Crumb } from '@/seo/schema';
@@ -16,6 +17,10 @@ type Props = {
   ctaTo?: string;
   secondaryLabel?: string;
   secondaryTo?: string;
+  /** External or anchor link for the secondary button (used when secondaryTo is not set). */
+  secondaryHref?: string;
+  /** Extra buttons appended to the CTA row. */
+  extraActions?: ReactNode;
   children?: ReactNode;
   variant?: 'navy' | 'split';
   /** Render the heading without the typewriter effect. */
@@ -31,10 +36,12 @@ export default function PageHero({
   colorBefore = 'var(--white)',
   colorAfter = 'var(--white)',
   subtext,
-  ctaLabel = 'Book My Free AI Audit',
+  ctaLabel = DISCOVERY_CTA,
   ctaTo = '/contact',
   secondaryLabel,
   secondaryTo,
+  secondaryHref,
+  extraActions,
   children,
   variant = 'navy',
   staticHeading = false,
@@ -63,18 +70,19 @@ export default function PageHero({
           {subtext}
         </p>
       )}
-      {(ctaLabel || secondaryLabel) && (
+      {(ctaLabel || secondaryLabel || extraActions) && (
         <div className="hero-cta-row fade-up" style={{ animationDelay: '1.8s' }}>
           {ctaLabel && (
             <Button to={ctaTo} variant="primary" size="lg" borderWrap icon>
               {ctaLabel}
             </Button>
           )}
-          {secondaryLabel && secondaryTo && (
-            <Button to={secondaryTo} variant="ghost-light" size="lg">
+          {secondaryLabel && (secondaryTo || secondaryHref) && (
+            <Button to={secondaryTo} href={secondaryHref} variant="ghost-light" size="lg">
               {secondaryLabel}
             </Button>
           )}
+          {extraActions}
         </div>
       )}
     </div>

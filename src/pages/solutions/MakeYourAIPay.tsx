@@ -1,4 +1,18 @@
-import { Database, Target, Workflow, ServerCrash, ClipboardCheck, Scale, Server, ShieldCheck, GraduationCap, LineChart } from 'lucide-react';
+import {
+  Database,
+  Target,
+  Workflow,
+  ServerCrash,
+  ClipboardCheck,
+  Scale,
+  Server,
+  ShieldCheck,
+  GraduationCap,
+  LineChart,
+  Receipt,
+  Activity,
+  Users,
+} from 'lucide-react';
 import Seo from '@/components/Seo';
 import PageHero from '@/components/PageHero';
 import SectionHeading from '@/components/SectionHeading';
@@ -9,11 +23,13 @@ import ProcessSteps from '@/components/ProcessSteps';
 import CTASection from '@/components/CTASection';
 import FaqSection from '@/components/FaqList';
 import RelatedLinks from '@/components/RelatedLinks';
-import { auditLink } from '@/data/site';
+import { AuditOffer, FeeCovers, GuaranteeNote } from '@/components/PricingBlocks';
+import { discoveryLink } from '@/data/site';
+import { RESCUE_PRICE_TEXT, aiWorkforce, productFromPrice } from '@/data/pricing';
 import { solutionFaqs } from '@/data/faqs';
 import { solutionRelated } from '@/data/related';
 import { PAGES, crumbsFor, solutionMeta } from '@/seo/routes';
-import { serviceId, serviceNode } from '@/seo/schema';
+import { offersFor, serviceId, serviceNode } from '@/seo/schema';
 
 const META = solutionMeta('ai-spend');
 const PATH = META.path;
@@ -75,9 +91,32 @@ const plan = [
     body: 'Go live, train your team, set a usage policy and switch on your ROI dashboard.',
   },
   {
-    phase: 'Ongoing',
-    title: 'Run & scale',
-    body: "We monitor accuracy, cost and uptime, report ROI monthly, and roll out the next workflow when you're ready.",
+    phase: 'Months 2–4',
+    title: 'Run, then scale',
+    body: 'Three months of Run are included: we monitor accuracy, cost and uptime and report ROI monthly. After that, it moves onto an AI Workforce plan.',
+  },
+];
+
+const rescuePricing: InfoCard[] = [
+  {
+    icon: <Receipt size={26} />,
+    kicker: 'Fixed fee by scope',
+    title: RESCUE_PRICE_TEXT,
+    body: 'One fixed fee, agreed up front from the scope of the rescue. No hourly billing and no open-ended change orders.',
+  },
+  {
+    icon: <Activity size={26} />,
+    kicker: 'Included',
+    title: '3 months of Run',
+    body: 'Once it is live, we monitor, fix, tune and report on it for three months as part of the fee.',
+  },
+  {
+    icon: <Users size={26} />,
+    kicker: 'Then',
+    title: 'Onto AI Workforce',
+    body: `The rescued workflow becomes an AI worker on a monthly AI Workforce plan. ${productFromPrice(aiWorkforce)}.`,
+    to: '/pricing#ai-workforce',
+    linkLabel: 'See AI Workforce plans',
   },
 ];
 
@@ -131,18 +170,18 @@ export default function MakeYourAIPay() {
             description: META.description,
             serviceType: 'AI pilot-to-production and AI ROI',
             audience: 'Growing businesses',
+            offers: offersFor('ai-rescue', 'audit'),
           }),
         ]}
       />
 
       <PageHero
         crumbs={CRUMBS}
-        eyebrow="Solution ③ · AI to production"
+        eyebrow="Solution ③ · 45-Day AI Rescue"
         text="You've tried AI. Now make it pay."
         splitIndex={0}
-        subtext="If you've paid for AI tools, pilots or consultants and have little to show for it, you're not alone. We audit what you already have, pick the workflow with the highest return, and take it into production in 45 days, on infrastructure that lasts and with ROI tracked from day one."
-        ctaLabel="Book an AI Spend Audit"
-        ctaTo={auditLink('ai-spend')}
+        subtext={`If you've paid for AI tools, pilots or consultants and have little to show for it, you're not alone. The 45-Day AI Rescue picks the workflow with the highest return and takes it into production in 45 days, on infrastructure that lasts and with ROI tracked from day one. Fixed fee: ${RESCUE_PRICE_TEXT}.`}
+        ctaTo={discoveryLink('ai-spend', 'ai-rescue')}
         secondaryLabel="See the 45-Day Plan"
         secondaryTo={`${PATH}#the-45-day-plan`}
       />
@@ -186,7 +225,23 @@ export default function MakeYourAIPay() {
         </div>
       </section>
 
-      <section className="section section-paper">
+      <section className="section section-paper" id="pricing">
+        <div className="container">
+          <SectionHeading
+            eyebrow="45-Day AI Rescue · Pricing"
+            title="A fixed-fee project"
+            accent="that rolls into a subscription."
+            intro="Prices exclude VAT. The fee depends on scope, which we agree with you before any work starts."
+          />
+          <div className="section-body">
+            <InfoCards items={rescuePricing} columns={3} />
+          </div>
+          <FeeCovers label="After launch, the Run months and your AI Workforce plan cover:" />
+          <GuaranteeNote text="if it isn't live in production in 45 days, we keep working free until it is." />
+        </div>
+      </section>
+
+      <section className="section section-dark">
         <div className="container">
           <SectionHeading
             center
@@ -197,15 +252,26 @@ export default function MakeYourAIPay() {
         </div>
       </section>
 
+      <section className="section section-paper">
+        <div className="container">
+          <AuditOffer
+            topic="ai-spend"
+            title="Not sure which pilot to rescue?"
+            body="The AI Opportunity Audit ($490 · ₦250,000) reviews your AI tools, pilots and spend, tells you what to keep, fix or cut, and ranks the AI workers worth running, with the monthly value of each. The fee is credited back when you start."
+          />
+        </div>
+      </section>
+
       <RelatedLinks title="Go deeper on" accent="Make Your AI Pay." items={solutionRelated('ai-spend')} />
 
       <FaqSection items={FAQS} title="Make Your AI Pay:" accent="your questions answered." />
 
       <CTASection
         heading="Find out what your AI spend should be delivering."
-        subtext="Book a free AI spend audit. We'll tell you honestly what's working, what isn't, and which one workflow will pay for the rest."
-        ctaLabel="Book My Free AI Spend Audit"
-        ctaTo={auditLink('ai-spend')}
+        subtext="Book a free 30-minute discovery call. We'll talk through what you've tried, what's stalled and whether a 45-Day AI Rescue is the right fit."
+        ctaTo={discoveryLink('ai-spend', 'ai-rescue')}
+        secondaryLabel="See Rescue pricing"
+        secondaryTo="/pricing#projects"
       />
     </>
   );

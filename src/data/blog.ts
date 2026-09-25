@@ -49,7 +49,7 @@ export const blogPosts: BlogPost[] = [
       '- It is checked. Guardrails, testing and human handoff are built in, so anything unusual goes to a person.',
       '- It proves its value. Each month, you get a report of hours returned, tasks completed and errors caught.',
       '## Where to start',
-      "If you want to know what your competitors changed this week without giving someone another job, start with a free AI audit. In 60 minutes, we'll map where your team's time goes and show you the first three workflows to automate. Market watch may well be one of them.",
+      "If you want to know what your competitors changed this week without giving someone another job, start with a free 30-minute discovery call. We'll talk through where your team's time goes and which AI workers to hire first. A Market Watch AI worker can be added to any plan for $1,000/month (₦600,000), and it may well be one of them.",
     ],
   },
   {
@@ -118,7 +118,7 @@ export const blogPosts: BlogPost[] = [
       '## Measure what you recover',
       "The point isn't to send more messages. It's to win more customers. So the number that matters is revenue recovered: a monthly report of enquiries answered, response times, bookings made and the revenue they represent.",
       '## Find your leak',
-      "Most businesses have never measured how many enquiries go unanswered, or how long replies really take. That's what a free Lead Leak Audit is for. We'll review your enquiry channels and show you how many leads went unanswered, how long replies took and what that likely cost you.",
+      "Most businesses have never measured how many enquiries go unanswered, or how long replies really take. That's part of what the AI Opportunity Audit ($490 · ₦250,000, credited in full if you subscribe within 30 days) is for. We'll review your enquiry channels and lead handling, show you where leads go unanswered and how long replies take, and rank what's worth fixing first. If you'd rather talk it through first, book a free 30-minute discovery call.",
     ],
   },
   {

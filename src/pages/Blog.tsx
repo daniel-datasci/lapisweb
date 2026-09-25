@@ -105,7 +105,7 @@ export default function Blog() {
 
       <CTASection
         heading="Ready to put this into practice?"
-        subtext="Book a free AI audit and find out where your business is leaking time, leads and money."
+        subtext="Book a free 30-minute discovery call and find out where your business is leaking time, leads and money."
       />
     </>
   );
