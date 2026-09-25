@@ -20,13 +20,11 @@ import ResponsiveTable from './ResponsiveTable';
 import {
   AUDIT_PRICE,
   commercialTerms,
-  extraNgn,
+  extraPrice,
   extras,
-  extraUsd,
+  formatPrice,
   guarantees,
-  ngn,
   ownership,
-  pricePair,
   productFromPrice,
   products,
   runStandard,
@@ -79,10 +77,6 @@ function TierCard({ tier, product, headingLevel = 3 }: { tier: Tier; product: Pr
           <span className="pricing-amount">{usd(tier.monthly.usd)}</span>
           <span className="pricing-cadence">/month</span>
         </div>
-        <p className="pricing-ngn">
-          {tier.from ? 'From ' : ''}
-          {ngn(tier.monthly.ngn)}/month
-        </p>
         <p className="pricing-tagline">{tier.summary}</p>
         <ul className="pricing-features">
           {tier.features.map((f) => (
@@ -95,7 +89,7 @@ function TierCard({ tier, product, headingLevel = 3 }: { tier: Tier; product: Pr
           ))}
         </ul>
         <p className="pricing-onboarding">
-          <span>Onboarding</span> {tier.onboarding ? pricePair(tier.onboarding) : tier.onboardingNote}
+          <span>Onboarding</span> {tier.onboarding ? formatPrice(tier.onboarding) : tier.onboardingText}
         </p>
         <Button
           to={contactLink({ plan: product.plan })}
@@ -201,7 +195,7 @@ export function AuditOffer({
         <h2 className="section-title">{title}</h2>
         <p className="section-intro">
           {body ??
-            `Book an AI Opportunity Audit (${pricePair(AUDIT_PRICE)}). You'll get a ranked plan of what AI can take off your team's plate and what it's worth each month. The fee is credited back when you start.`}
+            `Book an AI Opportunity Audit (${formatPrice(AUDIT_PRICE)}). You'll get a ranked plan of what AI can take off your team's plate and what it's worth each month. The fee is credited back when you start.`}
         </p>
         <ul className="check-list offer-list">
           <li>A 2-week review of your workflows, lead handling and AI spend</li>
@@ -221,22 +215,22 @@ export function AuditOffer({
   );
 }
 
-/** Projects, retainers and add-ons with USD and NGN prices. */
+/** Projects, retainers and add-ons. */
 export function ExtrasTable() {
   return (
     <ResponsiveTable
-      caption="Projects, retainers and add-ons, with prices in US dollars and Nigerian naira"
+      caption="Projects, retainers and add-ons, with prices in US dollars"
       className="extras-table"
-      columns={[{ label: 'Item' }, { label: 'Type' }, { label: 'USD' }, { label: 'NGN' }, { label: 'Details' }]}
-      rows={extras.map((e) => [e.name, e.kind, extraUsd(e), extraNgn(e), e.description])}
+      columns={[{ label: 'Item' }, { label: 'Type' }, { label: 'Price' }, { label: 'Details' }]}
+      rows={extras.map((e) => [e.name, e.kind, extraPrice(e), e.description])}
     />
   );
 }
 
-/** Contract, currency, guarantees and ownership terms. */
+/** Contract, guarantees and ownership terms. */
 export function TermsCards() {
-  const groups = [...commercialTerms, guarantees, ownership];
-  return <InfoCards columns={2} items={groups.map((g) => ({ title: g.title, points: g.items }))} />;
+  const groups = [commercialTerms, guarantees, ownership];
+  return <InfoCards columns={3} items={groups.map((g) => ({ title: g.title, points: g.items }))} />;
 }
 
 /** One-line summary of what the monthly fee pays for. */

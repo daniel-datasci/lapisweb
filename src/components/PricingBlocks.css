@@ -99,7 +99,7 @@
   align-items: baseline;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 18px;
 }
 
 .pricing-from {
@@ -124,15 +124,6 @@
 .pricing-cadence {
   font-size: 15px;
   font-weight: 500;
-}
-
-.pricing-ngn {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.2px;
-  color: var(--white-soft);
-  margin-bottom: 18px;
 }
 
 .pricing-tagline {
@@ -324,9 +315,8 @@
     width: 10%;
     white-space: nowrap;
   }
-  .extras-table .rtable td:nth-child(3),
-  .extras-table .rtable td:nth-child(4) {
-    width: 15%;
+  .extras-table .rtable td:nth-child(3) {
+    width: 18%;
     color: var(--white);
     font-weight: 600;
   }

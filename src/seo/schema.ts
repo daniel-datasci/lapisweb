@@ -11,7 +11,7 @@ import {
   aiWorkforce,
   extras,
   leadDesk,
-  pricePair,
+  formatPrice,
   type Extra,
   type Money,
   type Product,
@@ -258,38 +258,34 @@ export const serviceNode = ({ path, name, description, serviceType, audience, of
 
 /* ---------- Price book offers ---------- */
 
-type Currency = 'USD' | 'NGN';
-const CURRENCIES: { code: Currency; key: keyof Money; note: string }[] = [
-  { code: 'USD', key: 'usd', note: 'Global clients, billed in USD' },
-  { code: 'NGN', key: 'ngn', note: 'Nigeria-based clients, billed in NGN' },
-];
-
 const PRICING_URL = absoluteUrl('/pricing');
 const offerId = (id: string) => `${PRICING_URL}#offer-${id}`;
 
 const perMonth = { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' };
 
-/** Monthly fee in both currencies. `from` makes it a starting price. */
-const monthlySpecs = (m: Money, label: string, from = false): JsonLdNode[] =>
-  CURRENCIES.map(({ code, key, note }) => ({
+/** Monthly fee in USD. `from` makes it a starting price. */
+const monthlySpecs = (m: Money, label: string, from = false): JsonLdNode[] => [
+  {
     '@type': 'UnitPriceSpecification',
-    ...(from ? { minPrice: m[key] } : { price: m[key] }),
-    priceCurrency: code,
+    ...(from ? { minPrice: m.usd } : { price: m.usd }),
+    priceCurrency: 'USD',
     unitCode: 'MON',
     referenceQuantity: perMonth,
     valueAddedTaxIncluded: false,
-    description: `${label}${from ? ', from' : ''}, per month. ${note}.`,
-  }));
+    description: `${label}${from ? ', from' : ''}, per month.`,
+  },
+];
 
-/** One-off fee (or fee range) in both currencies. */
-const oneOffSpecs = (m: Money, label: string, max?: Money): JsonLdNode[] =>
-  CURRENCIES.map(({ code, key, note }) => ({
+/** One-off fee (or fee range) in USD. */
+const oneOffSpecs = (m: Money, label: string, max?: Money): JsonLdNode[] => [
+  {
     '@type': 'PriceSpecification',
-    ...(max ? { minPrice: m[key], maxPrice: max[key] } : { price: m[key] }),
-    priceCurrency: code,
+    ...(max ? { minPrice: m.usd, maxPrice: max.usd } : { price: m.usd }),
+    priceCurrency: 'USD',
     valueAddedTaxIncluded: false,
-    description: `${label}. ${note}.`,
-  }));
+    description: `${label}.`,
+  },
+];
 
 type OfferInput = {
   id: string;
@@ -321,7 +317,7 @@ const planOffers = (product: Product): JsonLdNode[] =>
       id: tier.id,
       name: `${product.name} ${tier.name}`,
       description: `${tier.summary} ${tier.features.join('; ')}. Onboarding: ${
-        tier.onboarding ? pricePair(tier.onboarding) : tier.onboardingNote
+        tier.onboarding ? formatPrice(tier.onboarding) : tier.onboardingText
       }.`,
       anchor: product.anchor,
       category: 'Subscription',

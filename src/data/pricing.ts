@@ -1,11 +1,11 @@
 import type { InterestPlan } from './site';
 
 /**
- * The Lapis AI price book. Global clients are billed in USD, Nigeria-based
- * clients in NGN. Every price excludes VAT; annual prepaid plans get 2 months free.
+ * The Lapis AI price book. Every price is in US dollars and excludes VAT;
+ * annual prepaid plans get 2 months free.
  */
 
-export type Money = { usd: number; ngn: number };
+export type Money = { usd: number };
 
 export type Tier = {
   id: string;
@@ -17,7 +17,7 @@ export type Tier = {
   /** One-off onboarding fee billed at signing, when it is a fixed amount. */
   onboarding?: Money;
   /** Onboarding wording when it isn't a fixed amount. */
-  onboardingNote?: string;
+  onboardingText?: string;
   summary: string;
   features: string[];
   popular?: boolean;
@@ -50,14 +50,11 @@ export type Product = {
 const group = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 2 });
 
 export const usd = (n: number) => `$${Number.isInteger(n) ? group(n) : n.toFixed(2)}`;
-export const ngn = (n: number) => `₦${group(n)}`;
-/** Compact naira for large one-off amounts: ₦4,500,000 → ₦4.5M. */
-export const ngnShort = (n: number) => (n >= 1_000_000 ? `₦${group(n / 1_000_000)}M` : ngn(n));
 
-/** "$390 · ₦250,000" */
-export const pricePair = (m: Money) => `${usd(m.usd)} · ${ngn(m.ngn)}`;
-/** "$390/mo · ₦250,000/mo" */
-export const monthlyPair = (m: Money) => `${usd(m.usd)}/mo · ${ngn(m.ngn)}/mo`;
+/** "$390" */
+export const formatPrice = (m: Money) => usd(m.usd);
+/** "$390/mo" */
+export const monthlyPrice = (m: Money) => `${usd(m.usd)}/mo`;
 
 /* ---------- products ---------- */
 
@@ -71,16 +68,16 @@ export const leadDesk: Product = {
   kind: 'Subscription',
   promise: 'never miss a lead again',
   blurb: 'Every enquiry answered in under 60 seconds, on WhatsApp, web, email and phone.',
-  startingPrice: { usd: 390, ngn: 250_000 },
+  startingPrice: { usd: 390 },
   startingPriceUnit: '/month',
   tierNote:
-    'Conversations above your band are billed at $0.40 · ₦250 each, monthly. Voice minutes are billed at cost plus a handling fee, with alerts at 80% of your budget.',
+    'Conversations above your band are billed at $0.40 each, monthly. Voice minutes are billed at cost plus a handling fee, with alerts at 80% of your budget.',
   tiers: [
     {
       id: 'lead-desk-starter',
       name: 'Starter',
-      monthly: { usd: 390, ngn: 250_000 },
-      onboarding: { usd: 490, ngn: 300_000 },
+      monthly: { usd: 390 },
+      onboarding: { usd: 490 },
       summary: 'One channel, answered and qualified around the clock.',
       features: [
         '1 channel (WhatsApp or web chat)',
@@ -92,8 +89,8 @@ export const leadDesk: Product = {
     {
       id: 'lead-desk-growth',
       name: 'Growth',
-      monthly: { usd: 790, ngn: 500_000 },
-      onboarding: { usd: 990, ngn: 600_000 },
+      monthly: { usd: 790 },
+      onboarding: { usd: 990 },
       summary: 'Every main channel, synced to your CRM and followed up.',
       popular: true,
       features: [
@@ -107,8 +104,8 @@ export const leadDesk: Product = {
     {
       id: 'lead-desk-pro',
       name: 'Pro',
-      monthly: { usd: 1_590, ngn: 950_000 },
-      onboarding: { usd: 1_490, ngn: 900_000 },
+      monthly: { usd: 1_590 },
+      onboarding: { usd: 1_490 },
       summary: 'Voice, multiple locations and the fastest fixes.',
       features: [
         'Everything in Growth + AI voice agent',
@@ -132,16 +129,16 @@ export const aiWorkforce: Product = {
   kind: 'Subscription',
   promise: 'grow without hiring',
   blurb: 'Managed AI workers that handle invoicing, reporting, onboarding and admin every day.',
-  startingPrice: { usd: 1_250, ngn: 750_000 },
+  startingPrice: { usd: 1_250 },
   startingPriceUnit: ' per AI worker/month',
   tierNote:
-    "Onboarding: one month's fee per new AI worker, waived on annual plans. Extra AI workers on any tier: $1,000/mo · ₦600,000/mo each.",
+    "Onboarding: one month's fee per new AI worker, waived on annual plans. Extra AI workers on any tier: $1,000/mo each.",
   tiers: [
     {
       id: 'ai-workforce-single',
       name: 'Single',
-      monthly: { usd: 1_250, ngn: 750_000 },
-      onboardingNote: WORKFORCE_ONBOARDING,
+      monthly: { usd: 1_250 },
+      onboardingText: WORKFORCE_ONBOARDING,
       summary: 'One AI worker with one job, run and reported on by us.',
       features: [
         '1 AI worker',
@@ -153,8 +150,8 @@ export const aiWorkforce: Product = {
     {
       id: 'ai-workforce-team',
       name: 'Team',
-      monthly: { usd: 2_950, ngn: 1_800_000 },
-      onboardingNote: WORKFORCE_ONBOARDING,
+      monthly: { usd: 2_950 },
+      onboardingText: WORKFORCE_ONBOARDING,
       summary: 'Three AI workers that hand work to each other.',
       popular: true,
       features: [
@@ -167,9 +164,9 @@ export const aiWorkforce: Product = {
     {
       id: 'ai-workforce-department',
       name: 'Department',
-      monthly: { usd: 5_500, ngn: 3_500_000 },
+      monthly: { usd: 5_500 },
       from: true,
-      onboardingNote: WORKFORCE_ONBOARDING,
+      onboardingText: WORKFORCE_ONBOARDING,
       summary: 'A whole function run by AI workers, with senior oversight.',
       features: [
         '6+ AI workers, dedicated operator',
@@ -181,7 +178,7 @@ export const aiWorkforce: Product = {
   ],
 };
 
-export const EXTRA_WORKER: Money = { usd: 1_000, ngn: 600_000 };
+export const EXTRA_WORKER: Money = { usd: 1_000 };
 
 export const aiRescue: Product = {
   id: 'ai-rescue',
@@ -194,7 +191,7 @@ export const aiRescue: Product = {
   promise: 'make your AI pay',
   blurb:
     'Already spent money on AI that never shipped? We get it live and measured in 45 days, or keep working free until it is.',
-  startingPrice: { usd: 7_500, ngn: 4_500_000 },
+  startingPrice: { usd: 7_500 },
   startingPriceUnit: '',
 };
 
@@ -206,13 +203,8 @@ export const productById: Record<ProductId, Product> = {
   'ai-rescue': aiRescue,
 };
 
-/** "From $390/month · ₦250,000/month" style headline price for a product. */
-export const productFromPrice = (p: Product) => {
-  const unit = p.startingPriceUnit;
-  const usdPart = `${usd(p.startingPrice.usd)}${unit}`;
-  const ngnPart = p.anchor === 'projects' ? ngnShort(p.startingPrice.ngn) : `${ngn(p.startingPrice.ngn)}${unit ? '/month' : ''}`;
-  return `From ${usdPart} · ${ngnPart}`;
-};
+/** "From $390/month" style headline price for a product. */
+export const productFromPrice = (p: Product) => `From ${usd(p.startingPrice.usd)}${p.startingPriceUnit}`;
 
 /* ---------- projects, retainers & add-ons ---------- */
 
@@ -232,14 +224,14 @@ export type Extra = {
   plan?: InterestPlan;
 };
 
-export const AUDIT_PRICE: Money = { usd: 490, ngn: 250_000 };
-export const RESCUE_PRICE = { min: { usd: 7_500, ngn: 4_500_000 }, max: { usd: 15_000, ngn: 9_000_000 } };
-/** "$7,500–$15,000 · ₦4.5M–₦9M" */
-export const RESCUE_PRICE_TEXT = `${usd(RESCUE_PRICE.min.usd)}–${usd(RESCUE_PRICE.max.usd)} · ${ngnShort(RESCUE_PRICE.min.ngn)}–${ngnShort(RESCUE_PRICE.max.ngn)}`;
-export const WORKSHOP_PRICE: Money = { usd: 1_500, ngn: 800_000 };
-export const FRACTIONAL_PRICE: Money = { usd: 2_500, ngn: 1_500_000 };
+export const AUDIT_PRICE: Money = { usd: 490 };
+export const RESCUE_PRICE: { min: Money; max: Money } = { min: { usd: 7_500 }, max: { usd: 15_000 } };
+/** "$7,500–$15,000" */
+export const RESCUE_PRICE_TEXT = `${usd(RESCUE_PRICE.min.usd)}–${usd(RESCUE_PRICE.max.usd)}`;
+export const WORKSHOP_PRICE: Money = { usd: 1_500 };
+export const FRACTIONAL_PRICE: Money = { usd: 2_500 };
 export const MARKET_WATCH_PRICE: Money = EXTRA_WORKER;
-export const OVERAGE_PRICE: Money = { usd: 0.4, ngn: 250 };
+export const OVERAGE_PRICE: Money = { usd: 0.4 };
 
 export const extras: Extra[] = [
   {
@@ -311,16 +303,10 @@ export const extras: Extra[] = [
 
 const cadenceSuffix = (c?: Extra['cadence']) => (c === 'month' ? '/mo' : c === 'conversation' ? ' each' : '');
 
-export const extraUsd = (e: Extra) => {
+export const extraPrice = (e: Extra) => {
   if (e.priceText || !e.price) return e.priceText ?? '';
   const s = cadenceSuffix(e.cadence);
   return e.maxPrice ? `${usd(e.price.usd)}–${usd(e.maxPrice.usd)}` : `${usd(e.price.usd)}${s}`;
-};
-
-export const extraNgn = (e: Extra) => {
-  if (e.priceText || !e.price) return e.priceText ?? '';
-  const s = cadenceSuffix(e.cadence);
-  return e.maxPrice ? `${ngnShort(e.price.ngn)}–${ngnShort(e.maxPrice.ngn)}` : `${ngn(e.price.ngn)}${s}`;
 };
 
 /* ---------- what every plan includes ---------- */
@@ -361,26 +347,15 @@ export const workerEssentials: RunItem[] = [
 
 export type TermGroup = { title: string; items: string[] };
 
-export const commercialTerms: TermGroup[] = [
-  {
-    title: 'Contract',
-    items: [
-      '3-month minimum first term, then rolling monthly, or a 12-month annual plan',
-      "30 days' notice to cancel",
-      'Billed monthly in advance; onboarding billed at signing',
-      'Recurring card or direct debit; corporates by invoice, due in 14 days',
-    ],
-  },
-  {
-    title: 'Currency (NGN clients)',
-    items: [
-      'Global clients are billed in USD; Nigeria-based clients in NGN',
-      'NGN prices are reviewed every quarter',
-      "If the naira moves more than 15% against the USD, prices adjust at the next billing cycle, with 30 days' notice",
-      'Annual prepaid plans are fixed for the whole term',
-    ],
-  },
-];
+export const commercialTerms: TermGroup = {
+  title: 'Contract',
+  items: [
+    '3-month minimum first term, then rolling monthly, or a 12-month annual plan',
+    "30 days' notice to cancel",
+    'Billed monthly in advance; onboarding billed at signing',
+    'Recurring card or direct debit; corporates by invoice, due in 14 days',
+  ],
+};
 
 export const guarantees: TermGroup = {
   title: 'Service guarantees',
@@ -401,7 +376,7 @@ export const ownership: TermGroup = {
   ],
 };
 
-export const PRICING_NOTE = 'Prices exclude VAT. Annual plans: 2 months free.';
+export const PRICING_NOTE = 'Prices are in US dollars and exclude VAT. Annual plans: 2 months free.';
 
 /* ---------- FAQs ---------- */
 
@@ -415,10 +390,6 @@ export const pricingFaqs: PricingFaq[] = [
   {
     q: 'Am I locked in?',
     a: "After a 3-month first term it's month to month with 30 days' notice. You own your data and get a full handover if you leave.",
-  },
-  {
-    q: 'Can I pay in naira?',
-    a: 'Yes. Nigeria-based businesses are billed in NGN by card, direct debit or bank transfer.',
   },
   {
     q: 'What if I need more?',

@@ -257,7 +257,7 @@ export default function MakeYourAIPay() {
           <AuditOffer
             topic="ai-spend"
             title="Not sure which pilot to rescue?"
-            body="The AI Opportunity Audit ($490 · ₦250,000) reviews your AI tools, pilots and spend, tells you what to keep, fix or cut, and ranks the AI workers worth running, with the monthly value of each. The fee is credited back when you start."
+            body="The AI Opportunity Audit ($490) reviews your AI tools, pilots and spend, tells you what to keep, fix or cut, and ranks the AI workers worth running, with the monthly value of each. The fee is credited back when you start."
           />
         </div>
       </section>

@@ -14,16 +14,7 @@ import {
   TermsCards,
   TierGrid,
 } from '@/components/PricingBlocks';
-import {
-  PRICING_NOTE,
-  RESCUE_PRICE,
-  aiWorkforce,
-  everyPlanIncludes,
-  leadDesk,
-  ngnShort,
-  pricingFaqs,
-  usd,
-} from '@/data/pricing';
+import { PRICING_NOTE, RESCUE_PRICE_TEXT, aiWorkforce, everyPlanIncludes, leadDesk, pricingFaqs } from '@/data/pricing';
 import { AUDIT_CTA, DISCOVERY_CTA, WHATSAPP_CTA, WHATSAPP_LINK, auditLink, contactLink } from '@/data/site';
 import { PAGES, crumbsFor } from '@/seo/routes';
 import { PRICING_CATALOG_ID, pricingCatalogNode } from '@/seo/schema';
@@ -76,7 +67,7 @@ export default function Pricing() {
             eyebrow="Three ways to start"
             title="Pick the problem."
             accent="We run the fix every month."
-            intro="Two subscriptions and one fixed-fee project. Every price is shown in US dollars and naira: global clients are billed in USD, Nigeria-based businesses in NGN."
+            intro={`Two subscriptions and one fixed-fee project. ${PRICING_NOTE}`}
           />
           <div className="section-body">
             <ProductCards />
@@ -140,7 +131,7 @@ export default function Pricing() {
             eyebrow="Projects, retainers & add-ons"
             title="45-Day AI Rescue,"
             accent="and everything else."
-            intro={`Already spent money on AI that never shipped? The 45-Day AI Rescue gets it live and measured in 45 days, or we keep working free until it is. Fixed fee by scope, ${usd(RESCUE_PRICE.min.usd)}–${usd(RESCUE_PRICE.max.usd)} · ${ngnShort(RESCUE_PRICE.min.ngn)}–${ngnShort(RESCUE_PRICE.max.ngn)}, with 3 months of Run included before it moves onto AI Workforce.`}
+            intro={`Already spent money on AI that never shipped? The 45-Day AI Rescue gets it live and measured in 45 days, or we keep working free until it is. Fixed fee by scope, ${RESCUE_PRICE_TEXT}, with 3 months of Run included before it moves onto AI Workforce.`}
           />
           <div className="section-body">
             <ExtrasTable />

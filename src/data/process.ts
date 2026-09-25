@@ -9,7 +9,7 @@ export const processSteps = [
   {
     phase: 'Step 2 · 2 weeks',
     title: 'AI Opportunity Audit',
-    body: 'A paid 2-week review of your workflows, lead handling and AI spend ($490 · ₦250,000). You get a ranked plan of AI workers with the monthly value of each. The fee is 100% credited if a subscription starts within 30 days.',
+    body: 'A paid 2-week review of your workflows, lead handling and AI spend ($490). You get a ranked plan of AI workers with the monthly value of each. The fee is 100% credited if a subscription starts within 30 days.',
     points: ['Workflow & data review', 'Ranked plan of AI workers', 'Monthly value of each'],
   },
   {

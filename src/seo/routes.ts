@@ -8,7 +8,7 @@ import { services } from '@/data/services';
 import { industries } from '@/data/industries';
 import { caseStudies } from '@/data/testimonials';
 import { blogPosts } from '@/data/blog';
-import { aiRescue, aiWorkforce, leadDesk, ngn, usd } from '@/data/pricing';
+import { aiRescue, aiWorkforce, leadDesk, usd } from '@/data/pricing';
 import { DEFAULT_OG_TITLE, SLOGAN } from '@/data/site';
 
 export type ShareImage = { eyebrow: string; headline: string };
@@ -32,7 +32,7 @@ export type SiteRoute = PageMeta & {
 };
 
 /** Built from the price book, so the snippet always matches the Pricing page. */
-const pricingDescription = `Lead Desk from ${usd(leadDesk.startingPrice.usd)}/month (${ngn(leadDesk.startingPrice.ngn)}), AI Workforce from ${usd(aiWorkforce.startingPrice.usd)} per AI worker and the 45-Day AI Rescue from ${usd(aiRescue.startingPrice.usd)}. Monitoring, fixes and reports included.`;
+const pricingDescription = `Lead Desk from ${usd(leadDesk.startingPrice.usd)}/month, AI Workforce from ${usd(aiWorkforce.startingPrice.usd)} per AI worker a month and the 45-Day AI Rescue from ${usd(aiRescue.startingPrice.usd)}. Monitoring, fixes and monthly reports included.`;
 
 export const PAGES = {
   home: {

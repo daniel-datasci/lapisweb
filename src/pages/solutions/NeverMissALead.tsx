@@ -111,7 +111,7 @@ export default function NeverMissALead() {
         eyebrow="Solution ② · Lapis Lead Desk"
         text="Every enquiry answered in under 60 seconds. On every channel."
         splitIndex={0}
-        subtext="Lapis Lead Desk answers, qualifies and books every call, WhatsApp message, Instagram DM, web form and email, day and night. Your team steps in when it matters, and every month you see exactly what it recovered. From $390/month · ₦250,000/month."
+        subtext="Lapis Lead Desk answers, qualifies and books every call, WhatsApp message, Instagram DM, web form and email, day and night. Your team steps in when it matters, and every month you see exactly what it recovered. From $390/month."
         ctaTo={discoveryLink('leads', 'lead-desk')}
         secondaryLabel="See Lead Desk plans"
         secondaryTo={`${PATH}#plans`}
@@ -198,7 +198,7 @@ export default function NeverMissALead() {
           <AuditOffer
             topic="leads"
             title="Want to see what you're missing first?"
-            body="The AI Opportunity Audit ($490 · ₦250,000) reviews your enquiry channels and lead handling, and shows where leads go unanswered, with a ranked plan of what to fix and what it's worth each month. The fee is credited back when you start."
+            body="The AI Opportunity Audit ($490) reviews your enquiry channels and lead handling, and shows where leads go unanswered, with a ranked plan of what to fix and what it's worth each month. The fee is credited back when you start."
           />
         </div>
       </section>

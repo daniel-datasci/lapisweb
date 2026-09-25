@@ -11,11 +11,9 @@ import {
   PRICING_NOTE,
   commercialTerms,
   everyPlanIncludes,
-  extraNgn,
+  extraPrice,
   extras,
-  extraUsd,
   guarantees,
-  ngn,
   ownership,
   pricingFaqs,
   productFromPrice,
@@ -66,8 +64,8 @@ const productLine = (p: Product) => `${p.name} (${p.kind.toLowerCase()}, ${p.pil
 const tierLines = (p: Product) =>
   (p.tiers ?? []).map(
     (t) =>
-      `- ${t.name}${t.popular ? ' (most popular)' : ''}: ${t.from ? 'from ' : ''}${usd(t.monthly.usd)}/month · ${t.from ? 'from ' : ''}${ngn(t.monthly.ngn)}/month. ${t.features.join('; ')}. Onboarding: ${
-        t.onboarding ? `${usd(t.onboarding.usd)} · ${ngn(t.onboarding.ngn)}` : t.onboardingNote
+      `- ${t.name}${t.popular ? ' (most popular)' : ''}: ${t.from ? 'from ' : ''}${usd(t.monthly.usd)}/month. ${t.features.join('; ')}. Onboarding: ${
+        t.onboarding ? usd(t.onboarding.usd) : t.onboardingText
       }.`,
   );
 
@@ -105,7 +103,7 @@ export function buildLlmsTxt(): string {
     '## Pricing',
     '',
     ...products.map((p) => `- ${productLine(p)}`),
-    `- ${AUDIT.name}: ${extraUsd(AUDIT)} · ${extraNgn(AUDIT)}. ${AUDIT.description}`,
+    `- ${AUDIT.name}: ${extraPrice(AUDIT)}. ${AUDIT.description}`,
     `- Every plan includes: ${everyPlanIncludes.join('; ')}.`,
     `- ${PRICING_NOTE}`,
     link('Pricing', PAGES.pricing.path, PAGES.pricing.description),
@@ -222,7 +220,7 @@ export function buildLlmsFullTxt(): string {
   out.push(
     'Hire AI workers, not more staff. We build them, run them and report what they did every month, for a fraction of the cost of a hire. No large upfront build fees and no systems left behind after launch.',
     '',
-    `Global clients are billed in USD; Nigeria-based clients are billed in NGN. ${PRICING_NOTE}`,
+    PRICING_NOTE,
     '',
     '### Every AI worker comes with',
     '',
@@ -235,9 +233,9 @@ export function buildLlmsFullTxt(): string {
     if (p.tierNote) out.push(p.tierNote, '');
   }
   out.push('### Projects, retainers and add-ons', '');
-  out.push(...extras.map((e) => `- ${e.name} (${e.kind.toLowerCase()}): ${e.priceText ?? `${extraUsd(e)} · ${extraNgn(e)}`}. ${e.description}`), '');
+  out.push(...extras.map((e) => `- ${e.name} (${e.kind.toLowerCase()}): ${extraPrice(e)}. ${e.description}`), '');
   out.push('### The Lapis Run standard: what the monthly fee pays for', '', ...runStandard.map((r) => `- ${r.title}: ${r.text}`), '');
-  for (const g of [...commercialTerms, guarantees, ownership]) {
+  for (const g of [commercialTerms, guarantees, ownership]) {
     out.push(`### ${g.title}`, '', ...g.items.map((i) => `- ${i}`), '');
   }
   out.push('### Pricing questions', '', ...pricingFaqs.flatMap((f) => [`**${f.q}**`, '', f.a, '']));

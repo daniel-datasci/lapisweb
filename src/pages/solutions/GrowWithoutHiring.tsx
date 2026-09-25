@@ -24,7 +24,7 @@ import FaqSection from '@/components/FaqList';
 import RelatedLinks from '@/components/RelatedLinks';
 import { AuditOffer, FeeCovers, TierGrid } from '@/components/PricingBlocks';
 import { discoveryLink } from '@/data/site';
-import { MARKET_WATCH_PRICE, aiWorkforce, monthlyPair } from '@/data/pricing';
+import { MARKET_WATCH_PRICE, aiWorkforce, monthlyPrice } from '@/data/pricing';
 import { solutionFaqs } from '@/data/faqs';
 import { solutionRelated } from '@/data/related';
 import { PAGES, crumbsFor, solutionMeta } from '@/seo/routes';
@@ -104,7 +104,7 @@ const workflows: InfoCard[] = [
     icon: <Radar size={26} />,
     title: 'Market watch',
     body: "An AI worker tracks competitors' prices, launches and hiring, plus market shifts, and sends you a short brief, so you always know what changed.",
-    note: `Add-on AI worker: ${monthlyPair(MARKET_WATCH_PRICE)}`,
+    note: `Add-on AI worker: ${monthlyPrice(MARKET_WATCH_PRICE)}`,
   },
 ];
 
@@ -144,7 +144,7 @@ export default function GrowWithoutHiring() {
         eyebrow="Solution ① · Lapis AI Workforce"
         text="Take on more work without taking on more people."
         splitIndex={0}
-        subtext="When everything runs through you, the business can only grow as fast as you can work. Lapis AI Workforce gives you AI workers that take the repetitive work, handoffs and approvals off your team's plate, and we run them for you, so your people move to higher-value work. From $1,250/month · ₦750,000/month for your first AI worker."
+        subtext="When everything runs through you, the business can only grow as fast as you can work. Lapis AI Workforce gives you AI workers that take the repetitive work, handoffs and approvals off your team's plate, and we run them for you, so your people move to higher-value work. From $1,250/month for your first AI worker."
         ctaTo={discoveryLink('capacity', 'ai-workforce')}
         secondaryLabel="See AI Workforce plans"
         secondaryTo={`${PATH}#plans`}
@@ -250,7 +250,7 @@ export default function GrowWithoutHiring() {
           <AuditOffer
             topic="capacity"
             title="Find your lost hours first."
-            body="The AI Opportunity Audit ($490 · ₦250,000) maps where your team's time goes and gives you a ranked plan of AI workers, with the monthly value of each. The fee is credited back when you start."
+            body="The AI Opportunity Audit ($490) maps where your team's time goes and gives you a ranked plan of AI workers, with the monthly value of each. The fee is credited back when you start."
           />
         </div>
       </section>

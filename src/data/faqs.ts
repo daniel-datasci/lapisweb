@@ -9,9 +9,8 @@ import {
   WORKSHOP_PRICE,
   FRACTIONAL_PRICE,
   aiWorkforce,
+  formatPrice,
   leadDesk,
-  ngn,
-  pricePair,
   pricingFaqs,
   usd,
   type Product,
@@ -20,18 +19,13 @@ import {
 export type FaqItem = { q: string; a: string };
 
 const tierPrices = (p: Product) =>
-  (p.tiers ?? [])
-    .map((t) => {
-      const from = t.from ? 'from ' : '';
-      return `${t.name}, ${from}${usd(t.monthly.usd)}/month (${from}${ngn(t.monthly.ngn)})`;
-    })
-    .join('; ');
+  (p.tiers ?? []).map((t) => `${t.name}, ${t.from ? 'from ' : ''}${usd(t.monthly.usd)}/month`).join('; ');
 
-const monthly = (m: { usd: number; ngn: number }) => `${usd(m.usd)}/month · ${ngn(m.ngn)}/month`;
+const monthly = (m: { usd: number }) => `${usd(m.usd)}/month`;
 
-const [whyMonthly, lockedIn, naira, needMore] = pricingFaqs;
+const [whyMonthly, lockedIn, needMore] = pricingFaqs;
 
-const auditAnswer = `A paid, 2-week review of your workflows, lead handling and AI spend (${pricePair(AUDIT_PRICE)}). You get a ranked plan of AI workers with the monthly value of each, and the fee is 100% credited if a subscription starts within 30 days.`;
+const auditAnswer = `A paid, 2-week review of your workflows, lead handling and AI spend (${formatPrice(AUDIT_PRICE)}). You get a ranked plan of AI workers with the monthly value of each, and the fee is 100% credited if a subscription starts within 30 days.`;
 
 export const faqs: FaqItem[] = [
   {
@@ -48,7 +42,6 @@ export const faqs: FaqItem[] = [
     a: 'The Lapis Run standard: 24/7 monitoring and alerts, fixes and maintenance, model upgrades and tuning, hosting, security and backups (never billed separately), the change requests included in your plan, and a monthly impact report by the 5th working day.',
   },
   lockedIn,
-  naira,
   {
     q: 'What happens to my data if I leave?',
     a: 'You own your data, prompts and business logic. If you leave, you get a full data export and a handover document within 14 days. We provide a data processing agreement aligned with NDPA 2023 and UK and EU GDPR.',
@@ -71,7 +64,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Do you work outside Nigeria?',
-    a: 'Yes. We work with businesses across Africa, the UK, US, Canada and Europe, with the same senior team and the same standards everywhere. International clients are billed in US dollars.',
+    a: 'Yes. We work with businesses across Africa, the UK, US, Canada and Europe, with the same senior team and the same standards everywhere.',
   },
   {
     q: 'Can I start small?',
@@ -105,7 +98,7 @@ export const solutionFaqs: Record<PillarId, FaqItem[]> = {
     },
     {
       q: 'Where do I start?',
-      a: `With a free 30-minute discovery call. If there's a fit, the AI Opportunity Audit (${pricePair(AUDIT_PRICE)}, credited if you subscribe within 30 days) maps where your team's time goes and ranks the AI workers worth hiring first.`,
+      a: `With a free 30-minute discovery call. If there's a fit, the AI Opportunity Audit (${formatPrice(AUDIT_PRICE)}, credited if you subscribe within 30 days) maps where your team's time goes and ranks the AI workers worth hiring first.`,
     },
   ],
   leads: [
@@ -115,7 +108,7 @@ export const solutionFaqs: Record<PillarId, FaqItem[]> = {
     },
     {
       q: 'How much does Lead Desk cost?',
-      a: `${tierPrices(leadDesk)}. Each plan has a one-off onboarding fee, and conversations above your plan's band are ${usd(OVERAGE_PRICE.usd)} (${ngn(OVERAGE_PRICE.ngn)}) each. Prices exclude VAT; annual plans get 2 months free.`,
+      a: `${tierPrices(leadDesk)}. Each plan has a one-off onboarding fee, and conversations above your plan's band are ${usd(OVERAGE_PRICE.usd)} each. Prices exclude VAT; annual plans get 2 months free.`,
     },
     {
       q: 'How fast are enquiries answered?',
@@ -255,7 +248,7 @@ export const serviceFaqs: Record<ServiceSlug, FaqItem[]> = {
     },
     {
       q: 'How is training delivered and priced?',
-      a: `As a Team AI Workshop: a half-day, practical session for up to 20 people, for ${pricePair(WORKSHOP_PRICE)}. It leads into the AI Opportunity Audit.`,
+      a: `As a Team AI Workshop: a half-day, practical session for up to 20 people, for ${formatPrice(WORKSHOP_PRICE)}. It leads into the AI Opportunity Audit.`,
     },
     {
       q: 'Who is the training for?',
