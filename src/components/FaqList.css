@@ -53,13 +53,17 @@
   flex-shrink: 0;
 }
 
+/* Answers stay readable without JavaScript; the accordion only collapses once the app runs. */
 .faq-answer {
-  max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
 
-.faq-open .faq-answer {
+.js .faq-answer {
+  max-height: 0;
+}
+
+.js .faq-open .faq-answer {
   max-height: 400px;
 }
 

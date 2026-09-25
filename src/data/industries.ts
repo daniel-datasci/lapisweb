@@ -27,6 +27,7 @@ export type Industry = {
   caseStudySlug?: string;
   offer: 'lead-leak' | 'audit';
   metaDescription: string;
+  seoTitle: string;
 };
 
 export const industries: Industry[] = [
@@ -51,7 +52,8 @@ export const industries: Industry[] = [
     },
     offer: 'lead-leak',
     metaDescription:
-      'AI automation and agents for accounting, legal, consulting and agency firms: document review, onboarding, reporting, enquiry qualification and governed AI tools.',
+      'AI automation for accounting, legal, consulting and agency firms: document review, client onboarding, reporting, enquiry qualification and governed AI tools.',
+    seoTitle: 'AI Automation for Professional Services | The Lapis AI',
   },
   {
     slug: 'healthcare',
@@ -74,7 +76,8 @@ export const industries: Industry[] = [
     },
     offer: 'lead-leak',
     metaDescription:
-      'AI for clinics, dental practices and diagnostics: 24/7 WhatsApp and phone booking, no-show follow-up, automated patient admin and safe, compliant AI with audit trails.',
+      'AI for clinics, dental practices and diagnostics: 24/7 WhatsApp and phone booking, no-show follow-up, automated patient admin and safe, compliant AI use.',
+    seoTitle: 'AI for Clinics & Healthcare: 24/7 Booking | The Lapis AI',
   },
   {
     slug: 'real-estate',
@@ -98,6 +101,7 @@ export const industries: Industry[] = [
     offer: 'lead-leak',
     metaDescription:
       'AI for real estate agencies: instant replies to property enquiries, viewing booking and follow-up, automated comparable-sales reports and market alerts.',
+    seoTitle: 'AI for Real Estate Agencies & Brokerages | The Lapis AI',
   },
   {
     slug: 'hospitality',
@@ -121,7 +125,8 @@ export const industries: Industry[] = [
     caseStudySlug: 'hospitality-rate-intelligence',
     offer: 'lead-leak',
     metaDescription:
-      'AI for hotels, short-lets and restaurants: direct-booking enquiries answered instantly, guest messaging day and night, and rate intelligence integrated with your PMS.',
+      'AI for hotels, short-lets and restaurants: direct-booking enquiries answered instantly, guest messaging day and night, and rate intelligence linked to your PMS.',
+    seoTitle: 'AI for Hotels, Short-Lets & Restaurants | The Lapis AI',
   },
   {
     slug: 'ecommerce-retail',
@@ -144,6 +149,7 @@ export const industries: Industry[] = [
     offer: 'audit',
     metaDescription:
       'AI for e-commerce and retail: DM and WhatsApp sales assistants, abandoned-cart follow-up, automated order and supplier admin, and competitor price monitoring.',
+    seoTitle: 'AI for E-commerce & Retail Businesses | The Lapis AI',
   },
   {
     slug: 'logistics',
@@ -165,7 +171,8 @@ export const industries: Industry[] = [
     },
     offer: 'audit',
     metaDescription:
-      'AI for logistics: quote requests answered and priced fast, automated dispatch updates, proof-of-delivery processing and invoicing, and live operations dashboards.',
+      'AI for logistics: quote requests answered and priced fast, automated dispatch updates, proof-of-delivery processing and invoicing, and live ops dashboards.',
+    seoTitle: 'AI for Logistics: Faster Quotes, Less Admin | The Lapis AI',
   },
   {
     slug: 'education',
@@ -188,7 +195,8 @@ export const industries: Industry[] = [
     },
     offer: 'lead-leak',
     metaDescription:
-      'AI for schools and training providers: prospective student enquiries answered and followed up, automated admissions admin and fee reminders, and responsible AI adoption.',
+      'AI for schools and training providers: student enquiries answered and followed up, automated admissions admin and fee reminders, and responsible AI adoption.',
+    seoTitle: 'AI for Schools & Training Providers | The Lapis AI',
   },
   {
     slug: 'saas',
@@ -211,7 +219,8 @@ export const industries: Industry[] = [
     caseStudySlug: 'saas-competitive-intelligence',
     offer: 'audit',
     metaDescription:
-      'AI for SaaS and tech companies: inbound lead response and routing in minutes, support triage, onboarding and reporting automation, competitor watch and AI pilots in production.',
+      'AI for SaaS and tech companies: inbound lead response and routing in minutes, support triage, onboarding and reporting automation, and competitor watch.',
+    seoTitle: 'AI for SaaS & Tech: Scale Without Headcount | The Lapis AI',
   },
 ];
 

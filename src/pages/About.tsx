@@ -5,7 +5,8 @@ import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
 import SectionHeading from '@/components/SectionHeading';
 import InfoCards from '@/components/InfoCards';
-import { breadcrumbLd, organizationLd } from '@/data/site';
+import { PAGES, crumbsFor } from '@/seo/routes';
+import { ORG_ID } from '@/seo/schema';
 import './About.css';
 
 const principles = [
@@ -37,29 +38,15 @@ const team = [
   },
 ];
 
+const crumbs = crumbsFor(PAGES.about);
+
 export default function About() {
   return (
     <>
-      <Seo
-        title="About Us | The Team That Stays | The Lapis AI"
-        description="Founded in 2022, The Lapis AI builds and runs AI systems for growing businesses, from Lagos to London."
-        path="/about"
-        jsonLd={[
-          {
-            '@context': 'https://schema.org',
-            '@type': 'AboutPage',
-            name: 'About The Lapis AI',
-            url: 'https://thelapisai.com.ng/about',
-            mainEntity: organizationLd,
-          },
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'About', path: '/about' },
-          ]),
-        ]}
-      />
+      <Seo {...PAGES.about} pageType="AboutPage" crumbs={crumbs} mainEntityId={ORG_ID} />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow="About"
         text="We're the AI team that stays."
         splitIndex={0}

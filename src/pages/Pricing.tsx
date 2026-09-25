@@ -6,43 +6,24 @@ import Reveal from '@/components/Reveal';
 import Button from '@/components/Button';
 import Rich from '@/components/Rich';
 import { pricingTiers } from '@/data/pricing';
-import { breadcrumbLd, SITE_URL } from '@/data/site';
+import { PAGES, crumbsFor } from '@/seo/routes';
+import { PRICING_CATALOG_ID, pricingCatalogNode } from '@/seo/schema';
 import './Pricing.css';
 
-const DESCRIPTION =
-  "Start with a free AI audit. Then pay for systems that are built, run and measured, with a monthly report of what they're worth.";
+const crumbs = crumbsFor(PAGES.pricing);
 
 export default function Pricing() {
   return (
     <>
       <Seo
-        title="Pricing | The Lapis AI"
-        description={DESCRIPTION}
-        path="/pricing"
-        jsonLd={[
-          {
-            '@context': 'https://schema.org',
-            '@type': 'OfferCatalog',
-            name: 'The Lapis AI pricing',
-            url: `${SITE_URL}/pricing`,
-            itemListElement: pricingTiers
-              .filter((t) => t.price.startsWith('$'))
-              .map((t) => ({
-                '@type': 'Offer',
-                name: t.name,
-                price: t.price.replace(/[^0-9.]/g, ''),
-                priceCurrency: 'USD',
-                description: t.tagline.replace(/\*/g, ''),
-              })),
-          },
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Pricing', path: '/pricing' },
-          ]),
-        ]}
+        {...PAGES.pricing}
+        crumbs={crumbs}
+        mainEntityId={PRICING_CATALOG_ID}
+        schema={[pricingCatalogNode()]}
       />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow="Pricing"
         text="Start free. Pay for results you can see."
         splitIndex={0}

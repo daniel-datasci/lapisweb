@@ -25,6 +25,7 @@ export type Service = {
   powersLine: string;
   powers: PillarId[];
   seoTitle: string;
+  seoDescription: string;
   /** Training-style services list programmes instead of the "What's included" rows. */
   programmes?: Programme[];
   heroCta?: { label: string; to: string; secondaryLabel?: string; secondaryHash?: string };
@@ -50,7 +51,9 @@ export const services: Service[] = [
     ],
     powersLine: 'Make Your AI Pay · the first step of every engagement',
     powers: ['ai-spend'],
-    seoTitle: 'AI Consulting | The Lapis AI',
+    seoTitle: 'AI Consulting & AI Strategy for Businesses | The Lapis AI',
+    seoDescription:
+      "AI consulting that finds where AI will save time, recover revenue or cut cost in your business, and where it won't. Start with a free 60-minute AI audit.",
   },
   {
     slug: 'ai-automation',
@@ -68,7 +71,9 @@ export const services: Service[] = [
     ],
     powersLine: 'Grow Without Hiring',
     powers: ['capacity'],
-    seoTitle: 'AI Automation | The Lapis AI',
+    seoTitle: 'AI Automation Services: Get Your Hours Back | The Lapis AI',
+    seoDescription:
+      "AI automation for the repetitive work that eats your team's week, from data entry and invoicing to reporting, connected to your tools. Book a free AI audit.",
   },
   {
     slug: 'agentic-workflows',
@@ -86,7 +91,9 @@ export const services: Service[] = [
     ],
     powersLine: 'Never Miss a Lead · Grow Without Hiring',
     powers: ['leads', 'capacity'],
-    seoTitle: 'Agentic Workflows | The Lapis AI',
+    seoTitle: 'Agentic Workflows & Custom AI Agents | The Lapis AI',
+    seoDescription:
+      'Custom AI agents that read, decide and act across your systems: answering customers, qualifying leads and processing documents, with human handoff built in.',
   },
   {
     slug: 'ai-infrastructure',
@@ -104,7 +111,9 @@ export const services: Service[] = [
     ],
     powersLine: 'all three solutions · essential for Make Your AI Pay',
     powers: ['capacity', 'leads', 'ai-spend'],
-    seoTitle: 'AI Infrastructure | The Lapis AI',
+    seoTitle: 'AI Infrastructure & Data Pipelines That Last | The Lapis AI',
+    seoDescription:
+      "Most AI pilots fail because of what's missing underneath. We build the data pipelines, integrations, monitoring and governance that keep AI systems dependable.",
   },
   {
     slug: 'ai-analytics-training',
@@ -120,7 +129,9 @@ export const services: Service[] = [
     ],
     powersLine: 'Make Your AI Pay · Grow Without Hiring',
     powers: ['ai-spend', 'capacity'],
-    seoTitle: 'AI & Analytics Training | The Lapis AI',
+    seoTitle: 'AI & Analytics Training for Business Teams | The Lapis AI',
+    seoDescription:
+      "AI and analytics training for business teams: AI readiness, advanced analytics and AI in Excel and Google Sheets. Tell us who you'd like to train today.",
     programmes: [
       {
         title: 'Training on AI Integration & Readiness for Businesses',

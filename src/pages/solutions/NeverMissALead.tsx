@@ -8,12 +8,19 @@ import InfoCards, { InfoCard } from '@/components/InfoCards';
 import ResponsiveTable from '@/components/ResponsiveTable';
 import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
-import { auditLink, breadcrumbLd, serviceLd } from '@/data/site';
+import FaqSection from '@/components/FaqList';
+import RelatedLinks from '@/components/RelatedLinks';
+import { auditLink } from '@/data/site';
+import { solutionFaqs } from '@/data/faqs';
+import { solutionRelated } from '@/data/related';
+import { PAGES, crumbsFor, solutionMeta } from '@/seo/routes';
+import { serviceId, serviceNode, tierOffer } from '@/seo/schema';
 
-const PATH = '/solutions/never-miss-a-lead';
-const DESCRIPTION =
-  'Every enquiry answered in under 60 seconds, then qualified and booked, on every channel, day and night, with a monthly report of revenue recovered.';
-
+const META = solutionMeta('leads');
+const PATH = META.path;
+const CRUMBS = crumbsFor(PAGES.solutions, META);
+const FAQS = solutionFaqs.leads;
+const GROWTH_OFFER = tierOffer('Growth System');
 const pains = [
   'Calls go to voicemail at your busiest times.',
   'After-hours and weekend enquiries go cold by Monday.',
@@ -81,20 +88,24 @@ export default function NeverMissALead() {
   return (
     <>
       <Seo
-        title="Never Miss a Lead | AI Lead Response on WhatsApp, Phone & Web | The Lapis AI"
-        description={DESCRIPTION}
-        path={PATH}
-        jsonLd={[
-          serviceLd('Never Miss a Lead', DESCRIPTION, PATH),
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Solutions', path: '/solutions' },
-            { name: 'Never Miss a Lead', path: PATH },
-          ]),
+        {...META}
+        crumbs={CRUMBS}
+        faqs={FAQS}
+        mainEntityId={serviceId(PATH)}
+        schema={[
+          serviceNode({
+            path: PATH,
+            name: META.label,
+            description: META.description,
+            serviceType: 'AI lead response and lead qualification',
+            audience: 'Growing businesses',
+            offers: GROWTH_OFFER ? [GROWTH_OFFER] : undefined,
+          }),
         ]}
       />
 
       <PageHero
+        crumbs={CRUMBS}
         eyebrow="Solution ② · Revenue response"
         text="Every enquiry answered in under 60 seconds. On every channel."
         splitIndex={0}
@@ -179,6 +190,10 @@ export default function NeverMissALead() {
           </Reveal>
         </div>
       </section>
+
+      <RelatedLinks title="Go deeper on" accent="Never Miss a Lead." items={solutionRelated('leads')} />
+
+      <FaqSection items={FAQS} title="Never Miss a Lead:" accent="your questions answered." />
 
       <CTASection
         heading="Stop losing customers to slow replies."

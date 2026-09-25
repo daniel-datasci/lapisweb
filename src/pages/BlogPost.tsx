@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Seo from '@/components/Seo';
 import CTASection from '@/components/CTASection';
@@ -7,8 +7,13 @@ import Reveal from '@/components/Reveal';
 import Button from '@/components/Button';
 import { blogPostBySlug, blogPosts, formatPostDate } from '@/data/blog';
 import { pillarTag, solutionById } from '@/data/solutions';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import NotFound from '@/pages/NotFound';
 import '@/components/ContentBlocks.css';
-import { breadcrumbLd, SITE_URL } from '@/data/site';
+import { absoluteUrl } from '@/data/site';
+import { ogImagePath } from '@/seo/og';
+import { PAGES, blogPostMeta, crumbsFor } from '@/seo/routes';
+import { orgRef, webpageId } from '@/seo/schema';
 import './BlogPost.css';
 
 function renderBody(body: string[]) {
@@ -44,56 +49,59 @@ function renderBody(body: string[]) {
 
 const plain = (body: string[]) => body.map((line) => line.replace(/^(## |- |> )/, '')).join('\n');
 
+const wordCount = (text: string) => text.split(/\s+/).filter(Boolean).length;
+
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const post = blogPostBySlug(slug);
 
-  if (!post) return <Navigate to="/blog" replace />;
+  if (!post) return <NotFound />;
 
   const solution = solutionById[post.category];
   const others = blogPosts.filter((p) => p.slug !== post.slug);
   const sameCategory = others.filter((p) => p.category === post.category);
   const related = [...sameCategory, ...others.filter((p) => p.category !== post.category)].slice(0, 2);
   const relatedHeading = sameCategory.length >= 2 ? `More on ${solution.name}` : 'Keep reading';
-  const path = `/blog/${post.slug}`;
+  const meta = blogPostMeta(post);
+  const path = meta.path;
+  const crumbs = crumbsFor(PAGES.blog, meta);
+  const articleId = `${absoluteUrl(path)}#article`;
+  const modified = post.updated ?? post.date;
+  const articleBody = plain(post.body);
 
   return (
     <>
       <Seo
-        title={`${post.title} | The Lapis AI Blog`}
-        description={post.excerpt}
-        path={path}
-        type="article"
-        article={{ publishedTime: new Date(`${post.date}T00:00:00Z`).toISOString(), section: solution.name }}
-        jsonLd={[
+        {...meta}
+        crumbs={crumbs}
+        article={{ published: post.date, modified, section: solution.name }}
+        mainEntityId={articleId}
+        schema={[
           {
-            '@context': 'https://schema.org',
             '@type': 'BlogPosting',
+            '@id': articleId,
             headline: post.title,
-            description: post.excerpt,
+            description: meta.description,
             datePublished: post.date,
+            dateModified: modified,
+            author: orgRef,
+            publisher: orgRef,
+            image: absoluteUrl(ogImagePath(path)),
+            mainEntityOfPage: { '@id': webpageId(path) },
+            isPartOf: { '@id': `${absoluteUrl(PAGES.blog.path)}#blog` },
+            url: absoluteUrl(path),
             articleSection: solution.name,
-            author: { '@type': 'Organization', name: 'The Lapis AI', url: SITE_URL },
-            publisher: {
-              '@type': 'Organization',
-              name: 'The Lapis AI',
-              logo: { '@type': 'ImageObject', url: `${SITE_URL}/og-back.png` },
-            },
-            mainEntityOfPage: `${SITE_URL}${path}`,
-            url: `${SITE_URL}${path}`,
-            articleBody: plain(post.body),
+            inLanguage: 'en',
+            wordCount: wordCount(articleBody),
+            articleBody,
           },
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Blog', path: '/blog' },
-            { name: post.title, path },
-          ]),
         ]}
       />
 
       <article className="blog-post">
         <section className="page-hero page-hero-navy">
           <div className="container" style={{ maxWidth: 760 }}>
+            <Breadcrumbs items={crumbs} className="breadcrumbs-start" />
             <Link to="/blog" className="blog-back hero-eyebrow" style={{ animation: 'none' }}>
               <ArrowLeft size={16} aria-hidden="true" /> All posts
             </Link>
@@ -125,6 +133,9 @@ export default function BlogPost() {
                 <Button to="/contact" variant="primary" size="lg" borderWrap icon>
                   Book My Free AI Audit
                 </Button>
+                <Link to={solution.path} className="blog-post-cta-link">
+                  See how {solution.name} works <ArrowRight size={16} aria-hidden="true" />
+                </Link>
               </aside>
             </Reveal>
           </div>

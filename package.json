@@ -5,10 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "verify:seo": "node scripts/verify-seo.mjs",
+    "serve:dist": "node scripts/serve-dist.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
+    "images": "vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/generate-images.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

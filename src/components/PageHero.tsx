@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import TypewriterHeading from './TypewriterHeading';
 import Button from './Button';
+import Breadcrumbs from './Breadcrumbs';
+import type { Crumb } from '@/seo/schema';
 import './PageHero.css';
 
 type Props = {
@@ -18,6 +20,8 @@ type Props = {
   variant?: 'navy' | 'split';
   /** Render the heading without the typewriter effect. */
   staticHeading?: boolean;
+  /** Breadcrumb trail shown above the hero card. */
+  crumbs?: Crumb[];
 };
 
 export default function PageHero({
@@ -34,7 +38,9 @@ export default function PageHero({
   children,
   variant = 'navy',
   staticHeading = false,
+  crumbs,
 }: Props) {
+  const trail = crumbs ? <Breadcrumbs items={crumbs} /> : null;
   const content = (
     <div className="page-hero-content">
       <span className="eyebrow hero-eyebrow">{eyebrow}</span>
@@ -77,6 +83,7 @@ export default function PageHero({
   if (variant === 'split') {
     return (
       <section className="page-hero page-hero-navy page-hero-split">
+        {trail}
         <div className="container page-hero-inner">
           {content}
           <div className="page-hero-aside">{children}</div>
@@ -87,6 +94,7 @@ export default function PageHero({
 
   return (
     <section className="page-hero page-hero-navy">
+      {trail}
       <div className="container page-hero-inner">
         {content}
         {children}

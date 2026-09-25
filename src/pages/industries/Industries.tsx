@@ -5,22 +5,24 @@ import ResponsiveTable from '@/components/ResponsiveTable';
 import CTASection from '@/components/CTASection';
 import { industries } from '@/data/industries';
 import { solutions } from '@/data/solutions';
-import { breadcrumbLd } from '@/data/site';
+import { PAGES, crumbsFor } from '@/seo/routes';
+import { itemListId, itemListNode } from '@/seo/schema';
+
+const crumbs = crumbsFor(PAGES.industries);
 
 export default function Industries() {
   return (
     <>
       <Seo
-        title="Industries We Serve | The Lapis AI"
-        description="AI automation and agents for professional services, clinics, real estate, hospitality, e-commerce, logistics, education and SaaS, in Nigeria and worldwide."
-        path="/industries"
-        jsonLd={breadcrumbLd([
-          { name: 'Home', path: '/' },
-          { name: 'Industries', path: '/industries' },
-        ])}
+        {...PAGES.industries}
+        pageType="CollectionPage"
+        crumbs={crumbs}
+        mainEntityId={itemListId(PAGES.industries.path)}
+        schema={[itemListNode(PAGES.industries.path, 'Industries', industries.map((i) => ({ name: i.name, path: i.path })))]}
       />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow="Industries"
         text="Different industries. The same three walls."
         splitIndex={0}

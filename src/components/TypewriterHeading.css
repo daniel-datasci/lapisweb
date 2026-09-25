@@ -27,3 +27,27 @@
     font-size: 26px;
   }
 }
+
+/* Zero-width cursor, so typing never shifts the reserved final layout. */
+.tw-cursor {
+  position: relative;
+}
+
+.tw-cursor::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  bottom: 0;
+  width: 3px;
+  height: 0.9em;
+  background: var(--cyan-400);
+  animation: blink 0.8s step-end infinite;
+}
+
+.js .tw-rest {
+  visibility: hidden;
+}
+
+html:not(.js) .tw-cursor {
+  display: none;
+}

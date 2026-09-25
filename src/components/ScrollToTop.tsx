@@ -15,11 +15,13 @@ export default function ScrollToTop() {
   const previousPath = useRef<string | null>(null);
 
   useEffect(() => {
+    const firstRun = previousPath.current === null;
     const samePage = previousPath.current === pathname;
     previousPath.current = pathname;
 
     if (!hash) {
-      if (!samePage) window.scrollTo(0, 0);
+      // On the first load the browser owns the scroll position (reload, back/forward restore).
+      if (!samePage && !firstRun) window.scrollTo(0, 0);
       return;
     }
 

@@ -7,12 +7,18 @@ import StatGrid from '@/components/StatGrid';
 import InfoCards, { InfoCard } from '@/components/InfoCards';
 import ProcessSteps from '@/components/ProcessSteps';
 import CTASection from '@/components/CTASection';
-import { auditLink, breadcrumbLd, serviceLd } from '@/data/site';
+import FaqSection from '@/components/FaqList';
+import RelatedLinks from '@/components/RelatedLinks';
+import { auditLink } from '@/data/site';
+import { solutionFaqs } from '@/data/faqs';
+import { solutionRelated } from '@/data/related';
+import { PAGES, crumbsFor, solutionMeta } from '@/seo/routes';
+import { serviceId, serviceNode } from '@/seo/schema';
 
-const PATH = '/solutions/make-your-ai-pay';
-const DESCRIPTION =
-  'Stalled AI pilots, unused licences, no ROI? We audit your AI spend and take the highest-return workflow into production in 45 days, with ROI tracked from day one.';
-
+const META = solutionMeta('ai-spend');
+const PATH = META.path;
+const CRUMBS = crumbsFor(PAGES.solutions, META);
+const FAQS = solutionFaqs['ai-spend'];
 const pains = [
   "You're paying for AI licences that half the team never opens.",
   'The pilot looked great on clean examples, then failed on real data.',
@@ -114,20 +120,23 @@ export default function MakeYourAIPay() {
   return (
     <>
       <Seo
-        title="Make Your AI Pay | AI Pilot to Production in 45 Days | The Lapis AI"
-        description={DESCRIPTION}
-        path={PATH}
-        jsonLd={[
-          serviceLd('Make Your AI Pay', DESCRIPTION, PATH),
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Solutions', path: '/solutions' },
-            { name: 'Make Your AI Pay', path: PATH },
-          ]),
+        {...META}
+        crumbs={CRUMBS}
+        faqs={FAQS}
+        mainEntityId={serviceId(PATH)}
+        schema={[
+          serviceNode({
+            path: PATH,
+            name: META.label,
+            description: META.description,
+            serviceType: 'AI pilot-to-production and AI ROI',
+            audience: 'Growing businesses',
+          }),
         ]}
       />
 
       <PageHero
+        crumbs={CRUMBS}
         eyebrow="Solution ③ · AI to production"
         text="You've tried AI. Now make it pay."
         splitIndex={0}
@@ -187,6 +196,10 @@ export default function MakeYourAIPay() {
           />
         </div>
       </section>
+
+      <RelatedLinks title="Go deeper on" accent="Make Your AI Pay." items={solutionRelated('ai-spend')} />
+
+      <FaqSection items={FAQS} title="Make Your AI Pay:" accent="your questions answered." />
 
       <CTASection
         heading="Find out what your AI spend should be delivering."

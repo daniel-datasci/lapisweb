@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Seo from '@/components/Seo';
 import PageHero from '@/components/PageHero';
@@ -13,14 +13,20 @@ import { industryBySlug } from '@/data/industries';
 import { caseStudyBySlug } from '@/data/testimonials';
 import { pricingTiers } from '@/data/pricing';
 import { pillarTag, solutions } from '@/data/solutions';
-import { auditLink, breadcrumbLd, serviceLd } from '@/data/site';
+import NotFound from '@/pages/NotFound';
+import { auditLink } from '@/data/site';
+import { PAGES, crumbsFor, industryMeta } from '@/seo/routes';
+import { serviceId, serviceNode } from '@/seo/schema';
 
 const freeAudit = pricingTiers[0];
 
 export default function IndustryPage() {
   const { slug } = useParams();
   const industry = industryBySlug(slug);
-  if (!industry) return <Navigate to="/industries" replace />;
+  if (!industry) return <NotFound />;
+
+  const meta = industryMeta(industry);
+  const crumbs = crumbsFor(PAGES.industries, meta);
 
   const study = caseStudyBySlug(industry.caseStudySlug);
   const leadLeak = industry.offer === 'lead-leak';
@@ -37,20 +43,22 @@ export default function IndustryPage() {
   return (
     <>
       <Seo
-        title={`AI for ${industry.name} | The Lapis AI`}
-        description={industry.metaDescription}
-        path={industry.path}
-        jsonLd={[
-          serviceLd(`AI automation and agents for ${industry.name}`, industry.metaDescription, industry.path),
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Industries', path: '/industries' },
-            { name: industry.name, path: industry.path },
-          ]),
+        {...meta}
+        crumbs={crumbs}
+        mainEntityId={serviceId(meta.path)}
+        schema={[
+          serviceNode({
+            path: meta.path,
+            name: `AI automation and AI agents for ${industry.name}`,
+            description: industry.metaDescription,
+            serviceType: 'AI automation and AI agents',
+            audience: industry.examples ?? industry.name,
+          }),
         ]}
       />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow={`Industries · ${industry.name}`}
         text={industry.heroHeading}
         splitIndex={0}

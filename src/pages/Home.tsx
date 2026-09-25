@@ -26,7 +26,8 @@ import ProcessSteps from '@/components/ProcessSteps';
 import QuoteGrid from '@/components/QuoteGrid';
 import CTASection from '@/components/CTASection';
 import { caseStudies } from '@/data/testimonials';
-import { DEFAULT_OG_TITLE, organizationLd } from '@/data/site';
+import { DEFAULT_OG_TITLE } from '@/data/site';
+import { PAGES } from '@/seo/routes';
 import './Home.css';
 
 const heroText = 'Grow without adding headcount, losing leads, or wasting money on AI.';
@@ -149,13 +150,7 @@ const quotes = caseStudies.map((c) => ({
 export default function Home() {
   return (
     <>
-      <Seo
-        title="The Lapis AI | Grow Without Hiring, Never Miss a Lead, Make Your AI Pay"
-        description="We build and run AI systems that give growing businesses more capacity, answer every enquiry in under 60 seconds, and turn stalled AI into measurable return."
-        path="/"
-        ogTitle={DEFAULT_OG_TITLE}
-        jsonLd={organizationLd}
-      />
+      <Seo {...PAGES.home} ogTitle={DEFAULT_OG_TITLE} />
 
       <div className="home">
         <section className="page-hero page-hero-navy home-hero">

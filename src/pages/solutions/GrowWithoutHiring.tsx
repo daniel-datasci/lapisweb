@@ -20,12 +20,19 @@ import DiffCards from '@/components/DiffCards';
 import QuoteGrid from '@/components/QuoteGrid';
 import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
-import { auditLink, breadcrumbLd, serviceLd } from '@/data/site';
+import FaqSection from '@/components/FaqList';
+import RelatedLinks from '@/components/RelatedLinks';
+import { auditLink } from '@/data/site';
+import { solutionFaqs } from '@/data/faqs';
+import { solutionRelated } from '@/data/related';
+import { PAGES, crumbsFor, solutionMeta } from '@/seo/routes';
+import { serviceId, serviceNode, tierOffer } from '@/seo/schema';
 
-const PATH = '/solutions/grow-without-hiring';
-const DESCRIPTION =
-  'Take on more work without taking on more people. We automate the admin, operations and reporting that bottleneck your team, and we run it for you.';
-
+const META = solutionMeta('capacity');
+const PATH = META.path;
+const CRUMBS = crumbsFor(PAGES.solutions, META);
+const FAQS = solutionFaqs.capacity;
+const GROWTH_OFFER = tierOffer('Growth System');
 const pains = [
   'Every decision, approval and customer issue ends up on your desk.',
   'Your team answers the same questions all day, every day.',
@@ -114,20 +121,24 @@ export default function GrowWithoutHiring() {
   return (
     <>
       <Seo
-        title="Grow Without Hiring | AI Automation & Agents | The Lapis AI"
-        description={DESCRIPTION}
-        path={PATH}
-        jsonLd={[
-          serviceLd('Grow Without Hiring', DESCRIPTION, PATH),
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Solutions', path: '/solutions' },
-            { name: 'Grow Without Hiring', path: PATH },
-          ]),
+        {...META}
+        crumbs={CRUMBS}
+        faqs={FAQS}
+        mainEntityId={serviceId(PATH)}
+        schema={[
+          serviceNode({
+            path: PATH,
+            name: META.label,
+            description: META.description,
+            serviceType: 'AI automation and AI agents for business operations',
+            audience: 'Growing businesses',
+            offers: GROWTH_OFFER ? [GROWTH_OFFER] : undefined,
+          }),
         ]}
       />
 
       <PageHero
+        crumbs={CRUMBS}
         eyebrow="Solution ① · Capacity"
         text="Take on more work without taking on more people."
         splitIndex={0}
@@ -217,6 +228,10 @@ export default function GrowWithoutHiring() {
           />
         </div>
       </section>
+
+      <RelatedLinks title="Go deeper on" accent="Grow Without Hiring." items={solutionRelated('capacity')} />
+
+      <FaqSection items={FAQS} title="Grow Without Hiring:" accent="your questions answered." />
 
       <CTASection
         heading="Find out how many hours a week you could get back."

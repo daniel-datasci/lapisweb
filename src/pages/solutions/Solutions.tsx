@@ -4,9 +4,12 @@ import PageHero from '@/components/PageHero';
 import ResponsiveTable from '@/components/ResponsiveTable';
 import Button from '@/components/Button';
 import Reveal from '@/components/Reveal';
-import { solutionById } from '@/data/solutions';
-import { breadcrumbLd } from '@/data/site';
+import { solutionById, solutions } from '@/data/solutions';
+import { PAGES, crumbsFor } from '@/seo/routes';
+import { itemListId, itemListNode } from '@/seo/schema';
 import '@/components/ContentBlocks.css';
+
+const crumbs = crumbsFor(PAGES.solutions);
 
 const rows = [
   {
@@ -34,16 +37,15 @@ export default function Solutions() {
   return (
     <>
       <Seo
-        title="Solutions | The Lapis AI"
-        description="Grow without hiring, never miss a lead, and make your AI investment pay. Three problems, one team that builds and runs the fix."
-        path="/solutions"
-        jsonLd={breadcrumbLd([
-          { name: 'Home', path: '/' },
-          { name: 'Solutions', path: '/solutions' },
-        ])}
+        {...PAGES.solutions}
+        pageType="CollectionPage"
+        crumbs={crumbs}
+        mainEntityId={itemListId(PAGES.solutions.path)}
+        schema={[itemListNode(PAGES.solutions.path, 'Solutions', solutions.map((s) => ({ name: s.name, path: s.path })))]}
       />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow="Solutions"
         text="Start with the problem, not the technology."
         splitIndex={0}

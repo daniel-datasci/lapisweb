@@ -5,10 +5,10 @@ import DarkCallout from '@/components/DarkCallout';
 import CTASection from '@/components/CTASection';
 import { services, lapisRun } from '@/data/services';
 import { serviceIcon } from '@/data/icons';
-import { breadcrumbLd, organizationLd, SITE_URL } from '@/data/site';
+import { PAGES, crumbsFor } from '@/seo/routes';
+import { itemListId, itemListNode } from '@/seo/schema';
 
-const DESCRIPTION =
-  'Five capabilities and one team that stays. The services behind every Lapis solution, from AI consulting and automation to team training.';
+const crumbs = crumbsFor(PAGES.services);
 
 export default function Services() {
   const cards: InfoCard[] = services.map((s) => ({
@@ -25,34 +25,15 @@ export default function Services() {
   return (
     <>
       <Seo
-        title="AI Consulting, Automation, Agents, Infrastructure & Training | The Lapis AI"
-        description={DESCRIPTION}
-        path="/services"
-        jsonLd={[
-          {
-            '@context': 'https://schema.org',
-            '@type': 'ItemList',
-            name: 'Services',
-            itemListElement: services.map((s, i) => ({
-              '@type': 'ListItem',
-              position: i + 1,
-              item: {
-                '@type': 'Service',
-                name: s.name,
-                description: s.body,
-                url: `${SITE_URL}${s.path}`,
-                provider: { '@type': 'Organization', name: organizationLd.name, url: SITE_URL },
-              },
-            })),
-          },
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Services', path: '/services' },
-          ]),
-        ]}
+        {...PAGES.services}
+        pageType="CollectionPage"
+        crumbs={crumbs}
+        mainEntityId={itemListId(PAGES.services.path)}
+        schema={[itemListNode(PAGES.services.path, 'Services', services.map((s) => ({ name: s.name, path: s.path })))]}
       />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow="Services"
         text="Five capabilities, delivered and run by one team."
         splitIndex={0}

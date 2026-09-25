@@ -7,18 +7,51 @@ import CTASection from '@/components/CTASection';
 import FilterChips from '@/components/FilterChips';
 import { blogPosts, formatPostDate } from '@/data/blog';
 import { pillarFilters, pillarTag, solutionById, type PillarId } from '@/data/solutions';
-import { breadcrumbLd, SITE_URL } from '@/data/site';
+import { SITE_NAME, absoluteUrl } from '@/data/site';
+import { useHydrated } from '@/hooks/useHydrated';
+import { ogImagePath } from '@/seo/og';
+import { PAGES, blogPostMeta, crumbsFor } from '@/seo/routes';
+import { orgRef } from '@/seo/schema';
 import './Blog.css';
 
 type Filter = 'all' | PillarId;
 
 const isFilter = (v: string | null): v is Filter => pillarFilters.some((f) => f.value === v);
 
-const DESCRIPTION = 'Practical thinking on getting hours back, never missing a lead and making AI pay.';
+const crumbs = crumbsFor(PAGES.blog);
+const BLOG_ID = `${absoluteUrl(PAGES.blog.path)}#blog`;
+
+const blogNode = () => ({
+  '@type': 'Blog',
+  '@id': BLOG_ID,
+  name: `${SITE_NAME} Blog`,
+  url: absoluteUrl(PAGES.blog.path),
+  description: PAGES.blog.description,
+  inLanguage: 'en',
+  publisher: orgRef,
+  blogPost: blogPosts.map((post) => {
+    const path = blogPostMeta(post).path;
+    return {
+      '@type': 'BlogPosting',
+      '@id': `${absoluteUrl(path)}#article`,
+      headline: post.title,
+      url: absoluteUrl(path),
+      description: post.excerpt,
+      datePublished: post.date,
+      dateModified: post.updated ?? post.date,
+      articleSection: solutionById[post.category].name,
+      image: absoluteUrl(ogImagePath(path)),
+      author: orgRef,
+      publisher: orgRef,
+    };
+  }),
+});
 
 export default function Blog() {
   const [params, setParams] = useSearchParams();
-  const raw = params.get('category');
+  // The static HTML lists every post; the category from the URL applies after hydration.
+  const hydrated = useHydrated();
+  const raw = hydrated ? params.get('category') : null;
   const filter: Filter = isFilter(raw) ? raw : 'all';
   const posts = filter === 'all' ? blogPosts : blogPosts.filter((p) => p.category === filter);
 
@@ -31,35 +64,10 @@ export default function Blog() {
 
   return (
     <>
-      <Seo
-        title="Blog | Practical AI for Growing Businesses | The Lapis AI"
-        description={DESCRIPTION}
-        path="/blog"
-        jsonLd={[
-          {
-            '@context': 'https://schema.org',
-            '@type': 'Blog',
-            name: 'The Lapis AI Blog',
-            url: `${SITE_URL}/blog`,
-            description: DESCRIPTION,
-            blogPost: blogPosts.map((post) => ({
-              '@type': 'BlogPosting',
-              headline: post.title,
-              url: `${SITE_URL}/blog/${post.slug}`,
-              datePublished: post.date,
-              description: post.excerpt,
-              articleSection: solutionById[post.category].name,
-              author: { '@type': 'Organization', name: 'The Lapis AI' },
-            })),
-          },
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Blog', path: '/blog' },
-          ]),
-        ]}
-      />
+      <Seo {...PAGES.blog} pageType="CollectionPage" crumbs={crumbs} mainEntityId={BLOG_ID} schema={[blogNode()]} />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow="Blog"
         text="Practical AI for growing businesses."
         splitIndex={0}
@@ -82,7 +90,7 @@ export default function Blog() {
                   <h2 className="blog-card-title">{post.title}</h2>
                   <p className="blog-card-excerpt">{post.excerpt}</p>
                   <div className="blog-card-meta">
-                    <span>{formatPostDate(post.date)}</span>
+                    <time dateTime={post.date}>{formatPostDate(post.date)}</time>
                     <span>{post.readTime}</span>
                   </div>
                   <span className="blog-card-link">

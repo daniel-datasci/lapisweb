@@ -1,34 +1,24 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function useTypewriter(
-  text: string,
-  speed = 35,
-  startDelay = 400,
-): { displayed: string; done: boolean } {
-  const [displayed, setDisplayed] = useState('');
-  const [done, setDone] = useState(false);
-  const textRef = useRef(text);
-  textRef.current = text;
+/**
+ * Number of characters of `text` revealed so far. It starts at 0 on the server and on the
+ * first client render, so hydration matches, then counts up one character every `speed` ms.
+ */
+export function useTypewriter(text: string, speed = 35, startDelay = 400): { count: number; done: boolean } {
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    setDisplayed('');
-    setDone(false);
-    let i = 0;
-    let interval: ReturnType<typeof setInterval>;
-    let timeout: ReturnType<typeof setTimeout>;
-
-    const start = () => {
+    setCount(0);
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const timeout = setTimeout(() => {
       interval = setInterval(() => {
-        i++;
-        setDisplayed(textRef.current.slice(0, i));
-        if (i >= textRef.current.length) {
-          clearInterval(interval);
-          setDone(true);
-        }
+        setCount((n) => {
+          const next = n + 1;
+          if (next >= text.length) clearInterval(interval);
+          return Math.min(next, text.length);
+        });
       }, speed);
-    };
-
-    timeout = setTimeout(start, startDelay);
+    }, startDelay);
 
     return () => {
       clearTimeout(timeout);
@@ -36,5 +26,5 @@ export function useTypewriter(
     };
   }, [text, speed, startDelay]);
 
-  return { displayed, done };
+  return { count, done: count >= text.length };
 }

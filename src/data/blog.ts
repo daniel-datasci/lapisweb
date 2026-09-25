@@ -5,8 +5,15 @@ export type BlogPost = {
   title: string;
   category: PillarId;
   excerpt: string;
+  /** ISO date (YYYY-MM-DD). */
   date: string;
+  /** ISO date of the last meaningful edit, if any. */
+  updated?: string;
   readTime: string;
+  /** Search title (50-60 chars) when the post title is too long. */
+  seoTitle?: string;
+  /** Search description (140-160 chars) when the excerpt doesn't fit. */
+  seoDescription?: string;
   /**
    * Paragraphs. A line starting with "## " is a subheading, "- " is a list item
    * (consecutive items are grouped) and "> " is a pull quote.
@@ -22,6 +29,9 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Checking competitor websites by hand is a job nobody has time for, so it doesn't get done. Here's how a market watch workflow tells you what changed this week, without adding it to anyone's to-do list.",
     date: '2026-07-15',
+    seoTitle: 'Market Watch: Track What Competitors Changed | The Lapis AI',
+    seoDescription:
+      "Checking competitor websites by hand is a job nobody has time for. Here's how a market watch workflow tells you what changed this week, with no extra work.",
     readTime: '5 min read',
     body: [
       "Ask most growing businesses what their competitors changed this week and you'll get a shrug. Not because nobody cares, but because checking prices, launches and job posts by hand is a job nobody has time for. So it slips down the list, and the first sign of a change arrives as a lost deal or a surprised customer.",
@@ -49,6 +59,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       'Before you hire an AI engineer, make sure you know what to build. The most expensive AI mistake isn\u2019t hiring the wrong person \u2014 it\u2019s building the wrong thing.',
     date: '2026-07-10',
+    seoTitle: 'AI Consulting vs. Hiring an AI Engineer | The Lapis AI',
     readTime: '5 min read',
     body: [
       'When a growing business decides to \u201cdo AI,\u201d the instinct is to hire. An AI engineer, a data scientist, maybe a whole team. It feels like progress.',
@@ -64,6 +75,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       'A demo that works on three clean examples is not a production system. Here are the four reasons your AI agent pilot will stall \u2014 and how to avoid them.',
     date: '2026-07-05',
+    seoTitle: 'Why Most AI Pilots Never Reach Production | The Lapis AI',
     readTime: '7 min read',
     body: [
       'The demo is impressive. The agent handles the input gracefully, returns the right answer, and everyone in the room nods. Then it goes to production and falls apart.',
@@ -81,6 +93,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       'They messaged you at 9pm. By the time you replied, someone else already had. Here is what a slow reply really costs, and how to stop the leak.',
     date: '2026-06-28',
+    seoTitle: 'The Real Cost of a Slow Reply to New Leads | The Lapis AI',
     readTime: '5 min read',
     body: [
       'A customer messages you at 9pm. Another calls while your team is with a client. A third fills in the form on your website and waits. And while they wait, someone else replies.',
@@ -115,6 +128,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       'A smart dashboard is the tip of the iceberg. Here\u2019s the four-layer stack underneath it \u2014 and why skipping any layer makes the whole thing collapse.',
     date: '2026-06-20',
+    seoTitle: 'AI Infrastructure 101: The Four Layers | The Lapis AI',
     readTime: '8 min read',
     body: [
       'When someone shows you a \u201csmart dashboard,\u201d they\u2019re showing you the top of a stack. What you don\u2019t see is the four layers underneath that make it work.',
@@ -132,6 +146,9 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       'Off-the-shelf AI tools are fast to start and slow to fit. Custom agents are slow to start and exact. Here\u2019s how to decide which one your workflow actually needs.',
     date: '2026-06-12',
+    seoTitle: 'Build vs. Buy: When a Custom AI Agent Wins | The Lapis AI',
+    seoDescription:
+      'Off-the-shelf AI tools are fast to start and slow to fit. Custom agents are slow to start and exact. Here\u2019s how to decide which one your workflow needs.',
     readTime: '6 min read',
     body: [
       'The off-the-shelf AI tool promises everything: plug it in, configure a few settings, and your workflow is automated. For generic tasks \u2014 summarizing meeting notes, drafting emails \u2014 this works.',
@@ -145,4 +162,9 @@ export const blogPosts: BlogPost[] = [
 export const blogPostBySlug = (slug?: string) => blogPosts.find((p) => p.slug === slug);
 
 export const formatPostDate = (date: string) =>
-  new Date(`${date}T00:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  new Date(`${date}T00:00:00Z`).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });

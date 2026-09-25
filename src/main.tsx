@@ -1,10 +1,30 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
+import { preloadRoute } from './routes.tsx';
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
+const container = document.getElementById('root')!;
+
+const app = (
   <StrictMode>
-    <App />
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
   </StrictMode>
 );
+
+if (container.firstElementChild) {
+  // Prerendered page: load this route's code first so hydration matches the server HTML.
+  preloadRoute(window.location.pathname).then(() => {
+    hydrateRoot(container, app);
+    window.clearTimeout(window.__lapisFallback);
+  });
+} else {
+  createRoot(container).render(app);
+  window.clearTimeout(window.__lapisFallback);
+}

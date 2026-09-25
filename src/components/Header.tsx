@@ -6,7 +6,7 @@ import { solutions } from '@/data/solutions';
 import { services } from '@/data/services';
 import { industries } from '@/data/industries';
 import './Header.css';
-import logsImage from '@/data/logs.png';
+import logsImage from '@/data/logo-mark.webp';
 
 type SubLink = { label: string; to: string; description?: string };
 

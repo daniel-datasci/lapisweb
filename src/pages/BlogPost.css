@@ -144,6 +144,20 @@
   width: auto;
 }
 
+.blog-post-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cyan-400);
+  transition: gap 0.3s ease;
+}
+
+.blog-post-cta-link:hover {
+  gap: 12px;
+}
+
 @media (max-width: 768px) {
   .blog-post-body p,
   .blog-post-body li {

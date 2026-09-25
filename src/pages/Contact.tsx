@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import emailjs from '@emailjs/browser';
-import { Check, ChevronDown } from 'lucide-react';
+import { Check, ChevronDown, Mail, MapPin, Phone } from 'lucide-react';
 import Seo from '@/components/Seo';
 import TypewriterHeading from '@/components/TypewriterHeading';
 import Button from '@/components/Button';
-import { breadcrumbLd, CONTACT_EMAIL, SITE_URL, type AuditTopic } from '@/data/site';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { AREA_SERVED_LABEL, CONTACT_EMAIL, LOCATION, PHONE_LINES, type AuditTopic } from '@/data/site';
+import { useHydrated } from '@/hooks/useHydrated';
+import { PAGES, crumbsFor } from '@/seo/routes';
+import { ORG_ID } from '@/seo/schema';
 import './Contact.css';
 
 const heading = "Let's find where your business is leaking time, leads and money.";
+
+const crumbs = crumbsFor(PAGES.contact);
 
 const countries = ['Nigeria', 'Ghana', 'Kenya', 'South Africa', 'UK', 'US', 'Canada', 'EU', 'Other'];
 
@@ -58,7 +63,9 @@ type Form = {
 
 export default function Contact() {
   const [params] = useSearchParams();
-  const topic = params.get('topic');
+  // The prerendered page has no query string, so ?topic= is read once hydrated to keep both renders identical.
+  const hydrated = useHydrated();
+  const topic = hydrated ? params.get('topic') : null;
 
   const [form, setForm] = useState<Form>({
     name: '',
@@ -128,6 +135,7 @@ export default function Contact() {
     setError('');
 
     try {
+      const { default: emailjs } = await import('@emailjs/browser');
       await emailjs.send(
         serviceId,
         templateId,
@@ -176,42 +184,14 @@ export default function Contact() {
     }
   };
 
-  const seo = (
-    <Seo
-      title="Book a Free AI Audit | The Lapis AI"
-      description="Sixty minutes, no obligation, and a written roadmap you keep. We reply within one business day."
-      path="/contact"
-      jsonLd={[
-        {
-          '@context': 'https://schema.org',
-          '@type': 'ContactPage',
-          name: 'Book a Free AI Audit | The Lapis AI',
-          url: `${SITE_URL}/contact`,
-          mainEntity: {
-            '@type': 'Organization',
-            name: 'The Lapis AI',
-            email: CONTACT_EMAIL,
-            contactPoint: {
-              '@type': 'ContactPoint',
-              contactType: 'sales',
-              email: CONTACT_EMAIL,
-              availableLanguage: ['English'],
-            },
-          },
-        },
-        breadcrumbLd([
-          { name: 'Home', path: '/' },
-          { name: 'Contact', path: '/contact' },
-        ]),
-      ]}
-    />
-  );
+  const seo = <Seo {...PAGES.contact} pageType="ContactPage" crumbs={crumbs} mainEntityId={ORG_ID} />;
 
   if (submitted) {
     return (
       <div className="contact-page">
         {seo}
         <section className="page-hero page-hero-navy">
+          <Breadcrumbs items={crumbs} />
           <div className="container">
             <div className="contact-success" role="status">
               <span className="contact-success-icon" aria-hidden="true">
@@ -235,6 +215,7 @@ export default function Contact() {
     <div className="contact-page">
       {seo}
       <section className="page-hero page-hero-navy">
+        <Breadcrumbs items={crumbs} />
         <div className="container contact-grid">
           <div className="contact-left">
             <span className="eyebrow hero-eyebrow">Contact</span>
@@ -243,6 +224,51 @@ export default function Contact() {
               Book your free AI audit: sixty minutes, no obligation, and a written roadmap you keep. Tell us a little
               about your business and we'll reply within one business day.
             </p>
+            <address className="contact-details fade-up" style={{ animationDelay: '1.7s' }}>
+              <h2 className="contact-details-title">Prefer to call, WhatsApp or email?</h2>
+              <ul className="contact-details-list">
+                {PHONE_LINES.map((line) => (
+                  <li key={line.e164}>
+                    <span className="contact-details-icon" aria-hidden="true">
+                      <Phone size={18} />
+                    </span>
+                    <span>
+                      <span className="contact-details-label">{line.country}</span>
+                      <a href={line.tel}>{line.display}</a>
+                      <span className="contact-details-sep" aria-hidden="true">
+                        ·
+                      </span>
+                      <a
+                        href={line.whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`WhatsApp ${line.display}`}
+                      >
+                        WhatsApp
+                      </a>
+                    </span>
+                  </li>
+                ))}
+                <li>
+                  <span className="contact-details-icon" aria-hidden="true">
+                    <Mail size={18} />
+                  </span>
+                  <span>
+                    <span className="contact-details-label">Email</span>
+                    <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                  </span>
+                </li>
+                <li>
+                  <span className="contact-details-icon" aria-hidden="true">
+                    <MapPin size={18} />
+                  </span>
+                  <span>
+                    <span className="contact-details-label">Based in</span>
+                    {LOCATION.label}. Serving {AREA_SERVED_LABEL}.
+                  </span>
+                </li>
+              </ul>
+            </address>
           </div>
 
           <div className="contact-right fade-up" style={{ animationDelay: '1.8s' }}>

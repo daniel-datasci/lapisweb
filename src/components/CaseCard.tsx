@@ -5,13 +5,19 @@ import { pillarTag } from '@/data/solutions';
 import type { CaseStudy } from '@/data/testimonials';
 import './CaseCard.css';
 
-export default function CaseCard({ study }: { study: CaseStudy }) {
+type Props = {
+  study: CaseStudy;
+  /** Heading level for the card title (h2 on the listing page). */
+  headingAs?: 'h2' | 'h3';
+};
+
+export default function CaseCard({ study, headingAs: Heading = 'h3' }: Props) {
   return (
     <Link to={`/case-studies/${study.slug}`} className="case-card">
       <span className="case-card-kicker">
         {pillarTag(study.pillar)} · {study.industry}
       </span>
-      <h3 className="case-card-title">{study.title}</h3>
+      <Heading className="case-card-title">{study.title}</Heading>
       <div className="case-card-section">
         <span className="case-card-label">Problem</span>
         <p>{study.problem}</p>

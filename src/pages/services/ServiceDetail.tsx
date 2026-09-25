@@ -1,4 +1,4 @@
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
 import Seo from '@/components/Seo';
 import PageHero from '@/components/PageHero';
@@ -8,17 +8,28 @@ import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
 import StackDiagram from '@/components/StackDiagram';
 import InfoCards from '@/components/InfoCards';
+import FaqSection from '@/components/FaqList';
+import RelatedLinks from '@/components/RelatedLinks';
+import NotFound from '@/pages/NotFound';
 import { programmeIcon } from '@/data/icons';
 import { serviceBySlug, lapisRun, ServiceSlug } from '@/data/services';
 import { solutionById } from '@/data/solutions';
-import { breadcrumbLd, serviceLd } from '@/data/site';
+import { caseStudies } from '@/data/testimonials';
+import { serviceFaqs } from '@/data/faqs';
+import { caseStudyLink } from '@/data/related';
+import { PAGES, crumbsFor, serviceMeta } from '@/seo/routes';
+import { serviceId, serviceNode, tierOffer } from '@/seo/schema';
 
 export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
   const service = serviceBySlug[slug];
-  if (!service) return <Navigate to="/services" replace />;
+  if (!service) return <NotFound />;
 
+  const meta = serviceMeta(service);
+  const crumbs = crumbsFor(PAGES.services, meta);
+  const faqs = serviceFaqs[slug];
   const { programmes, heroCta } = service;
   const callout = service.callout ?? lapisRun;
+  const auditOffer = slug === 'ai-consulting' ? tierOffer('Free AI Audit') : undefined;
 
   const powers = service.powers.map((id) => {
     const s = solutionById[id];
@@ -31,23 +42,29 @@ export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
     };
   });
 
+  const related = caseStudies.filter((c) => service.powers.includes(c.pillar)).map(caseStudyLink);
+
   return (
     <>
       <Seo
-        title={service.seoTitle}
-        description={service.body}
-        path={service.path}
-        jsonLd={[
-          serviceLd(service.name, service.body, service.path),
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Services', path: '/services' },
-            { name: service.name, path: service.path },
-          ]),
+        {...meta}
+        crumbs={crumbs}
+        faqs={faqs}
+        mainEntityId={serviceId(meta.path)}
+        schema={[
+          serviceNode({
+            path: meta.path,
+            name: service.name,
+            description: service.body,
+            serviceType: service.name,
+            audience: 'Growing businesses',
+            offers: auditOffer ? [auditOffer] : undefined,
+          }),
         ]}
       />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow={`Service ${service.num} · ${service.name}`}
         text={service.headline}
         splitIndex={0}
@@ -118,6 +135,10 @@ export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
       </section>
 
       <DarkCallout eyebrow={callout.label} title={callout.title} body={callout.body} />
+
+      <FaqSection items={faqs} title={`${service.name}:`} accent="your questions answered." />
+
+      <RelatedLinks eyebrow="See it working" title="Real systems." accent="Measured results." items={related} />
 
       {service.cta ? (
         <CTASection

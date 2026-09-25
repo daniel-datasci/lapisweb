@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Seo from '@/components/Seo';
 import PageHero from '@/components/PageHero';
@@ -10,44 +10,85 @@ import StatGrid from '@/components/StatGrid';
 import QuoteGrid from '@/components/QuoteGrid';
 import { caseStudyBySlug } from '@/data/testimonials';
 import { pillarTag, solutionById } from '@/data/solutions';
-import { breadcrumbLd, SITE_URL } from '@/data/site';
+import RelatedLinks, { type RelatedLink } from '@/components/RelatedLinks';
+import NotFound from '@/pages/NotFound';
+import { industries } from '@/data/industries';
+import { blogPosts } from '@/data/blog';
+import { lowerCase, postLink } from '@/data/related';
+import { absoluteUrl } from '@/data/site';
+import { ogImagePath } from '@/seo/og';
+import { PAGES, caseStudyMeta, crumbsFor } from '@/seo/routes';
+import { orgRef, serviceId, webpageId } from '@/seo/schema';
 import './CaseStudyDetail.css';
 
 export default function CaseStudyDetail() {
   const { slug } = useParams<{ slug: string }>();
   const study = caseStudyBySlug(slug);
 
-  if (!study) return <Navigate to="/case-studies" replace />;
+  if (!study) return <NotFound />;
 
   const solution = solutionById[study.pillar];
-  const path = `/case-studies/${study.slug}`;
+  const meta = caseStudyMeta(study);
+  const path = meta.path;
+  const crumbs = crumbsFor(PAGES.caseStudies, meta);
+  const articleId = `${absoluteUrl(path)}#article`;
+  const industry = industries.find((i) => i.caseStudySlug === study.slug);
+  const latestPost = [...blogPosts]
+    .filter((p) => p.category === study.pillar)
+    .sort((a, b) => b.date.localeCompare(a.date))[0];
+
+  const related: RelatedLink[] = [
+    ...(industry
+      ? [
+          {
+            kicker: `Industry · ${industry.name}`,
+            title: industry.heroHeading,
+            body: industry.heroSub,
+            to: industry.path,
+            linkLabel: `AI for ${lowerCase(industry.name)}`,
+          },
+        ]
+      : []),
+    {
+      kicker: `Solution ${solution.num} · ${solution.theme}`,
+      title: solution.name,
+      body: solution.body,
+      to: solution.path,
+      linkLabel: solution.linkLabel,
+    },
+    ...(latestPost ? [postLink(latestPost)] : []),
+  ];
 
   return (
     <>
       <Seo
-        title={`${study.industry} Case Study | The Lapis AI`}
-        description={`${study.title} ${study.problem}`}
-        path={path}
-        type="article"
-        jsonLd={[
+        {...meta}
+        crumbs={crumbs}
+        article={{ section: 'Case studies' }}
+        mainEntityId={articleId}
+        schema={[
           {
-            '@context': 'https://schema.org',
             '@type': 'Article',
+            '@id': articleId,
             headline: study.title,
-            description: study.problem,
-            about: solution.name,
-            url: `${SITE_URL}${path}`,
-            publisher: { '@type': 'Organization', name: 'The Lapis AI', url: SITE_URL },
+            description: meta.description,
+            url: absoluteUrl(path),
+            mainEntityOfPage: { '@id': webpageId(path) },
+            image: absoluteUrl(ogImagePath(path)),
+            author: orgRef,
+            publisher: orgRef,
+            articleSection: 'Case studies',
+            inLanguage: 'en',
+            about: [
+              { '@type': 'Thing', name: study.industry },
+              { '@id': serviceId(solution.path), name: solution.name },
+            ],
           },
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Case Studies', path: '/case-studies' },
-            { name: study.industry, path },
-          ]),
         ]}
       />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow={`Case study · ${study.industry}`}
         text={study.title}
         splitIndex={0}
@@ -112,6 +153,8 @@ export default function CaseStudyDetail() {
           />
         </div>
       </section>
+
+      <RelatedLinks items={related} title="Go deeper on" accent={`${solution.name}.`} />
 
       <CTASection
         heading="Want results like these?"

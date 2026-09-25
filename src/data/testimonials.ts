@@ -11,6 +11,8 @@ export type CaseStudy = {
   results: { value: string; label: string }[];
   testimonial: { quote: string; name: string; company: string };
   featured?: boolean;
+  seoTitle: string;
+  seoDescription: string;
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -19,6 +21,9 @@ export const caseStudies: CaseStudy[] = [
     pillar: 'capacity',
     industry: 'Real Estate',
     client: 'Regional Real Estate Brokerage',
+    seoTitle: 'Real Estate AI Case Study: 8+ Hours Saved | The Lapis AI',
+    seoDescription:
+      'A regional real estate brokerage got 8+ hours a week back per agent with an AI market monitor across 12 areas and instant alerts. Read the case study.',
     title: 'Agents got 8+ hours a week back, and spent them with clients.',
     problem:
       'Agents spent their mornings pulling comparable sales by hand, and were the last to know about price drops and new listings in their own areas.',
@@ -41,6 +46,9 @@ export const caseStudies: CaseStudy[] = [
     pillar: 'leads',
     industry: 'Hospitality',
     client: 'Boutique Hotel Group',
+    seoTitle: 'Hotel AI Case Study: 14% RevPAR Lift | The Lapis AI',
+    seoDescription:
+      'A boutique hotel group lifted RevPAR 14% with 24/7 rate and demand monitoring integrated with its PMS, live in 6 weeks. Read the full case study.',
     title: "A 14% RevPAR lift by pricing on today's market.",
     problem:
       "A boutique hotel group was pricing rooms on yesterday's data while competitors adjusted hourly, and was leaving revenue behind every high-demand night.",
@@ -63,6 +71,9 @@ export const caseStudies: CaseStudy[] = [
     pillar: 'leads',
     industry: 'SaaS',
     client: 'Mid-Market SaaS Platform',
+    seoTitle: 'SaaS Case Study: AI Competitor Monitoring | The Lapis AI',
+    seoDescription:
+      'A mid-market SaaS platform put 6+ AI agents on five competitors and now spots price and feature changes in under 4 hours. Read the full case study.',
     title: "The sales team stopped losing deals it couldn't explain.",
     problem:
       "A B2B SaaS company was losing deals because competitors' price and feature changes went unnoticed for weeks.",

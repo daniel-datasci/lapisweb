@@ -8,7 +8,12 @@ import CaseCard from '@/components/CaseCard';
 import FilterChips from '@/components/FilterChips';
 import { caseStudies } from '@/data/testimonials';
 import { pillarFilters, type PillarId } from '@/data/solutions';
-import { auditLink, breadcrumbLd, SITE_URL } from '@/data/site';
+import { auditLink } from '@/data/site';
+import { useHydrated } from '@/hooks/useHydrated';
+import { PAGES, caseStudyMeta, crumbsFor } from '@/seo/routes';
+import { itemListId, itemListNode } from '@/seo/schema';
+
+const crumbs = crumbsFor(PAGES.caseStudies);
 
 type Filter = 'all' | PillarId;
 
@@ -16,7 +21,9 @@ const isFilter = (v: string | null): v is Filter => pillarFilters.some((f) => f.
 
 export default function CaseStudies() {
   const [params, setParams] = useSearchParams();
-  const raw = params.get('pillar');
+  // The static HTML lists every case study; the filter from the URL applies after hydration.
+  const hydrated = useHydrated();
+  const raw = hydrated ? params.get('pillar') : null;
   const filter: Filter = isFilter(raw) ? raw : 'all';
   const visible = filter === 'all' ? caseStudies : caseStudies.filter((c) => c.pillar === filter);
 
@@ -30,29 +37,21 @@ export default function CaseStudies() {
   return (
     <>
       <Seo
-        title="Case Studies | The Lapis AI"
-        description="Real systems and measured results: hours returned, revenue recovered and AI that pays."
-        path="/case-studies"
-        jsonLd={[
-          {
-            '@context': 'https://schema.org',
-            '@type': 'CollectionPage',
-            name: 'Case Studies | The Lapis AI',
-            url: `${SITE_URL}/case-studies`,
-            hasPart: caseStudies.map((c) => ({
-              '@type': 'Article',
-              headline: c.title,
-              url: `${SITE_URL}/case-studies/${c.slug}`,
-            })),
-          },
-          breadcrumbLd([
-            { name: 'Home', path: '/' },
-            { name: 'Case Studies', path: '/case-studies' },
-          ]),
+        {...PAGES.caseStudies}
+        pageType="CollectionPage"
+        crumbs={crumbs}
+        mainEntityId={itemListId(PAGES.caseStudies.path)}
+        schema={[
+          itemListNode(
+            PAGES.caseStudies.path,
+            'Case studies',
+            caseStudies.map((c) => ({ name: c.title, path: caseStudyMeta(c).path })),
+          ),
         ]}
       />
 
       <PageHero
+        crumbs={crumbs}
         eyebrow="Case studies"
         text="Real systems. Measured results."
         splitIndex={0}
@@ -70,7 +69,7 @@ export default function CaseStudies() {
             <div className="case-grid">
               {visible.map((cs, i) => (
                 <Reveal key={cs.slug} delay={((i % 3) + 1) as 1 | 2 | 3}>
-                  <CaseCard study={cs} />
+                  <CaseCard study={cs} headingAs="h2" />
                 </Reveal>
               ))}
             </div>
