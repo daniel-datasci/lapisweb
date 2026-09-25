@@ -23,8 +23,8 @@ export const pricingTiers: PricingTier[] = [
   },
   {
     name: 'Growth System',
-    price: '$4,790',
-    tagline: 'One-time build, **then $87/month** for Lapis Run. One complete solution, built and run for you.',
+    price: '$2,790',
+    tagline: 'One-time build, **then $418/month** for Lapis Run. One complete solution, built and run for you.',
     features: [
       'Everything in the Free Audit',
       'One solution fully deployed: **Grow Without Hiring** *or* **Never Miss a Lead**',
