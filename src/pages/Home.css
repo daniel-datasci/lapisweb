@@ -1,4 +1,4 @@
-/* ---------- 1. Hero: full-bleed photo, centred copy, floating chips ---------- */
+/* ---------- 1. Hero: the owner's artwork, centred copy, floating chips ---------- */
 .home-hero {
   position: relative;
   isolation: isolate;
@@ -10,7 +10,7 @@
   text-align: center;
   padding-top: clamp(132px, 10.5vw, 170px);
   padding-bottom: 180px;
-  background: linear-gradient(180deg, #1a1c12 0%, var(--bg) 60%);
+  background: var(--bg);
 }
 
 .home-hero-media {
@@ -19,24 +19,30 @@
   z-index: -1;
 }
 
-.home-hero-media picture,
 .home-hero-img {
   display: block;
   width: 100%;
   height: 100%;
-}
-
-.home-hero-img {
   object-fit: cover;
-  object-position: 50% 38%;
+  /* The head sits right of centre in the artwork; this keeps the profile clear of the copy. */
+  object-position: 42% 50%;
 }
 
+/* A soft pool of shade behind the copy (the pale arc of the artwork runs behind the headline), a light top
+   scrim for the nav, and the bottom fade into the page. */
 .home-hero-media::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(29, 31, 19, 0.5) 0%, rgba(15, 18, 12, 0.05) 34%, rgba(15, 18, 12, 0) 62%, rgba(15, 18, 12, 0.7) 86%, var(--bg) 100%),
-    radial-gradient(120% 70% at 50% 18%, rgba(15, 18, 12, 0.45), rgba(15, 18, 12, 0) 60%);
+  background: radial-gradient(40% 36% at 50% 33%, rgba(15, 18, 12, 0.72), rgba(15, 18, 12, 0.46) 55%, rgba(15, 18, 12, 0) 100%),
+    linear-gradient(180deg, rgba(15, 18, 12, 0.5) 0%, rgba(15, 18, 12, 0) 20%, rgba(15, 18, 12, 0) 72%, rgba(15, 18, 12, 0.72) 88%, var(--bg) 100%);
+}
+
+.home-hero-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .home-hero-inner {
@@ -72,19 +78,55 @@
   color: var(--muted);
 }
 
-@media (max-width: 700px) {
+/* Over the artwork (desktop) the trust line needs the lighter grey to hold 4.5:1 where the arc passes behind it. */
+@media (min-width: 1024px) {
+  .home-trust {
+    color: var(--text-2);
+  }
+}
+
+/* Below 1024px the copy comes first and the artwork becomes a stage under it: the head fills the stage width
+   and the chips are placed around it. Everything is sized from --stage so the composition holds from 360px up. */
+@media (max-width: 1023px) {
   .home-hero {
-    min-height: max(760px, 100svh);
+    --stage: min(100vw, 540px);
+    min-height: 0;
     padding-top: 120px;
+    /* The logo strip tucks 56px (32px on phones) under the hero; --pb keeps it clear of the last chip and --band
+       is the strip of page left under the artwork for the final chip. */
+    --pb: 64px;
+    --band: 44px;
+    padding-bottom: var(--pb);
   }
   .home-hero-media {
-    top: 36%;
+    inset: auto;
+    /* The artwork is 1920×1080 and the head spans source x 540–1580, so 1.846 × stage frames the head edge to
+       edge (back of the head at the left, nose tip just inside the right). */
+    left: calc(50% - var(--stage) * 1.0192);
+    bottom: calc(var(--pb) + var(--band));
+    width: calc(var(--stage) * 1.8462);
+    height: calc(var(--stage) * 1.0385);
   }
   .home-hero-img {
-    object-position: 50% 30%;
+    object-position: 50% 50%;
   }
   .home-hero-media::after {
-    background: linear-gradient(180deg, #151710 0%, rgba(15, 18, 12, 0) 26%, rgba(15, 18, 12, 0) 66%, var(--bg) 100%);
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(15, 18, 12, 0) 7%, rgba(15, 18, 12, 0) 78%, var(--bg) 100%);
+  }
+  .home-hero-stage {
+    position: relative;
+    inset: auto;
+    flex: none;
+    width: var(--stage);
+    height: calc(var(--stage) * 1.0385 + var(--band));
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-hero {
+    --pb: 40px;
+    padding-top: 112px;
   }
 }
 

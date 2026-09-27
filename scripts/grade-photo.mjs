@@ -2,10 +2,13 @@
 //
 //   npm i --no-save sharp
 //   node scripts/grade-photo.mjs <input.jpg> <name> [--widths 960,1600,2400] [--aspect 1.78] [--y 0.3] [--blur 0]
+//                                [--light] [--quality 64]
 //
 // Writes public/images/photos/<name>-<width>.webp and prints the { w, h } list to paste into
 // src/data/photos.ts (photoSources). Reusing an existing <name> with the same widths needs no code change.
 // --aspect crops to width/height (e.g. 1.78 for 16:9); --y sets the vertical crop start (0 = top, 1 = bottom).
+// --light skips the grade and only nudges the levels so the darks meet the page background; use it for
+// the owner's own artwork (e.g. the Home hero). Widths larger than the source are never upscaled.
 import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -24,7 +27,12 @@ const widths = flag('widths', '960,1600,2400').split(',').map(Number);
 const aspect = flag('aspect') ? Number(flag('aspect')) : null;
 const y = Number(flag('y', '0'));
 const blur = Number(flag('blur', '0'));
+const light = args.includes('--light');
+const quality = flag('quality') ? Number(flag('quality')) : null;
 const outDir = path.resolve('public/images/photos');
+
+/** Light tone match only: pull the near-black background (~#13160f) down to the page's #0f120c. */
+const toneMatch = (buf) => sharp(buf).linear(0.96, -3).toBuffer();
 
 async function grade(buf, width, height) {
   // Same recipe as the shipped set: desaturate + darken, pull blue out of the shadows (olive),
@@ -60,16 +68,17 @@ const maxW = Math.min(cw, Math.max(...widths));
 const maxH = Math.round((maxW * ch) / cw);
 
 const cropped = await sharp(input).rotate().extract({ left, top, width: cw, height: ch }).resize(maxW, maxH).toBuffer();
-let graded = await grade(cropped, maxW, maxH);
+let graded = light ? await toneMatch(cropped) : await grade(cropped, maxW, maxH);
 if (blur > 0) graded = await sharp(graded).blur(blur).toBuffer();
 
 fs.mkdirSync(outDir, { recursive: true });
 const sources = [];
-for (const w of widths) {
-  const ww = Math.min(w, maxW);
+for (const w of [...new Set(widths.map((w) => Math.min(w, maxW)))]) {
+  const ww = w;
   const hh = Math.round((ww * maxH) / maxW);
   const out = path.join(outDir, `${name}-${ww}.webp`);
-  await sharp(graded).resize(ww, hh).webp({ quality: ww > 1700 ? 58 : 64, effort: 5 }).toFile(out);
+  const q = quality ?? (ww > 1700 ? 58 : 64);
+  await sharp(graded).resize(ww, hh).webp({ quality: q, effort: 5, ...(light ? { smartSubsample: true } : {}) }).toFile(out);
   sources.push({ w: ww, h: hh });
   console.log(`wrote ${path.relative(process.cwd(), out)} (${Math.round(fs.statSync(out).size / 1024)} KB)`);
 }

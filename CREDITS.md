@@ -1,17 +1,18 @@
-﻿# Photo credits
+# Photo credits
 
-All photographs in `public/images/photos/` are from [Unsplash](https://unsplash.com) and used under the
-[Unsplash License](https://unsplash.com/license) (free to use, commercial use allowed, no attribution required;
-credited here as a courtesy). No Unsplash+ (premium) images are used.
+The Home hero (`home-hero`) is the owner's own artwork. Every other photograph in `public/images/photos/` is
+from [Unsplash](https://unsplash.com) and used under the [Unsplash License](https://unsplash.com/license) (free to
+use, commercial use allowed, no attribution required; credited here as a courtesy). No Unsplash+ (premium) images
+are used.
 
-Every image was cropped, colour-graded (desaturated, olive shadows, warm highlights, soft vignette) and exported
-as responsive WebP by the grading script used during the 2026 redesign. File names follow `<name>-<width>.webp`;
+Every Unsplash image was cropped, colour-graded (desaturated, olive shadows, warm highlights, soft vignette) and
+exported as responsive WebP by `scripts/grade-photo.mjs`. The owner's artwork was only tone-matched into the page
+background (`--light`) and exported as WebP at its native size and below. File names follow `<name>-<width>.webp`;
 the sizes available for each name are listed in `src/data/photos.ts`.
 
 | Name | Used for | Photographer | Source |
 |---|---|---|---|
-| `home-hero` | Home hero (desktop crop) | [aytam zaker](https://unsplash.com/@aytam) | https://unsplash.com/photos/a-woman-with-long-hair-is-looking-at-the-camera--P8Bss0qT_U |
-| `home-hero-tall` | Home hero (mobile crop) | [aytam zaker](https://unsplash.com/@aytam) | https://unsplash.com/photos/a-woman-with-long-hair-is-looking-at-the-camera--P8Bss0qT_U |
+| `home-hero` | Home hero (all widths) and the default / Home share images | Owner-supplied | Owner-supplied artwork (`ai-worker.png`, 1920×1080), used with the owner's permission; tone-matched only |
 | `how-we-work` | Home "How we work" carousel background | [Brooke Cagle](https://unsplash.com/@brookecagle) | https://unsplash.com/photos/silver-laptop-on-womans-lap-n1m25jvupEU |
 | `final-cta` | Final call-to-action background | [Chloe Fung](https://unsplash.com/@chloefung) | https://unsplash.com/photos/desk-by-a-window-with-dark-curtains-StCrd5WABUE |
 | `forest-mist` | Solution card backgrounds | [Dave Hoefler](https://unsplash.com/@iamthedave) | https://unsplash.com/photos/forest-covered-in-fog-vW1TR9cBcSg |
@@ -27,7 +28,7 @@ the sizes available for each name are listed in `src/data/photos.ts`.
 | `hero-services` | Services hero (and service pages) | [Haberdoedas](https://unsplash.com/@haberdoedas) | https://unsplash.com/photos/modern-office-interior-with-plants-and-desk-mBcar0a3Fj8 |
 | `hero-industries` | Industries hero (and industry pages) | [Firas Wardhana](https://unsplash.com/@firassu) | https://unsplash.com/photos/a-row-of-empty-desks-in-a-classroom-dYPbE5tDHo0 |
 | `hero-pricing` | Pricing hero | [Evan Wise](https://unsplash.com/@evanthewise) | https://unsplash.com/photos/a-laptop-computer-sitting-on-top-of-a-wooden-desk-0ABOLMFuvGs |
-| `hero-how` | How It Works hero | [ÃrpÃ¡d Czapp](https://unsplash.com/@czapp_arpad) | https://unsplash.com/photos/a-person-using-a-laptop-M5bwcOxPg78 |
+| `hero-how` | How It Works hero | [Árpád Czapp](https://unsplash.com/@czapp_arpad) | https://unsplash.com/photos/a-person-using-a-laptop-M5bwcOxPg78 |
 | `hero-about` | About hero | [Steffen Lemmerzahl](https://unsplash.com/@steffen_l) | https://unsplash.com/photos/black-and-white-table-lamp-on-brown-wooden-table-Y_kgII7ML3M |
 | `hero-contact` | Contact hero | [Akram Huseyn](https://unsplash.com/@akramhuseyn) | https://unsplash.com/photos/woman-in-black-tank-top-using-macbook-pro-sgzFhiSUoII |
 | `hero-cases` | Case studies hero | [visualsoflukas](https://unsplash.com/@lukas_blass) | https://unsplash.com/photos/man-sitting-in-front-of-a-computer-N7Bjz9vY67E |

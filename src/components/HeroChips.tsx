@@ -3,7 +3,7 @@ import './HeroChips.css';
 
 type Props = {
   items: string[];
-  /** home = five chips scattered over the tall hero photo; page = a lighter set for inner heroes. */
+  /** home = six chips around the hero artwork (a stage under the copy on small screens); page = a lighter set for inner heroes. */
   variant?: 'home' | 'page';
 };
 

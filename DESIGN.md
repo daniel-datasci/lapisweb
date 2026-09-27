@@ -68,8 +68,9 @@ Rules: never introduce a new hue; accents are sage and green only. No naira, and
   6. circle-check list;
   7. a full-width pill button.
 - **Green icon circle**: `radial-gradient(circle at 50% 28%, #5a7757, #33503a 55%, #22381f)` with a sage icon. Used on plan cards, service cards, team cards and step cards.
-- **Hero chips** (`HeroChips.tsx`): floating dark glass pills with a green sparkle, restating real capabilities only.
-  - Home shows 5 (3 below 768px); inner heroes show up to 4 (hidden below 1200px).
+- **Hero chips** (`HeroChips.tsx`): floating glass pills with a green sparkle, restating real capabilities only.
+  - Home shows all 6 at every width, in a lighter glass (white 10–16% fill, 26% white border, backdrop blurred and dimmed to 72%) so white text holds at least 7:1 over the dark artwork. From 1024px they float over the full-bleed hero around the copy; below that the artwork becomes a stage under the copy (`.home-hero-stage`, sized from `--stage`) and the chips run down the left of the head and along the bottom, clear of the face.
+  - Inner heroes use the darker glass and show up to 4 (hidden below 1200px).
   - `aria-hidden`, because they are decorative.
 - **Page hero** (`PageHero.tsx`): a full-bleed graded photo with a bottom fade into `--bg`, then crumbs, a centred eyebrow, the h1, subtitle and pill CTAs. It is about 70–80vh on desktop.
   - Props: `image` (a `PhotoName`), `chips`, `crumbs`, `eyebrow`, `text`, `subtext`, `ctaLabel`, children.
@@ -104,12 +105,13 @@ Rules: never introduce a new hue; accents are sage and green only. No naira, and
 
 ## Photography
 
-- 23 Unsplash photos (standard Unsplash License); sources and photographers are listed in `CREDITS.md`.
+- The Home hero is the owner's own artwork (`home-hero`, an abstract particle head in profile). It is tone-matched only, never graded.
+- The other 22 are Unsplash photos (standard Unsplash License); sources and photographers are listed in `CREDITS.md`.
 - Files are `public/images/photos/<name>-<width>.webp`; `src/data/photos.ts` lists each name's widths and heights.
 - `Photo.tsx` renders `srcset`/`sizes` with explicit dimensions.
   - Heroes use `priority` (eager loading plus `fetchpriority="high"`).
   - Everything else is lazy.
-- **Grade.** Every image uses one recipe:
+- **Grade.** Every stock image uses one recipe:
   1. desaturate to 62% and darken to 80%;
   2. recombine channels to pull blue out of the shadows (olive);
   3. apply a warm olive soft-light wash (`rgb(58,66,36)` at 55%);
@@ -119,6 +121,7 @@ Rules: never introduce a new hue; accents are sage and green only. No naira, and
   2. Run `node scripts/grade-photo.mjs <input.jpg> <name> --widths 960,1600,2400 [--aspect 1.78] [--y 0.3]`.
   3. Reusing an existing name with the same widths needs no code change. Otherwise paste the printed entry into `photoSources`.
   4. Update `CREDITS.md`.
+  - For owner artwork, add `--light` (a very light tone match into `#0f120c`, no grade) and optionally `--quality 76`; widths above the source are skipped. The Home hero was made with `--widths 960,1600,1920 --light --quality 76`.
 - **Share images.** `npm run images -- --og-only` regenerates `public/og/*.jpg` in this style: graded page photo, Inter Tight, sage sparkle eyebrow. Leave off `--og-only` to also rebuild favicons and logos.
 
 ## Accessibility floor

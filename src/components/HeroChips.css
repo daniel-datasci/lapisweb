@@ -38,33 +38,97 @@
   color: var(--sage-200);
 }
 
-/* Home: five chips scattered around the subject, echoing the reference placement */
+/* Home: six chips over the owner's artwork. It is very dark, so these use a lighter glass than the inner-page
+   chips: a brighter fill and edge, plus a backdrop that is blurred and dimmed so white text holds over the arc. */
+.hero-chips-home .hero-chip {
+  gap: 9px;
+  padding: 5px 15px 5px 5px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.1));
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 12px 30px -10px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(14px) saturate(1.3) brightness(0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3) brightness(0.72);
+  color: #fff;
+}
+.hero-chips-home .hero-chip-icon {
+  background: radial-gradient(circle at 50% 30%, #5a7853, #2b422a);
+  border-color: rgba(205, 232, 195, 0.4);
+  color: #e3edd9;
+}
+
+/* Desktop (≥1024): the hero keeps a 1.25 aspect up to ~1450px, so these % positions hold across widths.
+   Chips sit around the copy and over the back of the head, never over the face (right of ~68%). */
 .hero-chips-home .hero-chip-1 {
-  left: 24%;
-  top: 56%;
+  left: 8%;
+  top: 25%;
   animation-delay: 0.5s, 0s;
 }
 .hero-chips-home .hero-chip-2 {
-  left: 62%;
-  top: 61%;
-  animation-delay: 0.62s, -1.4s;
+  left: 71%;
+  top: 11%;
+  animation-delay: 0.6s, -1.2s;
 }
 .hero-chips-home .hero-chip-3 {
-  left: 18%;
-  top: 76%;
-  animation-delay: 0.74s, -2.8s;
+  left: 12%;
+  top: 48%;
+  animation-delay: 0.7s, -2.4s;
 }
 .hero-chips-home .hero-chip-4 {
-  left: 70%;
-  top: 74%;
-  animation-delay: 0.86s, -4.2s;
+  left: 27%;
+  top: 64%;
+  animation-delay: 0.8s, -3.6s;
 }
 .hero-chips-home .hero-chip-5 {
-  left: 58%;
-  top: 88%;
-  animation-delay: 0.98s, -5.6s;
+  left: 41%;
+  top: 76%;
+  animation-delay: 0.9s, -4.8s;
+}
+.hero-chips-home .hero-chip-6 {
+  left: 69%;
+  top: 86%;
+  animation-delay: 1s, -6s;
 }
 
+/* Below 1024 the chips live in the stage under the copy (see Home.css): the head fills the stage and the face
+   takes its right ~40% between 20% and 82% of its height, so chips run down the left and along the bottom. */
+@media (max-width: 1023px) {
+  .hero-chips-home .hero-chip {
+    font-size: 12px;
+    gap: 7px;
+    padding: 4px 12px 4px 4px;
+  }
+  .hero-chips-home .hero-chip-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .hero-chips-home .hero-chip-1 {
+    left: 4%;
+    top: 2%;
+  }
+  .hero-chips-home .hero-chip-2 {
+    left: auto;
+    right: 3%;
+    top: 6%;
+  }
+  .hero-chips-home .hero-chip-3 {
+    left: 2%;
+    top: 26%;
+  }
+  .hero-chips-home .hero-chip-4 {
+    left: 23%;
+    top: 44%;
+  }
+  .hero-chips-home .hero-chip-5 {
+    left: 3%;
+    top: 66%;
+  }
+  .hero-chips-home .hero-chip-6 {
+    left: auto;
+    right: 4%;
+    top: auto;
+    bottom: 2%;
+  }
+}
 /* Inner pages: up to four chips kept to the outer edges, clear of the centred copy */
 .hero-chips-page .hero-chip-1 {
   left: 6%;
@@ -113,29 +177,6 @@
 @media (max-width: 1200px) {
   .hero-chips-page {
     display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-chip {
-    font-size: 12px;
-  }
-  .hero-chips-home .hero-chip-3,
-  .hero-chips-home .hero-chip-5 {
-    display: none;
-  }
-  .hero-chips-home .hero-chip-1 {
-    left: 6%;
-    top: 62%;
-  }
-  .hero-chips-home .hero-chip-2 {
-    left: auto;
-    right: 6%;
-    top: 70%;
-  }
-  .hero-chips-home .hero-chip-4 {
-    left: 10%;
-    top: 82%;
   }
 }
 

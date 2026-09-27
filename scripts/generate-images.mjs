@@ -56,6 +56,8 @@ const PHOTO_FOR = [
   ['/contact', 'hero-contact'],
 ];
 const photoFor = (path) => (PHOTO_FOR.find(([prefix]) => path === prefix || path.startsWith(`${prefix}/`)) ?? [, 'home-hero'])[1];
+/** Owner artwork whose subject sits right of centre; shown whole rather than cover-cropped behind the copy. */
+const ART_RIGHT = new Set(['home-hero']);
 
 async function ensureFonts() {
   mkdirSync(FONT_DIR, { recursive: true });
@@ -183,9 +185,25 @@ async function shareImage({ eyebrow, headline }, photo, file) {
   const blockHeight = pillH + 28 + head.height;
   const blockTop = Math.max(top, Math.round(top + (bottom - top - blockHeight) / 2));
 
-  const bg = await sharp(join(PHOTO_DIR, `${photo}-1600.webp`))
-    .resize(W, H, { fit: 'cover', position: 'centre' })
-    .toBuffer();
+  const src = join(PHOTO_DIR, `${photo}-1600.webp`);
+  let bg;
+  if (ART_RIGHT.has(photo)) {
+    // Keep the whole head: scale the artwork to the card height and push it right, beside the copy.
+    const art = await sharp(src).resize({ height: H }).toBuffer({ resolveWithObject: true });
+    const shift = 200;
+    bg = await sharp({ create: { width: W, height: H, channels: 3, background: BG } })
+      .composite([
+        {
+          input: await sharp(art.data).extract({ left: 0, top: 0, width: Math.min(art.info.width, W - shift), height: H }).toBuffer(),
+          left: shift,
+          top: 0,
+        },
+      ])
+      .png()
+      .toBuffer();
+  } else {
+    bg = await sharp(src).resize(W, H, { fit: 'cover', position: 'centre' }).toBuffer();
+  }
 
   await sharp(bg)
     .composite([

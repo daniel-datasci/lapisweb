@@ -17,11 +17,17 @@ import { caseStudies, type CaseStudy } from '@/data/testimonials';
 import { solutionById, type PillarId } from '@/data/solutions';
 import { PRICING_NOTE, leadDesk, usd, workerEssentials } from '@/data/pricing';
 import { DEFAULT_OG_TITLE, FOUNDING_YEAR, LOCATION, discoveryLink } from '@/data/site';
-import { photoSet } from '@/data/photos';
 import { PAGES } from '@/seo/routes';
 import './Home.css';
 
-const heroChips = ['WhatsApp replies', 'Lead qualification', 'Follow-ups', 'Market Watch', 'Monthly impact report'];
+const heroChips = [
+  'CRM actions',
+  'Lead qualification',
+  'Follow-ups',
+  'Market Watch',
+  'Monthly impact report',
+  'Workflow automation',
+];
 
 /** Order on the page: the reference's chart, flow and stat mockups. */
 const solutionOrder: PillarId[] = ['leads', 'capacity', 'ai-spend'];
@@ -111,7 +117,6 @@ function WallCard({ item }: { item: WallItem }) {
 }
 
 export default function Home() {
-  const tall = photoSet('home-hero-tall');
   return (
     <>
       <Seo {...PAGES.home} ogTitle={DEFAULT_OG_TITLE} />
@@ -120,12 +125,13 @@ export default function Home() {
         {/* 1. Hero */}
         <section className="home-hero" aria-labelledby="home-hero-title">
           <div className="home-hero-media" aria-hidden="true">
-            <picture>
-              <source media="(max-width: 700px)" srcSet={tall.srcSet} sizes="100vw" width={tall.width} height={tall.height} />
-              <Photo name="home-hero" priority className="home-hero-img" />
-            </picture>
+            <Photo
+              name="home-hero"
+              priority
+              className="home-hero-img"
+              sizes="(max-width: 540px) 205vw, (max-width: 1023px) 1107px, 142vw"
+            />
           </div>
-          <HeroChips items={heroChips} variant="home" />
           <div className="container home-hero-inner">
             <span className="eyebrow hero-eyebrow">Operated AI on subscription</span>
             <h1 className="hero-title home-hero-title fade-up" id="home-hero-title">
@@ -147,6 +153,10 @@ export default function Home() {
             <p className="home-trust fade-up" style={{ animationDelay: '0.3s' }}>
               Free 30-minute discovery call · Plans from {usd(leadDesk.startingPrice.usd)}/month · No hourly billing
             </p>
+          </div>
+          {/* Desktop: chips float over the full-bleed artwork. Below 1024px the artwork and chips form a stage under the copy. */}
+          <div className="home-hero-stage">
+            <HeroChips items={heroChips} variant="home" />
           </div>
         </section>
 
