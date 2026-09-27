@@ -69,7 +69,10 @@ Rules: never introduce a new hue; accents are sage and green only. No naira, and
   7. a full-width pill button.
 - **Green icon circle**: `radial-gradient(circle at 50% 28%, #5a7757, #33503a 55%, #22381f)` with a sage icon. Used on plan cards, service cards, team cards and step cards.
 - **Hero chips** (`HeroChips.tsx`): floating glass pills with a green sparkle, restating real capabilities only.
-  - Home shows all 6 at every width, in a lighter glass (white 10–16% fill, 26% white border, backdrop blurred and dimmed to 72%) so white text holds at least 7:1 over the dark artwork. From 1024px they float over the full-bleed hero around the copy; below that the artwork becomes a stage under the copy (`.home-hero-stage`, sized from `--stage`) and the chips run down the left of the head and along the bottom, clear of the face.
+  - Home shows all 6 at every width, in a lighter glass (white 10–16% fill, 26% white border, backdrop blurred and dimmed to 72%) so white text holds at least 7:1 over the dark artwork.
+  - Layout is a symmetric "( )": three mirrored pairs (CRM actions | Lead qualification, Follow-ups | Monthly impact report, Market Watch | Workflow automation). Each chip is centre-anchored and each pair shares one offset from the centre line (`--dx-n`) and one height (`--y-n`), so the two arcs are exact mirror images. Offsets narrow down the page (top pair widest), so the pairs form a bowl.
+  - From 1024px the pairs frame the copy over the full-bleed hero (top pair beside the headline, just in front of the forehead). Below that the artwork becomes a stage under the copy (`.home-hero-stage`, sized from `--stage`) and the pairs become three rows around the head. At ≤414px the chips are a little smaller (text stays 12px).
+  - Pairs enter together and float together, 3px (`chip-float-home`).
   - Inner heroes use the darker glass and show up to 4 (hidden below 1200px).
   - `aria-hidden`, because they are decorative.
 - **Page hero** (`PageHero.tsx`): a full-bleed graded photo with a bottom fade into `--bg`, then crumbs, a centred eyebrow, the h1, subtitle and pill CTAs. It is about 70–80vh on desktop.
@@ -100,7 +103,7 @@ Rules: never introduce a new hue; accents are sage and green only. No naira, and
 
 - Entrance: `.fade-up` / `.fade-down` (opacity, 18px rise, 6px blur; 0.9–1s, expo-out). Hero delays stay under 0.35s.
 - Scroll: `.reveal` elements rise 22px from a 4px blur, triggered by `IntersectionObserver`. The hidden state only applies under `.js`, so content is visible without JavaScript.
-- Ambient: a hero chip float (7s), a logo marquee (46s, pauses on hover) and slow image zoom on card hover.
+- Ambient: a hero chip float (7s; 3px on Home, 6px on inner heroes), a logo marquee (46s, pauses on hover) and slow image zoom on card hover.
 - `prefers-reduced-motion: reduce` disables the chip float, marquee (logos wrap instead), reveals, carousel transitions and hover zooms.
 
 ## Photography

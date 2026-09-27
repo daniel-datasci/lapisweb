@@ -92,10 +92,10 @@
     --stage: min(100vw, 540px);
     min-height: 0;
     padding-top: 120px;
-    /* The logo strip tucks 56px (32px on phones) under the hero; --pb keeps it clear of the last chip and --band
-       is the strip of page left under the artwork for the final chip. */
+    /* The logo strip tucks 56px (32px on phones) under the hero; --pb keeps it clear of the last chip row and
+       --band is the strip of page left under the artwork. */
     --pb: 64px;
-    --band: 44px;
+    --band: 24px;
     padding-bottom: var(--pb);
   }
   .home-hero-media {

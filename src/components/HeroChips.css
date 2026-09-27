@@ -56,42 +56,78 @@
   color: #e3edd9;
 }
 
-/* Desktop (≥1024): the hero keeps a 1.25 aspect up to ~1450px, so these % positions hold across widths.
-   Chips sit around the copy and over the back of the head, never over the face (right of ~68%). */
-.hero-chips-home .hero-chip-1 {
-  left: 8%;
-  top: 25%;
+/* Symmetric "( )" layout: the six chips are three mirrored pairs (1|2, 3|5, 4|6). Each chip is anchored at its
+   visual centre and a pair shares one offset from the centre line (--dx) and one height (--y), so the left arc
+   and the right arc are true mirror images at every width. Offsets narrow down the page (top pair widest), so
+   the pairs read as a bowl that frames the copy and the head. */
+.hero-chips-home {
+  /* Desktop (≥1024): the hero keeps a 1.25 aspect up to ~1450px, so the % values track the artwork; the px caps
+     hold the 1440 geometry on wider screens. The top pair sits just in front of the forehead, the middle pair
+     beside the cheek (under the nose line) and the bottom pair on the jaw. */
+  --dx-1: min(39.9%, 575px);
+  --y-1: 26.5%;
+  --dx-2: clamp(360px, 30.2%, 435px);
+  --y-2: 50.8%;
+  --dx-3: min(18.4%, 265px);
+  --y-3: 66.8%;
+}
+.hero-chips-home .hero-chip {
+  width: max-content;
+  translate: -50% -50%;
+  animation-name: chip-in, chip-float-home;
+}
+.hero-chips-home .hero-chip-1,
+.hero-chips-home .hero-chip-2 {
+  top: var(--y-1);
   animation-delay: 0.5s, 0s;
 }
+.hero-chips-home .hero-chip-3,
+.hero-chips-home .hero-chip-5 {
+  top: var(--y-2);
+  animation-delay: 0.65s, -2.3s;
+}
+.hero-chips-home .hero-chip-4,
+.hero-chips-home .hero-chip-6 {
+  top: var(--y-3);
+  animation-delay: 0.8s, -4.6s;
+}
+.hero-chips-home .hero-chip-1 {
+  left: calc(50% - var(--dx-1));
+}
 .hero-chips-home .hero-chip-2 {
-  left: 71%;
-  top: 11%;
-  animation-delay: 0.6s, -1.2s;
+  left: calc(50% + var(--dx-1));
 }
 .hero-chips-home .hero-chip-3 {
-  left: 12%;
-  top: 48%;
-  animation-delay: 0.7s, -2.4s;
-}
-.hero-chips-home .hero-chip-4 {
-  left: 27%;
-  top: 64%;
-  animation-delay: 0.8s, -3.6s;
+  left: calc(50% - var(--dx-2));
 }
 .hero-chips-home .hero-chip-5 {
-  left: 41%;
-  top: 76%;
-  animation-delay: 0.9s, -4.8s;
+  left: calc(50% + var(--dx-2));
+}
+.hero-chips-home .hero-chip-4 {
+  left: calc(50% - var(--dx-3));
 }
 .hero-chips-home .hero-chip-6 {
-  left: 69%;
-  top: 86%;
-  animation-delay: 1s, -6s;
+  left: calc(50% + var(--dx-3));
 }
 
-/* Below 1024 the chips live in the stage under the copy (see Home.css): the head fills the stage and the face
-   takes its right ~40% between 20% and 82% of its height, so chips run down the left and along the bottom. */
+/* 1024–1279: the chips are larger relative to the art, so the top pair steps out to stay in front of the brow. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .hero-chips-home {
+    --dx-1: 41%;
+  }
+}
+
+/* Below 1024 the chips live in the stage under the copy (see Home.css), in three mirrored rows around the head.
+   Offsets are from the viewport centre (the stage is centred), so wider tablets frame the head from outside it. */
 @media (max-width: 1023px) {
+  .hero-chips-home {
+    --dx-1: min(32vw, 50vw - 88px);
+    --dx-2: min(27.5vw, 50vw - 100px);
+    --dx-3: 19vw;
+    --y-1: calc(var(--stage) * 0.17);
+    --y-2: calc(var(--stage) * 0.53);
+    --y-3: calc(var(--stage) * 0.89);
+  }
   .hero-chips-home .hero-chip {
     font-size: 12px;
     gap: 7px;
@@ -101,32 +137,22 @@
     width: 22px;
     height: 22px;
   }
-  .hero-chips-home .hero-chip-1 {
-    left: 4%;
-    top: 2%;
+}
+
+/* Phones: slightly smaller chips so the widest pair still fits at 360 with a clear bowl (text stays 12px). */
+@media (max-width: 414px) {
+  .hero-chips-home {
+    --dx-1: calc(50vw - 74px);
+    --dx-2: calc(50vw - 86px);
+    --dx-3: max(20vw, 73px);
   }
-  .hero-chips-home .hero-chip-2 {
-    left: auto;
-    right: 3%;
-    top: 6%;
+  .hero-chips-home .hero-chip {
+    gap: 6px;
+    padding: 3px 10px 3px 3px;
   }
-  .hero-chips-home .hero-chip-3 {
-    left: 2%;
-    top: 26%;
-  }
-  .hero-chips-home .hero-chip-4 {
-    left: 23%;
-    top: 44%;
-  }
-  .hero-chips-home .hero-chip-5 {
-    left: 3%;
-    top: 66%;
-  }
-  .hero-chips-home .hero-chip-6 {
-    left: auto;
-    right: 4%;
-    top: auto;
-    bottom: 2%;
+  .hero-chips-home .hero-chip-icon {
+    width: 20px;
+    height: 20px;
   }
 }
 /* Inner pages: up to four chips kept to the outer edges, clear of the centred copy */
@@ -174,6 +200,17 @@
   }
 }
 
+/* Home chips are centre-anchored, so their float carries the -50% offset; 3px keeps the structure still. */
+@keyframes chip-float-home {
+  0%,
+  100% {
+    translate: -50% -50%;
+  }
+  50% {
+    translate: -50% calc(-50% - 3px);
+  }
+}
+
 @media (max-width: 1200px) {
   .hero-chips-page {
     display: none;
@@ -181,7 +218,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-chip {
+  .hero-chip,
+  .hero-chips-home .hero-chip {
     animation: none;
   }
 }
