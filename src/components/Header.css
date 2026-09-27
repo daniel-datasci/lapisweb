@@ -265,6 +265,7 @@
   backdrop-filter: blur(10px);
 }
 
+/* Rendered through a portal on <body>, outside the header, so `inset: 0` is always the viewport. */
 .mobile-menu {
   position: fixed;
   inset: 0;
@@ -273,7 +274,8 @@
   flex-direction: column;
   gap: 20px;
   padding: 16px var(--gutter) 28px;
-  background: rgba(11, 13, 9, 0.9);
+  /* Near-opaque so the links stay legible even where the blur isn't painted. */
+  background: rgba(11, 13, 9, 0.96);
   backdrop-filter: blur(26px) saturate(1.2);
   -webkit-backdrop-filter: blur(26px) saturate(1.2);
   overflow-y: auto;
@@ -287,6 +289,13 @@
   visibility: visible;
   opacity: 1;
   transition: opacity 0.35s var(--ease-standard), visibility 0s linear 0s;
+}
+
+/* Scroll lock while the menu is open. Both elements are needed for iOS Safari. */
+html.menu-open,
+html.menu-open body {
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .mobile-menu-top {
