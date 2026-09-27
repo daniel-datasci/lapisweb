@@ -176,6 +176,9 @@ export default function MakeYourAIPay() {
       />
 
       <PageHero
+
+
+        image="hero-pay"
         crumbs={CRUMBS}
         eyebrow="Solution ③ · 45-Day AI Rescue"
         text="You've tried AI. Now make it pay."

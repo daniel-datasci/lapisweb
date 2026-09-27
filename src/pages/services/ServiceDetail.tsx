@@ -81,6 +81,9 @@ export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
       />
 
       <PageHero
+
+
+        image="hero-services"
         crumbs={crumbs}
         eyebrow={`Service ${service.num} · ${service.name}`}
         text={service.headline}

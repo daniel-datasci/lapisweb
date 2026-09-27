@@ -27,6 +27,9 @@ export default function HowItWorks() {
       <Seo {...PAGES.howItWorks} crumbs={crumbs} faqs={faqs} />
 
       <PageHero
+
+
+        image="hero-how"
         crumbs={crumbs}
         eyebrow="How it works"
         text="Six steps from first call to AI workers on the job."

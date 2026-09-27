@@ -1,6 +1,8 @@
 import Button from './Button';
+import Photo from './Photo';
 import Reveal from './Reveal';
 import { DISCOVERY_CTA } from '@/data/site';
+import type { PhotoName } from '@/data/photos';
 import './CTASection.css';
 
 type Props = {
@@ -12,8 +14,10 @@ type Props = {
   secondaryTo?: string;
   /** External link for the secondary button, e.g. WhatsApp. */
   secondaryHref?: string;
+  /** Legacy colour variant; both render the photo CTA. */
   variant?: 'navy' | 'gold';
   eyebrow?: string;
+  image?: PhotoName;
 };
 
 export default function CTASection({
@@ -24,18 +28,21 @@ export default function CTASection({
   secondaryLabel,
   secondaryTo,
   secondaryHref,
-  variant = 'navy',
   eyebrow = 'Get Started',
+  image = 'final-cta',
 }: Props) {
   return (
-    <section className={`cta-section cta-${variant}`}>
+    <section className="cta-section">
+      <div className="cta-media" aria-hidden="true">
+        <Photo name={image} className="cta-img" />
+      </div>
       <div className="container">
         <Reveal className="cta-inner">
           <span className="eyebrow">{eyebrow}</span>
           <h2 className="cta-heading">{heading}</h2>
           {subtext && <p className="cta-subtext">{subtext}</p>}
           <div className="cta-actions">
-            <Button to={ctaTo} variant={variant === 'gold' ? 'light' : 'primary'} size="lg" borderWrap icon>
+            <Button to={ctaTo} variant="primary" size="lg">
               {ctaLabel}
             </Button>
             {secondaryLabel && (secondaryTo || secondaryHref) && (

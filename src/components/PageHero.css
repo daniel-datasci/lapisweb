@@ -1,117 +1,105 @@
-.page-hero-inner {
+.page-hero {
   position: relative;
-  max-width: var(--maxw);
-  padding: clamp(32px, 4vw, 52px);
-  border-radius: 32px;
-  border: 1px solid rgba(132, 197, 255, 0.3);
-  background:
-    radial-gradient(circle at 52% 98%, rgba(30, 203, 255, 0.34), transparent 46%),
-    linear-gradient(165deg, rgba(8, 24, 45, 0.84), rgba(6, 14, 30, 0.95));
-  box-shadow: 0 30px 74px rgba(0, 0, 0, 0.4);
+  isolation: isolate;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: clamp(580px, 78vh, 860px);
+  padding: 150px 0 120px;
+  color: var(--text);
 }
 
-.page-hero-inner::before {
+.page-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg-3);
+}
+
+.page-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  animation: hero-photo-in 1.8s var(--ease-out-expo) both;
+}
+
+/* Legibility wash: darker at the nav and behind the copy, then a long fade into the page */
+.page-hero-media::after {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  border: 1px solid rgba(204, 233, 255, 0.14);
-  pointer-events: none;
+  background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(12, 15, 9, 0.45), transparent 75%),
+    linear-gradient(180deg, rgba(12, 15, 9, 0.6) 0%, rgba(12, 15, 9, 0.2) 26%, rgba(12, 15, 9, 0.28) 60%, var(--bg) 100%);
 }
 
-.page-hero-split .page-hero-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.85fr);
-  gap: clamp(32px, 4vw, 72px);
-  align-items: center;
-}
-
-.page-hero-content {
-  max-width: 760px;
-}
-
-.page-hero:not(.page-hero-split) .page-hero-inner {
+.page-hero-inner {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-.page-hero:not(.page-hero-split) .page-hero-content {
-  max-width: 920px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.page-hero-crumbs {
+  margin-bottom: 26px;
 }
 
-.page-hero:not(.page-hero-split) .hero-sub {
+.page-hero-title {
+  font-size: clamp(36px, 4.6vw, 66px);
+  max-width: 19ch;
   margin-left: auto;
   margin-right: auto;
 }
 
-.page-hero:not(.page-hero-split) .hero-cta-row {
-  justify-content: center;
-}
-
-.page-hero-aside {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 520px;
+.page-hero .hero-sub {
   margin-left: auto;
+  margin-right: auto;
+  color: var(--text-2);
 }
 
-.page-hero-aside .orbit-viz {
-  width: min(100%, 420px);
-  transform: translateX(-12px);
+.page-hero .hero-cta-row {
+  justify-content: center;
 }
 
-.page-hero-aside .orbit-stage {
-  width: 520px;
-  height: 520px;
-  transform: scale(0.72);
-  transform-origin: center;
+.page-hero-extra {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-@media (max-width: 1024px) {
-  .page-hero-split .page-hero-inner {
-    grid-template-columns: 1fr;
+@keyframes hero-photo-in {
+  from {
+    opacity: 0.4;
+    transform: scale(1.04);
   }
-  .page-hero-aside {
-    min-height: 320px;
-    max-width: none;
-  }
-  .page-hero-aside .orbit-stage {
-    width: 504px;
-    height: 504px;
-    transform: scale(0.7);
-  }
-  .page-hero-aside .orbit-viz {
+  to {
+    opacity: 1;
     transform: none;
   }
 }
 
 @media (max-width: 768px) {
-  .page-hero-aside .orbit-stage {
-    width: min(86vw, 360px);
-    height: min(86vw, 360px);
-    transform: scale(0.5);
+  .page-hero {
+    min-height: 0;
+    padding: 124px 0 88px;
+  }
+  .page-hero-img {
+    object-position: center 35%;
   }
 }
 
 @media (max-width: 480px) {
-  .page-hero-inner {
-    padding: 28px 20px;
-    border-radius: 24px;
+  .page-hero .hero-cta-row {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
   }
-  .page-hero-aside {
-    min-height: 240px;
-  }
-  .page-hero-aside .orbit-stage {
-    width: min(92vw, 300px);
-    height: min(92vw, 300px);
-    transform: scale(0.42);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-hero-img {
+    animation: none;
   }
 }

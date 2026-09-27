@@ -55,6 +55,9 @@ export default function NotFound() {
       <Seo {...PAGES.notFound} noindex />
 
       <PageHero
+
+
+        image="hero-404"
         eyebrow="404 · Page not found"
         text="This page doesn't exist, or it has moved."
         splitIndex={0}

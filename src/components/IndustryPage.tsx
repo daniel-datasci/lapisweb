@@ -85,6 +85,9 @@ export default function IndustryPage() {
       />
 
       <PageHero
+
+
+        image="hero-industries"
         crumbs={crumbs}
         eyebrow={`Industries · ${industry.name}`}
         text={industry.heroHeading}
@@ -115,7 +118,7 @@ export default function IndustryPage() {
 
       <section className="section section-paper">
         <div className="container">
-          <SectionHeading eyebrow="Case study" />
+          <SectionHeading eyebrow="Case study" center />
           <div className="section-body industry-case">
             {study ? (
               <Reveal>
@@ -152,7 +155,7 @@ export default function IndustryPage() {
                 ))}
               </ul>
               <div className="cta-row-center">
-                <Button to={ctaTo} variant="primary" size="lg" borderWrap icon>
+                <Button to={ctaTo} variant="primary" size="lg">
                   {DISCOVERY_CTA}
                 </Button>
                 <Button to={`/pricing#${offer.product.anchor}`} variant="ghost-light" size="lg">

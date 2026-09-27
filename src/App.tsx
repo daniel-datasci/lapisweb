@@ -10,7 +10,7 @@ import { appRoutes } from '@/routes';
 function PageLoader() {
   return (
     <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 15, color: 'var(--ink-faint)', letterSpacing: '1px' }}>
+      <span style={{ fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: 12, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
         Loading&hellip;
       </span>
     </div>

@@ -140,6 +140,9 @@ export default function GrowWithoutHiring() {
       />
 
       <PageHero
+
+
+        image="hero-grow"
         crumbs={CRUMBS}
         eyebrow="Solution ① · Lapis AI Workforce"
         text="Take on more work without taking on more people."

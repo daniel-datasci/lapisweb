@@ -22,6 +22,9 @@ export default function Industries() {
       />
 
       <PageHero
+
+
+        image="hero-industries"
         crumbs={crumbs}
         eyebrow="Industries"
         text="Different industries. The same three walls."

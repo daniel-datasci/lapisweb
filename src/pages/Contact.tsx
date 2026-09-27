@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Check, ChevronDown, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import Seo from '@/components/Seo';
-import TypewriterHeading from '@/components/TypewriterHeading';
 import Button from '@/components/Button';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import Photo from '@/components/Photo';
+import '@/components/PageHero.css';
 import {
   AREA_SERVED_LABEL,
   CONTACT_EMAIL,
@@ -261,14 +262,17 @@ export default function Contact() {
     return (
       <div className="contact-page">
         {seo}
-        <section className="page-hero page-hero-navy">
-          <Breadcrumbs items={crumbs} />
+        <section className="page-hero contact-hero contact-hero-success">
+          <div className="page-hero-media" aria-hidden="true">
+            <Photo name="hero-contact" priority className="page-hero-img" />
+          </div>
           <div className="container">
+            <Breadcrumbs items={crumbs} className="page-hero-crumbs" />
             <div className="contact-success" role="status">
               <span className="contact-success-icon" aria-hidden="true">
-                <Check size={48} />
+                <Check size={40} />
               </span>
-              <h1 className="contact-success-title">Thanks. We've got it.</h1>
+              <h1 className="hero-title contact-success-title">Thanks. We've got it.</h1>
               <p className="contact-success-body">
                 Expect a reply from a senior member of our team within one business day to find a time that suits you.
               </p>
@@ -285,18 +289,23 @@ export default function Contact() {
   return (
     <div className="contact-page">
       {seo}
-      <section className="page-hero page-hero-navy">
-        <Breadcrumbs items={crumbs} />
+      <section className="page-hero contact-hero">
+        <div className="page-hero-media" aria-hidden="true">
+          <Photo name="hero-contact" priority className="page-hero-img" />
+        </div>
+        <div className="container">
+          <Breadcrumbs items={crumbs} className="page-hero-crumbs contact-crumbs fade-down" />
+        </div>
         <div className="container contact-grid">
           <div className="contact-left">
             <span className="eyebrow hero-eyebrow">Contact</span>
-            <TypewriterHeading text={heading} splitIndex={0} className="hero-title" />
-            <p className="hero-sub fade-up" style={{ animationDelay: '1.5s' }}>
+            <h1 className="hero-title contact-title fade-up">{heading}</h1>
+            <p className="hero-sub fade-up" style={{ animationDelay: '0.12s' }}>
               Thirty minutes with a senior member of our team, with no obligation. We'll talk through where your
               business is losing time, leads or money, and which AI workers would help. Tell us a little about your
               business and we'll reply within one business day to book a time.
             </p>
-            <address className="contact-details fade-up" style={{ animationDelay: '1.7s' }}>
+            <address className="contact-details fade-up" style={{ animationDelay: '0.22s' }}>
               <h2 className="contact-details-title">Prefer to call, WhatsApp or email?</h2>
               <ul className="contact-details-list">
                 {PHONE_LINES.map((line) => (
@@ -341,7 +350,7 @@ export default function Contact() {
                 </li>
               </ul>
             </address>
-            <div className="contact-whatsapp fade-up" style={{ animationDelay: '1.8s' }}>
+            <div className="contact-whatsapp fade-up" style={{ animationDelay: '0.3s' }}>
               <Button href={WHATSAPP_LINK} variant="ghost-light">
                 <MessageCircle size={18} aria-hidden="true" className="btn-lead-icon" />
                 {WHATSAPP_CTA}
@@ -349,7 +358,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="contact-right fade-up" style={{ animationDelay: '1.8s' }}>
+          <div className="contact-right fade-up" style={{ animationDelay: '0.2s' }}>
             <form className="contact-form" onSubmit={handleSubmit} noValidate>
               <div className="form-field">
                 <label htmlFor="name">Name *</label>
@@ -500,15 +509,7 @@ export default function Contact() {
               )}
 
               <div className="form-field-full">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="lg"
-                  borderWrap
-                  icon
-                  className="contact-submit"
-                  disabled={isSubmitting}
-                >
+                <Button type="submit" variant="primary" size="lg" className="contact-submit" disabled={isSubmitting}>
                   {isSubmitting ? 'Sending…' : submitLabel}
                 </Button>
               </div>

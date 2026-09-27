@@ -46,6 +46,9 @@ export default function About() {
       <Seo {...PAGES.about} pageType="AboutPage" crumbs={crumbs} mainEntityId={ORG_ID} />
 
       <PageHero
+
+
+        image="hero-about"
         crumbs={crumbs}
         eyebrow="About"
         text="We're the AI team that stays."

@@ -1,13 +1,11 @@
 .stack-diagram {
-  margin-top: 64px;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-width: 760px;
-  margin-left: auto;
-  margin-right: auto;
   align-items: center;
+  gap: 14px;
+  max-width: 760px;
+  margin: 64px auto 0;
   padding: 0 12px;
 }
 
@@ -17,32 +15,24 @@
   left: 50%;
   top: 18px;
   bottom: 18px;
+  width: 1px;
   transform: translateX(-50%);
-  width: 2px;
-  background: linear-gradient(180deg, rgba(108, 227, 255, 0.8), rgba(108, 227, 255, 0.15));
+  background: linear-gradient(180deg, rgba(180, 198, 164, 0.5), rgba(180, 198, 164, 0.05));
 }
 
 .stack-layer {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 22px 26px;
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(16, 30, 59, 0.92), rgba(11, 22, 45, 0.98));
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(18px);
-  transition: transform 0.4s var(--ease-standard), border-color 0.4s var(--ease-standard),
-    box-shadow 0.4s var(--ease-standard);
-  position: relative;
-  overflow: hidden;
   width: 100%;
   max-width: 680px;
-  animation: floatLayer 6s ease-in-out infinite;
-}
-
-.stack-layer::before {
-  display: none;
+  padding: 20px 24px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, rgba(34, 38, 30, 0.9), rgba(20, 23, 17, 0.95));
+  border: 1px solid var(--hair-2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 24px 50px -30px rgba(0, 0, 0, 0.9);
+  transition: transform var(--speed-medium) var(--ease-standard), border-color var(--speed-medium) var(--ease-standard);
 }
 
 .stack-layer-4 {
@@ -50,33 +40,35 @@
 }
 
 .stack-layer-3 {
-  max-width: 600px;
+  max-width: 610px;
 }
 
 .stack-layer-2 {
-  max-width: 520px;
+  max-width: 540px;
 }
 
 .stack-layer-1 {
-  max-width: 440px;
+  max-width: 470px;
+  background: var(--featured);
+  border-color: rgba(200, 230, 185, 0.18);
 }
 
 .stack-layer:hover {
-  transform: translateY(-4px);
-  border-color: rgba(111, 208, 255, 0.58);
-  box-shadow: 0 28px 70px rgba(0, 8, 24, 0.5), 0 0 22px rgba(108, 227, 255, 0.18);
+  transform: translateY(-3px);
+  border-color: var(--hair-3);
 }
 
 .stack-layer-icon {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 48px;
-  min-height: 48px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  color: var(--cyan-400);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 28%, #5a7757 0%, #33503a 55%, #22381f 100%);
+  border: 1px solid rgba(200, 230, 185, 0.22);
+  color: var(--text);
 }
 
 .stack-layer-text {
@@ -85,54 +77,23 @@
 }
 
 .stack-layer-label {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 18px;
-  color: var(--white);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.015em;
+  color: var(--text);
 }
 
 .stack-layer-desc {
+  margin-top: 4px;
   font-size: 14px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.75);
-  margin-top: 6px;
-}
-
-.stack-layer:nth-child(1) {
-  animation-delay: 0.15s;
-}
-
-.stack-layer:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.stack-layer:nth-child(3) {
-  animation-delay: 0.45s;
-}
-
-.stack-layer:nth-child(4) {
-  animation-delay: 0.6s;
-}
-
-@keyframes floatLayer {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+  line-height: 1.55;
+  color: var(--text-2);
 }
 
 @media (max-width: 992px) {
   .stack-diagram {
     max-width: 100%;
     padding: 0 8px;
-  }
-  .stack-diagram::before {
-    left: 50%;
-  }
-  .stack-layer {
-    padding: 20px 22px;
   }
   .stack-layer-4,
   .stack-layer-3,
@@ -145,15 +106,14 @@
 @media (max-width: 768px) {
   .stack-diagram {
     padding: 0;
-    gap: 16px;
+    gap: 12px;
   }
   .stack-diagram::before {
     display: none;
   }
   .stack-layer {
-    padding: 18px 20px;
-  }
-  .stack-layer::before {
-    display: none;
+    align-items: flex-start;
+    padding: 18px;
+    border-radius: var(--radius);
   }
 }

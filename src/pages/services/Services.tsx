@@ -33,6 +33,9 @@ export default function Services() {
       />
 
       <PageHero
+
+
+        image="hero-services"
         crumbs={crumbs}
         eyebrow="Services"
         text="Five capabilities, delivered and run by one team."

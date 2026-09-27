@@ -6,7 +6,7 @@ const SETTLE_MS = 2500;
 
 /**
  * Scrolls to the top on route changes, or to the element named by the URL hash.
- * When arriving from another route, lazy pages and the typewriter hero change the
+ * When arriving from another route, lazy pages and late-loading images change the
  * layout after the first paint, so the target is looked up for a short while and
  * re-aligned until the page settles (or the user starts scrolling themselves).
  */

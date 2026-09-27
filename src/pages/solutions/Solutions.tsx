@@ -48,6 +48,9 @@ export default function Solutions() {
       />
 
       <PageHero
+
+
+        image="hero-solutions"
         crumbs={crumbs}
         eyebrow="Solutions"
         text="Start with the problem, not the technology."
@@ -91,7 +94,7 @@ export default function Solutions() {
                 call will tell you where to begin.
               </p>
               <div className="cta-row-center">
-                <Button to={discoveryLink()} variant="primary" borderWrap icon>
+                <Button to={discoveryLink()} variant="primary">
                   {DISCOVERY_CTA}
                 </Button>
                 <Button to="/pricing" variant="ghost-light">

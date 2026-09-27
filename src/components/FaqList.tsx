@@ -19,7 +19,7 @@ export function FaqItem({ q, a, defaultOpen = false }: Faq & { defaultOpen?: boo
         >
           <span className="faq-q-text">{q}</span>
           <span className="faq-q-icon" aria-hidden="true">
-            {open ? <Minus size={20} /> : <Plus size={20} />}
+            {open ? <Minus size={16} /> : <Plus size={16} />}
           </span>
         </button>
       </h3>

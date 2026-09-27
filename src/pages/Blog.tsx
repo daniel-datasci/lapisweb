@@ -67,6 +67,9 @@ export default function Blog() {
       <Seo {...PAGES.blog} pageType="CollectionPage" crumbs={crumbs} mainEntityId={BLOG_ID} schema={[blogNode()]} />
 
       <PageHero
+
+
+        image="hero-blog"
         crumbs={crumbs}
         eyebrow="Blog"
         text="Practical AI for growing businesses."
@@ -75,7 +78,7 @@ export default function Blog() {
         subtext="No hype. Just clear thinking on how to get your hours back, stop losing customers and make your AI investment pay."
         ctaLabel=""
       >
-        <div className="hero-filters fade-up" style={{ animationDelay: '1.8s' }}>
+        <div className="hero-filters fade-up" style={{ animationDelay: '0.3s' }}>
           <FilterChips options={pillarFilters} value={filter} onChange={onChange} label="Filter articles by category" />
         </div>
       </PageHero>

@@ -52,6 +52,9 @@ export default function CaseStudies() {
       />
 
       <PageHero
+
+
+        image="hero-cases"
         crumbs={crumbs}
         eyebrow="Case studies"
         text="Real systems. Measured results."
@@ -59,7 +62,7 @@ export default function CaseStudies() {
         subtext="We don't sell theory. These are systems we've built and still run, the problems they solved and the numbers they moved. Filter by the problem you want to fix."
         ctaLabel=""
       >
-        <div className="hero-filters fade-up" style={{ animationDelay: '1.8s' }}>
+        <div className="hero-filters fade-up" style={{ animationDelay: '0.3s' }}>
           <FilterChips options={pillarFilters} value={filter} onChange={onChange} label="Filter case studies by problem" />
         </div>
       </PageHero>
@@ -84,7 +87,7 @@ export default function CaseStudies() {
                   production in 45 days, or we keep working free until it's live. Start with a free discovery call.
                 </p>
                 <div className="cta-row-center">
-                  <Button to={discoveryLink('ai-spend', 'ai-rescue')} variant="primary" size="lg" borderWrap icon>
+                  <Button to={discoveryLink('ai-spend', 'ai-rescue')} variant="primary" size="lg">
                     {DISCOVERY_CTA}
                   </Button>
                   <Button to="/solutions/make-your-ai-pay" variant="ghost-light" size="lg">

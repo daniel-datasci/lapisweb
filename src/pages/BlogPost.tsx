@@ -5,6 +5,8 @@ import Seo from '@/components/Seo';
 import CTASection from '@/components/CTASection';
 import Reveal from '@/components/Reveal';
 import Button from '@/components/Button';
+import Photo from '@/components/Photo';
+import '@/components/PageHero.css';
 import { blogPostBySlug, blogPosts, formatPostDate } from '@/data/blog';
 import { pillarTag, solutionById } from '@/data/solutions';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -99,19 +101,22 @@ export default function BlogPost() {
       />
 
       <article className="blog-post">
-        <section className="page-hero page-hero-navy">
-          <div className="container" style={{ maxWidth: 760 }}>
-            <Breadcrumbs items={crumbs} className="breadcrumbs-start" />
-            <Link to="/blog" className="blog-back hero-eyebrow" style={{ animation: 'none' }}>
-              <ArrowLeft size={16} aria-hidden="true" /> All posts
-            </Link>
-            <Link to={`/blog?category=${post.category}`} className="blog-post-category">
-              {pillarTag(post.category)}
-            </Link>
-            <h1 className="blog-post-title" style={{ animation: 'fadeInUp 1s var(--ease-standard) 0.2s both' }}>
-              {post.title}
-            </h1>
-            <div className="blog-post-meta">
+        <section className="page-hero blog-post-hero">
+          <div className="page-hero-media" aria-hidden="true">
+            <Photo name="hero-blog" priority className="page-hero-img" />
+          </div>
+          <div className="container page-hero-inner">
+            <Breadcrumbs items={crumbs} className="page-hero-crumbs fade-down" />
+            <div className="blog-post-hero-top fade-down">
+              <Link to="/blog" className="blog-back">
+                <ArrowLeft size={14} aria-hidden="true" /> All posts
+              </Link>
+              <Link to={`/blog?category=${post.category}`} className="eyebrow blog-post-category">
+                {pillarTag(post.category)}
+              </Link>
+            </div>
+            <h1 className="hero-title blog-post-title fade-up">{post.title}</h1>
+            <div className="blog-post-meta fade-up" style={{ animationDelay: '0.12s' }}>
               <time dateTime={post.date}>{formatPostDate(post.date)}</time>
               <span className="blog-post-meta-dot" aria-hidden="true">
                 &bull;
@@ -122,7 +127,7 @@ export default function BlogPost() {
         </section>
 
         <section className="section section-paper">
-          <div className="container" style={{ maxWidth: 760 }}>
+          <div className="container blog-post-column">
             <Reveal>
               <div className="blog-post-body">{renderBody(post.body)}</div>
             </Reveal>
@@ -132,7 +137,7 @@ export default function BlogPost() {
                 <p className="blog-post-cta-text">
                   Want this working in your business? It starts with a free 30-minute discovery call.
                 </p>
-                <Button to={discoveryLink(solution.topic)} variant="primary" size="lg" borderWrap icon>
+                <Button to={discoveryLink(solution.topic)} variant="primary" size="lg">
                   {DISCOVERY_CTA}
                 </Button>
                 <Link to={solution.path} className="blog-post-cta-link">

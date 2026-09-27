@@ -107,6 +107,9 @@ export default function NeverMissALead() {
       />
 
       <PageHero
+
+
+        image="hero-lead"
         crumbs={CRUMBS}
         eyebrow="Solution ② · Lapis Lead Desk"
         text="Every enquiry answered in under 60 seconds. On every channel."

@@ -44,6 +44,9 @@ export default function Pricing() {
       />
 
       <PageHero
+
+
+        image="hero-pricing"
         crumbs={crumbs}
         eyebrow="Pricing"
         text="Hire AI workers, not more staff."
@@ -138,7 +141,7 @@ export default function Pricing() {
           </div>
           <Reveal>
             <div className="cta-row-center pricing-projects-cta">
-              <Button to={contactLink({ plan: 'ai-rescue' })} variant="primary" size="lg" borderWrap icon>
+              <Button to={contactLink({ plan: 'ai-rescue' })} variant="primary" size="lg">
                 Talk to us about a Rescue
               </Button>
               <Button to="/solutions/make-your-ai-pay" variant="ghost-light" size="lg">

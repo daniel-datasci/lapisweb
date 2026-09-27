@@ -1,11 +1,23 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import {
+  ArrowLeft,
+  Bell,
+  Briefcase,
+  GitCommit,
+  Layers,
+  LayoutDashboard,
+  Newspaper,
+  ShieldCheck,
+  Tag,
+  type LucideIcon,
+} from 'lucide-react';
 import Seo from '@/components/Seo';
 import PageHero from '@/components/PageHero';
 import CTASection from '@/components/CTASection';
-import OrbitVisualization from '@/components/OrbitVisualization';
+import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import SectionHeading from '@/components/SectionHeading';
+import Sparkle from '@/components/Sparkle';
 import StatGrid from '@/components/StatGrid';
 import QuoteGrid from '@/components/QuoteGrid';
 import { caseStudyBySlug } from '@/data/testimonials';
@@ -20,6 +32,72 @@ import { ogImagePath } from '@/seo/og';
 import { PAGES, caseStudyMeta, crumbsFor } from '@/seo/routes';
 import { orgRef, serviceId, webpageId } from '@/seo/schema';
 import './CaseStudyDetail.css';
+
+type FlowNode = { label: string; Icon: LucideIcon };
+
+/** The market watch workflow from the SaaS case study: what the agents watch, check and deliver. */
+const MARKET_WATCH: { stage: string; nodes: FlowNode[] }[] = [
+  {
+    stage: 'Watching',
+    nodes: [
+      { label: 'Pricing pages', Icon: Tag },
+      { label: 'Feature pages', Icon: Layers },
+      { label: 'Changelogs', Icon: GitCommit },
+      { label: 'Hiring signals', Icon: Briefcase },
+    ],
+  },
+  {
+    stage: 'Checking',
+    nodes: [
+      { label: 'Verifier', Icon: ShieldCheck },
+      { label: 'Alert engine', Icon: Bell },
+    ],
+  },
+  {
+    stage: 'Delivering',
+    nodes: [
+      { label: 'Weekly brief', Icon: Newspaper },
+      { label: 'Dashboard', Icon: LayoutDashboard },
+    ],
+  },
+];
+
+function SystemFlow() {
+  return (
+    <div className="system-flow">
+      <div className="system-flow-bg" aria-hidden="true">
+        <Photo name="forest-mist" sizes="(max-width: 1100px) 100vw, 1200px" />
+      </div>
+      <div className="system-flow-panel">
+        <div className="system-flow-head">
+          <span className="system-flow-count">6+</span>
+          <span className="system-flow-caption">
+            Agents watching, <span className="system-flow-live">24/7</span>
+          </span>
+        </div>
+        <ol className="system-flow-stages">
+          {MARKET_WATCH.map((s, i) => (
+            <li key={s.stage} className="system-flow-stage">
+              <span className="system-flow-stage-label">
+                <Sparkle size={11} /> 0{i + 1} · {s.stage}
+              </span>
+              <ul className="system-flow-nodes">
+                {s.nodes.map(({ label, Icon }) => (
+                  <li key={label} className="system-flow-node">
+                    <span className="system-flow-icon" aria-hidden="true">
+                      <Icon size={16} strokeWidth={1.6} />
+                    </span>
+                    {label}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  );
+}
 
 export default function CaseStudyDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -89,13 +167,14 @@ export default function CaseStudyDetail() {
 
       <PageHero
         crumbs={crumbs}
+        image="hero-cases"
         eyebrow={`Case study · ${study.industry}`}
         text={study.title}
         splitIndex={0}
         subtext={study.client}
         ctaLabel=""
       >
-        <div className="case-hero-meta fade-up" style={{ animationDelay: '1.8s' }}>
+        <div className="case-hero-meta fade-up" style={{ animationDelay: '0.3s' }}>
           <Link to={solution.path} className="case-pillar-tag">
             {pillarTag(study.pillar)}
           </Link>
@@ -124,14 +203,9 @@ export default function CaseStudyDetail() {
         <section className="section section-dark">
           <div className="container">
             <SectionHeading eyebrow="The system" title="A network of agents," accent="working 24/7." center />
-            <div style={{ marginTop: 24 }}>
-              <OrbitVisualization
-                preset="market-watch"
-                centerValue={6}
-                centerSuffix="+"
-                centerLabel="Agents watching"
-              />
-            </div>
+            <Reveal className="section-body">
+              <SystemFlow />
+            </Reveal>
           </div>
         </section>
       )}

@@ -1,24 +1,28 @@
 .faq-container {
-  max-width: 880px;
+  max-width: 900px;
 }
 
 .faq-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .faq-item {
-  border: 1px solid rgba(130, 198, 255, 0.26);
-  border-radius: 16px;
-  background: rgba(8, 22, 43, 0.7);
-  backdrop-filter: blur(10px);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
   overflow: hidden;
-  transition: border-color 0.3s ease;
+  transition: border-color var(--speed-medium) ease, background-color var(--speed-medium) ease;
+}
+
+.faq-item:hover {
+  border-color: var(--hair-2);
 }
 
 .faq-open {
-  border-color: rgba(111, 203, 255, 0.58);
+  border-color: var(--hair-3);
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .faq-heading {
@@ -32,54 +36,90 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 24px 28px;
+  padding: 22px 26px;
   text-align: left;
-  font-family: var(--font-display);
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-weight: 500;
   font-size: 17px;
-  color: var(--white);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text);
 }
 
 .faq-question:focus-visible {
-  outline: 2px solid var(--cyan-400);
+  outline: 2px solid var(--sage-300);
   outline-offset: -2px;
-  border-radius: 16px;
+  border-radius: var(--radius);
 }
 
 .faq-q-icon {
-  display: flex;
-  color: var(--cyan-400);
-  transition: transform 0.3s ease;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--hair-2);
+  background: rgba(30, 33, 27, 0.8);
+  color: var(--text-2);
+  transition: transform var(--speed-medium) var(--ease-standard), background-color var(--speed-medium) ease;
+}
+
+.faq-open .faq-q-icon {
+  background: var(--green-800);
+  color: var(--text);
 }
 
 /* Answers stay readable without JavaScript; the accordion only collapses once the app runs. */
 .faq-answer {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.32s var(--ease-standard);
+}
+
+.faq-answer > p {
+  min-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
 }
 
 .js .faq-answer {
-  max-height: 0;
+  grid-template-rows: 0fr;
 }
 
 .js .faq-open .faq-answer {
-  max-height: 400px;
+  grid-template-rows: 1fr;
 }
 
 .faq-answer p {
-  padding: 0 28px 24px;
+  max-width: 70ch;
+  padding: 0 26px;
   font-size: 15px;
-  line-height: 1.6;
-  color: var(--white-soft);
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
+.faq-answer p::after {
+  content: '';
+  display: block;
+  height: 24px;
 }
 
 @media (max-width: 480px) {
   .faq-question {
-    padding: 20px;
+    padding: 18px 18px;
     font-size: 16px;
   }
   .faq-answer p {
-    padding: 0 20px 20px;
+    padding: 0 18px;
+  }
+  .faq-answer p::after {
+    height: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-answer {
+    transition: none;
   }
 }
